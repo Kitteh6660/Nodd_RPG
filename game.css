@@ -1,0 +1,389 @@
+/* Body Content */
+body {
+	display: block;
+	background-color: #000000;
+    background: url(assets/interface/background.jpg) no-repeat;
+    background-size: cover;
+	background-position: center bottom;
+	height: 100vh;
+	min-height: 700px;
+	overflow: hidden;
+}
+
+nav {
+	float: left;
+	margin-right: 0;
+	margin-left: 0;
+	display: block;
+}
+header {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1260px;
+	height: 55px;
+	display: flex;
+}
+main {
+	display: flex;
+}
+footer {
+	display: flex;
+}
+#mainContent {
+	display: flex;
+}
+
+/* Heading Texts */
+h1 {
+    font-size: 1.8em;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 0;
+	color: rgba(0, 255, 128, 1);
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 100%;
+}
+h2 {
+    font-size: 1.2em;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 0;
+	color: rgba(0, 255, 128, 1);
+	width: 100%;
+}
+h3 {
+	font-size: 200%;
+	line-height: 4px;
+	margin-top: 10px;
+	margin-bottom: 2px;
+}
+h4 {
+	font-size: 150%;
+	line-height: 2px;
+	margin-top: 10px;
+	margin-bottom: 2px;
+}
+
+/* Link Texts */
+a {
+	transition: color 0.2s linear;
+}
+a:link {
+	color: rgba(0, 255, 128, 1);
+}
+a:visited {
+	color: rgba(0, 192, 96, 1);
+}
+a:hover {
+	color: rgba(255, 255, 255, 1);
+}
+a:active {
+	color: rgba(0, 192, 96, 1);
+}
+
+/* Wrapper */
+#wrapper {
+
+}
+
+/* Top Section Display */
+#headertext {
+	display: inline-block;
+	font-size: 1.8em;
+	text-align: center;
+	color: rgba(0, 255, 128, 1);
+	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", sans-serif;
+	margin-left: auto;
+	margin-right: 100px;
+	width: 388px;
+	height: 41px;
+	line-height: 1.4em;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+}
+#timeDisplay {
+	display: inline-block;
+	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+	font-weight: bold;
+	font-size: 1.0em;
+	margin-left: 0;
+	margin-right: auto;
+	color: rgba(0, 255, 128, 1);
+	width: 188px;
+	height: 41px;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+}
+
+/* Main Display */
+#maintext {
+	display: inline-block;
+	margin-left: 5px;
+	/*margin-right: auto;*/
+	margin-top: 5px;
+	margin-bottom: 0px;
+	width: 1032px;
+	min-height: 522px;
+	height: 70vh;
+	max-height: 642px;
+	padding-left: 5px;
+	overflow-y: auto;
+	color: rgba(220, 220, 220, 1);
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+}
+
+/* Stats Display */
+#stats {
+	display: inline-block;
+	width: 246px;
+	height: 642px;
+	/*margin-left: auto;*/
+	margin-right: 0;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+	float: right;
+}
+#stats p {
+	width: 220px;
+	padding-left: 5px;
+	margin-top: 0;
+	line-height: 1.4em;
+	overflow-x: visible;
+}
+.statframe {
+	padding-top: 0;
+	margin-top: 0;
+	margin-left: 10px;
+	height: 20px;
+	width: 200px;
+	display: block;
+	background-color: rgba(0, 0, 0, 0.2);
+	border: 2px ridge #000000;
+	border-radius: 2px;
+}
+.statframeblank {
+	padding-top: 0;
+	margin-top: 0;
+	margin-left: 10px;
+	height: 20px;
+	width: 200px;
+	display: block;
+	/*border: 2px ridge #000000;*/
+	padding: 2px;
+}
+.statbar {
+	background-image: linear-gradient(to bottom, rgba(0, 255, 127, 0.6), rgba(127, 255, 186, 0.6) 50%, rgba(0, 255, 0, 0.6) 50%);
+	height: 100%;
+	width: 100%;
+    transition: width 0.5s ease-in-out;
+	border-radius: 4px;
+}
+.statlabel {
+	position: relative;
+	left: 0px;
+	top: -2px;
+	padding: 0;
+	margin: 0;
+	height: 0;
+	width: 100px;
+	display: block;
+	color: rgba(220, 220, 220, 1);
+	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	text-shadow: 1px 1px 5px #333333;
+}
+.statlabel:hover {
+    cursor: help;
+}
+.statnum {
+	position: relative;
+	top: -2px;
+	right: 30px;
+	padding: 0;
+	margin: 0;
+	height: 0;
+	width: 60px;
+	text-align: right;
+	color: rgba(220, 220, 220, 1);
+	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+	font-size: 18px;
+	text-shadow: 1px 1px 5px #333333;
+}
+.statupdown {
+	float: inherit;
+	position: relative;
+	left: 202px;
+	bottom: 22px;
+	background-image: url(assets/interface/arrow_green.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 24px;
+	width: 24px;
+}
+.statReverseArrows {
+	transform: rotate(180deg);
+}
+#strBar, #dexBar, #endBar, #intBar, #wilBar, #chaBar, #libBar, #corBar, #hpBar, #mpBar, #lustBar, #xpBar {}
+#strNum, #dexNum, #endNum, #intNum, #wilNum, #chaBar, #libNum, #corNum, #hpNum, #mpNum, #lustNum, #xpNum, #levelNum, #gloamNum {}
+
+#strArrow, #dexArrow, #endArrow, #intArrow, #wilArrow, #chaArrow, #libArrow, #corArrow, #hpArrow, #mpArrow, #lustArrow, #hungerArrow {}
+
+/* Buttons */
+.leftbuttonrow {
+	bottom: 24px;
+	padding-left: 5px;
+}
+.buttonrow {
+	padding-left: 5px;
+	padding-bottom: 0px;
+	min-width: 1060px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.button {
+	background-repeat: no-repeat;
+	width: 196px;
+	max-height: 44px;
+	height: 5vh;
+	min-height: 30px;
+	display: block;
+	float: left;
+	margin-top: 2px;
+	margin-right: 2px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px #333333;
+    font-family: "Palatino Linotype", Palatino, Georgia, serif;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 44px; 
+	color: rgba(0, 255, 127, 1);
+	transition: color 0.2s linear;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+}
+.button_small {
+	background-repeat: no-repeat;
+	width: 44px;
+	height: 44px;
+	display: block;
+	float: left;
+	margin-top: 2px;
+	margin-right: 5px;
+	text-align: center;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px #333333;
+    font-family: "Palatino Linotype", Palatino, Georgia, serif;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 38px;
+	color: #000000;
+	transition: color 0.2s linear;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+}
+.button:hover, .button_small:hover {
+	opacity: 0.8;
+	color: rgba(255, 255, 255, 1);
+	cursor: pointer;
+}
+.button:hover div#tooltip {
+    visibility: visible;
+}
+.button:active, .button_small:active {
+	opacity: 0.6;
+	color: rgba(255, 255, 255, 1);
+}
+.button:disabled {
+	opacity: 0.2;
+	color: rgba(64, 64, 64, 1);
+}
+#leftbuttonset {
+	float: right;
+	display: inline-block;
+	margin-bottom: 0;
+	margin-left: auto;
+	margin-right: 5px;
+	left: 0px;
+	bottom: 0px;
+	height: 20vh;
+	min-height: 80px;
+	max-height: 180px;
+	width: 258px;
+}
+#buttonset {
+	display: inline-block;
+	margin-left: 0;
+	margin-right: auto;
+	margin-bottom: 0px;
+	min-width: 1060px;
+	width: 1060px;
+	height: 20vh;
+	min-height: 80px;
+	max-height: 180px;
+}
+
+/* Others */
+#perkselect { min-width: 200px; }
+#tooltip {
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    z-index: 10;
+    left: 100px;
+    bottom: 100px;
+    width: 400px;
+    height: 240px;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/tooltip.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+}
+#tooltip h5 {
+    margin: 0px 5px 0px;
+    padding-top: 5px;
+    padding-left: 5px;
+    border-bottom: solid 2px #000000;
+    font-family: "Palatino Linotype", "Georgia", "Times New Roman", serif;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+#tooltip p {
+    margin-top: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+	font-family: "Palatino Linotype", "Georgia", "Times New Roman", serif;
+    font-size: 1.0em;
+}

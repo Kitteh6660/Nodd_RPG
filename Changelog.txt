@@ -1,0 +1,11 @@
+This is the change log for Nodd RPG, detailing additions and changes.
+
+[0.1.0] - 2021-11-11
+* Initial code release
+
+Added:
++ All six Districts, and the Spire which all are pretty barebones at the moment.
++ Induction, Darkling Row, Outside Inn. All of those are still work in progress.
++ Stub for Grud's Grub and Eggpluck's Discount Familiars. 
++ Black Ditch Couture which sells Vulturewear and some armour.
++ Two random battle encounters: Nurk Rogue and Ravel Rogue.

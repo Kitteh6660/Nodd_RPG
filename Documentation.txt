@@ -1,0 +1,243 @@
+How to work with City of Nodd RPG Source Code!
+
+Please note that the game is a work in progress! So is this documentation!
+
+Hello! Just figured that I would teach you how to work with the source code. It's rather simple.
+
+The game is written in JavaScript, which makes the game work! If you have knowledge of JavaScript, then you can work with it!
+Remember to always put a semi-colon ; at the end of the line!
+
+To put quote marks, put a backward slash (\) before putting the " marks. (Example: \"quote\")
+
+Things to know: The game may have some leftover Corruption of Champions HTML code which will slowly being converted and Noddified!
+
+========================
+## Adding New Content ##
+========================
+To create a new file, you can use program like Notepad++ or any source text editor, and you save the file as JavaScript (.js).
+To make sure the game recognizes the file, you open up game.html and include the file in <script></script> tag.
+
+I have included several example content that you can use such as battles and shops, even navigation.
+
+You can create flags in the gameFlags.js that will be used for tracking progress.
+
+Here is an example code:
+
+ContentStuff = [];
+
+ContentStuff.foo = function() {
+   clearOutput();
+   outputText("Howdy there!");
+   doNext(ContentStuff.foo2);
+}
+ContentStuff.foo2 = function() {
+   clearOutput();
+   outputText("Oh my god, second page!<br><br>");
+   outputText("And there's even another! How <b>amazing</b>!");
+   menu();
+   addButton(0, "Yay!", ContentStuff.foo);
+   addButton(1, "Wut", ContentStuff.foo2);
+}
+
+There are some content types to consider and that they should have content warnings. 
+The following content should have content warnings:
+* Parasites & infestation (toggleable)
+* Scat (toggleable)
+* Gore (toggleable?)
+* Hard vore (toggleable)
+
+========================
+##  Creating Battles  ##
+========================
+You can create new enemy by creating a JS file that effectively would extend creature.
+
+Create a constructor based on creature, and then you need to hook it up as prototype.
+
+I have provided two sample enemies: nurk_rogue.js and ravel_rogue.js that you can use to learn how to make enemies!
+
+There are many parameters but some of the important parameters are...
+
+this.str, this.dex, this.end, this.inte, this.wil, this.cha, this.lib, this.cor - Those are the combat attributes.
+
+this.level - The level of the enemy, higher level will result in more XP being dropped.
+this.gloam - How much gloam will be dropped when you defeat the enemy.
+this.clearDrops() - Blanks out the drop. Call before populating loot pool.
+this.addDrop(item, chance) - Creates a drop with item and chance. Note that you generally can only gain 1 drop from a single combat. But you can use clever workarounds!
+this.victory - If you manage to beat the enemy, this will be called after dropping the enemy's HP to 0 or lust to max.
+this.defeat - If you lose to the enemy, this will be called after your HP drops to 0, or lust hits max.
+
+Do not add parentheses () in constructor for victory or defeat or it will immediately invoke!
+
+For example, if you want to set up Nurk Rogue battle, you would use either method: 
+
+Code 1:
+monster = new NurkRogue(); //Calling this way allows you to modify stats before starting combat.
+startCombat(monster);
+
+OR
+Code 2:
+startCombat(new NurkRogue());
+
+=============================
+## The Important Functions ##
+=============================
+Here are the game functions to use when making scenes!
+
+> Interface
+===========
+clearOutput()
+Clears all output text.
+
+outputText(txt)
+Puts the text on the main text field. You can use HTML tags to format text, even bold, italics, underline, and even colour!
+To create a new line, put <br> at the end of text string, INSIDE the string! I recommend putting 2 br tags (<br><br>) to create a paragraph.
+
+setHeader(txt)
+Sets the header text at the top of the screen. Good for locations.
+
+showMenus()
+Shows the buttons at the lower-left corner.
+
+hideMenus()
+Hides the buttons at the lower-left corner.
+
+menu()
+Clear all buttons.
+
+doNext(func)
+Clears all buttons AND creates a single button with 'Next' that when pressed on, triggers the function.
+
+doYesNo(func1, func2)
+Clears a button AND creates two buttons labelled 'Yes' and 'No', triggers the corresponding functions.
+
+addButton(pos, text, func, arg1, arg2, arg3, tooltipText, tooltipHeader)
+Creates a button. The argument 'pos' can be from 0 to 14, 'text' is what the label will be, 'func' is what function will be triggered when clicked on.
+The optional parameters 'arg1', 'arg2', and 'arg3' will then passed as arguments for the triggered function's parameters.
+The optional parameters 'tooltipText' and 'tooltipHeader' set the tooltips for the buttons.
+If 'tooltipHeader' is not specified, it defaults to button text.
+
+addButtonDisabled(pos, text, tooltipText, tooltipHeader)
+Creates a grayed-out button. The argument 'pos' can be from 0 to 14, 'text' is what the label will be.
+The optional parameters 'tooltipText' and 'tooltipHeader' will create tooltip texts.
+If 'tooltipHeader' is not specified, it defaults to button text.
+
+hint(pos, tooltipText, tooltipHeader)
+Sets a tooltip to the corresponding button.
+The parameter 'tooltipText' sets the main content of the tooltip. The optional parameter 'tooltipHeader' specifies the header of the tooltip.
+If 'tooltipHeader' is not specified, it defaults to button text.
+
+genericPlayerButtons()
+Sets up a set of generic buttons that will also include inventory and map button.
+By default, North, South, West, East, Up, and Down are disabled and grayed out, you then use addButton over the corresponding slots.
+
+refreshStats()
+Refreshes the stats panel, updating to match the current values. Should call after changing player stats.
+
+hideUpDown()
+Hides the up and down arrows on stats.
+
+
+> Time
+===========
+Time.advanceHours(amt)
+How much time to pass in hours. The argument 'amt' is how many hours.
+
+Time.advanceMinutes(amt)
+How much time to pass in minutes. The argument 'amt' is how many minutes.
+
+
+> Combat
+===========
+startCombat(creature)
+Starts a combat with the enemy. You can declare a new creature before using the function if you wish to modify the monster's stats before combat.
+
+cleanupAfterCombat()
+After a victory or defeat scene, use this to call the results. If the player wins, the player will be awarded XP and Gloam with possibility of item drops.
+
+gameOver()
+Creates a Bad Ending, ending the game. This will also increment 'times bad-ended' stat when implemented.
+
+
+> Creature
+===========
+creature.changeHP(amt, display)
+Alters the entity's HP, 'amt' is how much to add or subtract, 'display' displays damage or healing.
+Can also be called on player with player.changeHP(amt, display)
+
+
+> Player
+===========
+player.orgasm()
+Resets the player's lust and increment times orgasmed counter. Resets hours since orgasm.
+
+player.refillHunger(amt)
+Refills the player's hunger (satiety) by a specified amount.
+
+player.refillThirst(amt)
+Refills the player's thirst (hydration) by a specified amount.
+
+player.refillEnergy(amt)
+Refills the player's energy by a specified amount.
+
+player.emptyBladder()
+Empties the player's bladder value to 0.
+
+player.emptyBowels()
+Empties the player's bowel value to 0.
+
+player.changeXP(amt)
+How much experience to give the player. Or take away if you feel sadistic.
+
+player.changeMoney(amt)
+How much gloam to give the player. Or take away accordingly.
+
+
+> Key Items
+===========
+player.createKeyItem(keyID, val1, val2, val3, val4)
+Adds a key item to the player. The four parameters are the values of the key items which can be used for if-checks.
+
+player.hasKeyItem(keyID)
+Checks if the key item is present. Returns -1 if it's absent, so use operator of >= 0 if you want to check against having key item.
+
+player.keyValue(keyID, value)
+Gets the value of the Key Item. If you do not possess the Key Item, this will return 0.
+The 'value' can be between 1 and 4, it then returns the number stored for that Key Item.
+
+player.addKeyValue(keyID, valueIdx, bonus)
+Increments or decrements the key item's value. 
+'keyID' is the key item to find, 'valueIdx' must be between 1 and 4, bonus is how much to add or subtract.
+
+player.removeKeyItem(keyID)
+Removes the key item from the player's inventory if the player has it.
+
+> Inventory
+===========
+Inventory.takeItem(item, func)
+Give the player an item. The parameter 'item' is the item type, you can check the item files.
+The parameter 'func' is the function to execute after the item is either taken or abandoned.
+
+player.destroyItems(item, qty)
+Removes an item of that type from the player. The parameter 'qty' is the amount to remove from player.
+
+
+> Status Effects
+===========
+(I feel a bit lazy. Sorry! This section will be filled out though.)
+
+
+========================
+##  Part Descriptions ##
+========================
+Now here comes the sweet part. You can insert functions that will describe player's parts, even sexual endowments!
+
+
+
+========================
+##  Debugging Errors  ##
+========================
+Naturally, you may come across some errors so if something isn't working or broken, here's the simple thing.
+
+Press F12 to bring up the web inspector and switch to console tab, you will be able to see what's wrong!
+
+Usually, the console should tell you what is broken, some syntax errors. This will allow you to pinpoint the problematic code and fix accordingly.

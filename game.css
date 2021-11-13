@@ -29,9 +29,6 @@ main {
 footer {
 	display: flex;
 }
-#mainContent {
-	display: flex;
-}
 
 /* Heading Texts */
 h1 {
@@ -95,7 +92,7 @@ a:active {
 	color: rgba(0, 255, 128, 1);
 	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", sans-serif;
 	margin-left: auto;
-	margin-right: 100px;
+	margin-right: 5vw;
 	width: 388px;
 	height: 41px;
 	line-height: 1.4em;
@@ -109,12 +106,11 @@ a:active {
 #timeDisplay {
 	display: inline-block;
 	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-	font-weight: bold;
 	font-size: 1.0em;
 	margin-left: 0;
 	margin-right: auto;
 	color: rgba(0, 255, 128, 1);
-	width: 188px;
+	width: 288px;
 	height: 41px;
 	border-width: 6px;
 	border-style: solid;
@@ -241,13 +237,15 @@ a:active {
 	height: 24px;
 	width: 24px;
 }
-.statReverseArrows {
-	transform: rotate(180deg);
-}
+
 #strBar, #dexBar, #endBar, #intBar, #wilBar, #chaBar, #libBar, #corBar, #hpBar, #mpBar, #lustBar, #xpBar {}
 #strNum, #dexNum, #endNum, #intNum, #wilNum, #chaBar, #libNum, #corNum, #hpNum, #mpNum, #lustNum, #xpNum, #levelNum, #gloamNum {}
 
 #strArrow, #dexArrow, #endArrow, #intArrow, #wilArrow, #chaArrow, #libArrow, #corArrow, #hpArrow, #mpArrow, #lustArrow, #hungerArrow {}
+
+#lustArrow, #bladderArrow, #bowelArrow {
+	transform: rotate(180deg);
+}
 
 /* Buttons */
 .leftbuttonrow {

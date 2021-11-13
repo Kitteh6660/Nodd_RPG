@@ -13,8 +13,13 @@ function StatusEffect(type, val1, val2, val3, val4) {
     this.value4 = val4;
 }
 
-function StatusEffectType(id) {
+function CombatStatusEffect(id) {
+	return new StatusEffectType("Fertilized", true);
+}
+
+function StatusEffectType(id, combat) {
     //Variables
     this.id = id;
+	this.isCombat = (combat != undefined ? combat : false);
     StatusEffectIDs[this.id] = this;
 }

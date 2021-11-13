@@ -9,7 +9,6 @@ function RavelRogue() {
 	this.heShe = "he";
 	this.himHer = "him";
 	this.hisHer = "his";
-	this.battleDesc = "A Ravel stares daggers at you, with a dagger in his right hand as if intent to mug you. (Description will be filled out later, okay?)";
 	
 	//Stats
 	this.str = 8;
@@ -27,20 +26,21 @@ function RavelRogue() {
 	//Advancement
 	this.level = 2;
 	this.gloam = 8 + rand(6);
+    //Drops
+    this.clearDrops();
+    this.randomize();
     //Battle variables
-    this.weapon.equipmentName = Items.Weapons.Dagger.equipmentName;
-    this.weapon.verb = "stab";
-    this.armor.equipmentName = "leathery skin";
     this.lustVuln = 1;
 	this.temperment = 1; //TEMPERMENT_LUSTY_GRAPPLES
     //Appearance
-    this.tallness = rand(36) + 6;
+    this.tallness = 60 + rand(24);
     this.hipRating = HIP_RATING_BOYISH;
     this.buttRating = BUTT_RATING_TIGHT;
     this.skinTone = "red";
     this.hairColor = "black";
     this.hairLength = 5;
-	this.wingType = WING_TYPE_NONE;
+	this.skinType = SKIN_TYPE_FEATHERS;
+	this.wingType = WING_TYPE_FEATHERED_LARGE;
 	//Sexual characteristics
     this.createCock(rand(2) + 8, 2, CockTypesEnum.DOG);
     this.balls = 2;
@@ -49,10 +49,7 @@ function RavelRogue() {
     this.ass.analLooseness = ANAL_LOOSENESS_STRETCHED;
     this.ass.analWetness = ANAL_WETNESS_NORMAL;
 
-    //Drops
-    this.clearDrops();
-    this.addDrop(Items.Weapons.Dagger, 30);
-    this.addDrop(Items.Weapons.NoddDagger, 1);
+	this.battleDesc = "The Ravel before you stares at you with malicious intent. ";
 
 	//Victory/defeat
 	this.victory = RavelRogue.victoryMenu;
@@ -61,17 +58,47 @@ function RavelRogue() {
 RavelRogue.prototype = new Creature();
 RavelRogue.prototype.constructor = RavelRogue;
 
+RavelRogue.prototype.randomize = function() {
+	if (this.level >= 4 && rand(100) >= 70 - ((this.level - 4) * 5)) {
+		this.weapon = Items.Weapons.NoddDagger;
+		this.addDrop(Items.Weapons.NoddDagger, 10);
+		this.battleDesc += "Clenched in his right hand is an organic-looking dagger of Noddish design. ";
+	}
+	else {
+		this.weapon = Items.Weapons.Dagger;
+		this.addDrop(Items.Weapons.Dagger, 30);
+		this.battleDesc += "Clenched in his right hand is an ordinary-looking, metal dagger that has seen plenty of uses. ";
+	}
+	if (this.level >= 3 && rand(100) >= 50 - ((this.level - 3) * 2.5)) {
+		var armourSelect = rand(20);
+		if (armourSelect < 5) {
+			this.armor = Items.Armor.NurkVulturewear;
+			this.addDrop(Items.Armor.NurkVulturewear, 5);
+			this.battleDesc += "The Ravel appears to be covered in an odd clothing seemingly made from the hides of some Vurk. ";
+		}
+		else if (armourSelect < 10) {
+			this.armor = Items.Armor.RavelVulturewear;
+			this.addDrop(Items.Armor.RavelVulturewear, 5);
+			this.battleDesc += "The Ravel appears to be covered in an odd clothing seemingly made from the hides of his own kind. ";
+		}
+		else if (armourSelect < 15) {
+			this.armor = Items.Armor.LehltVulturewear;
+			this.addDrop(Items.Armor.LehltVulturewear, 5);
+			this.battleDesc += "The Ravel appears to be covered in an odd clothing seemingly made from the hides of some goat-like creatures. ";
+		}
+		else {
+			this.armor = Items.Armor.SlyneVulturewear;
+			this.addDrop(Items.Armor.SlyneVulturewear, 5);
+			this.battleDesc += "The Ravel appears to be covered in an odd clothing seemingly made from the hides of a long-snouted reptilian. "
+		}
+	}
+}
+
 //------------
 // COMBAT
 //------------
 RavelRogue.prototype.doAI = function() {
-	switch(rand(4)) {
-		case 0:
-			RavelRogue.lustMagicAttack();
-			break;
-		default:
-			this.attack();
-	}
+	this.attack();
 	combatRoundOver();
 }
 
@@ -158,6 +185,7 @@ RavelRogue.killRavel = function() {
 	clearOutput();
 	outputText("You make quick work of the Ravel and the now-lifeless corpse lays on the ground. You check for any loot.");
 	if (player.location == "darkling_row") locFlags.darklingRowKillCount++;
+	monster.additionalXP += monster.level + 3;
 	cleanupAfterCombat();
 }
 
@@ -165,6 +193,7 @@ RavelRogue.buttStuffRavel = function() {
 	clearOutput();
 	outputText("You give Ravel a good fucking with your dick. This scene is just a placeholder.");
 	player.orgasm();
+	bonusGloam();
 	cleanupAfterCombat();
 }
 
@@ -172,6 +201,7 @@ RavelRogue.makeRavelSuck = function() {
 	clearOutput();
 	outputText("You make Ravel suck you off and cum into his maw. Sadly, just a placeholder.");
 	player.orgasm();
+	bonusGloam();
 	cleanupAfterCombat();
 }
 
@@ -179,6 +209,7 @@ RavelRogue.rideRavelVaginally = function() {
 	clearOutput();
 	outputText("In this scene, you will ride Ravel's penis vaginally. Alas, this is only a placeholder.");
 	player.orgasm();
+	bonusGloam();
 	cleanupAfterCombat();
 }
 
@@ -186,5 +217,6 @@ RavelRogue.rideRavelAnally = function() {
 	clearOutput();
 	outputText("In this scene, you will ride Ravel's penis anally. Alas, this is only a placeholder.");
 	player.orgasm();
+	bonusGloam();
 	cleanupAfterCombat();
 }

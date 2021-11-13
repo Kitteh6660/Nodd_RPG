@@ -1,6 +1,7 @@
 ItemLib = []; //Hold item IDs for purpose of looking up or for save data.
 Items = [];
 
+//Item Types
 ITEM_TYPE_WEAPON = "Weapon";
 ITEM_TYPE_ARMOUR = "Armour";
 ITEM_TYPE_UNDERGARMENT = "Undergarment";
@@ -8,6 +9,30 @@ ITEM_TYPE_CONSUMABLE = "Consumable";
 ITEM_TYPE_MATERIAL = "Material";
 ITEM_TYPE_SHIELD = "Shield";
 
+//Item Flags
+ITEM_FLAG_LIFE_LEECH = "life_leech";
+
+ITEM_FLAG_SKINTIGHT = "skintight";
+ITEM_FLAG_CROTCHLESS = "crotchless";
+ITEM_FLAG_TRANSPARENT = "transparent";
+ITEM_FLAG_BLOCKS_UNDERWEAR = "no_underwear"
+ITEM_FLAG_NO_STRIP_NEEDED = "no_strip";
+ITEM_FLAG_WATERPROOF = "waterproof";
+ITEM_FLAG_MACABRE = "macabre";
+
+//Resistances
+RESISTANCE_STAB = "stab_res";
+RESISTANCE_SLASH = "slash_res";
+RESISTANCE_CRUSH = "crush_res";
+RESISTANCE_LUST = "lust_res";
+RESISTANCE_ARCANE = "arcane_res";
+RESISTANCE_ACID = "acid_res";
+RESISTANCE_POISON = "poison_res";
+RESISTANCE_FIRE = "fire_res";
+RESISTANCE_ICE = "ice_res";
+RESISTANCE_LIGHTNING = "lightning_res";
+
+//Item Constructor!
 function Item(itemId, itemShortName, itemLongName, itemType) {
 	//Required values, will be declared by parameters
 	this.id = itemId;
@@ -31,6 +56,8 @@ function Item(itemId, itemShortName, itemLongName, itemType) {
 	this.sexiness = 0;
 	this.verb = "";
 	this.maxStackSize = 10;
+	this.itemFlags = [];
+	this.resistances = [];
 	//Add to library for lookup.
 	ItemLib[this.id] = this;
 }
@@ -117,6 +144,28 @@ Item.prototype.getMaxStackSize = function() {
 	else {
 		return 10;
 	}
+}
+
+Item.prototype.hasFlag = function(flag) {
+	var found = false;
+	for (var i = 0; i < this.itemFlags.length; i++) {
+		if (this.itemFlags[i] == flag) {
+			found = true;
+			break;
+		}
+	}
+	return found;
+}
+
+Item.prototype.getResistance = function(res) {
+	var amt = 0;
+	for (var i = 0; i < this.resistances.length; i += 2) {
+		if (this.resistances[i] == res) {
+			res = this.resistances[i+1];
+			break;
+		}
+	}
+	return found;
 }
 
 Items.NOTHING = new Item("Nothing", "NOTHING!", "nothing", ITEM_TYPE_MATERIAL);

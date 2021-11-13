@@ -11,6 +11,7 @@ function dataScreen() {
 	outputText("Here, you can save or load data.");
 	menu();
 	if (gameStarted) addButton(0, "Save", Data.saveScreen);
+	else addButtonDisabled(0, "Save");
 	addButton(1, "Load", Data.loadScreen);
 	addButton(2, "Delete", Data.deleteScreen);
 	
@@ -39,7 +40,7 @@ Data.loadScreen = function() {
 	menu();
 	for (i = 0; i < Data.totalSlots; i++) {
 		outputText("Slot " + (i + 1) + ": " + Data.loadSaveDisplay("Nodd_" + (i+1)) + "<br>");
-		if (localStorage["Nodd_" + (i+1)] != undefined) {
+		if (localStorage.getItem("Nodd_" + (i+1)) != undefined) {
 			addButton(i, "Slot " + (i+1), Data.loadGame, "Nodd_" + (i+1));
 		}
 	}
@@ -55,7 +56,7 @@ Data.deleteScreen = function() {
 	menu();
 	for (i = 0; i < Data.totalSlots; i++) {
         outputText("Slot " + (i + 1) + ": " + Data.loadSaveDisplay("Nodd_" + (i+1)) + "<br>");
-		if (localStorage["Nodd_" + (i+1)] != undefined) {
+		if (localStorage.getItem("Nodd_" + (i+1)) != undefined) {
 			addButton(i, "Slot " + (i+1), Data.deletePrompt, "Nodd_" + (i+1));
 		}
 	}
@@ -210,7 +211,7 @@ Data.saveGameObject = function(slot) {
 
         //Assign Save Version
         saveData.saveVersion = saveVersion;
-        localStorage[slot] = JSON.stringify(saveData);
+        localStorage.setItem(slot, JSON.stringify(saveData));
 
         //Set to successful and return
         success = true;
@@ -245,7 +246,7 @@ Data.loadGame = function(slot) {
 Data.loadGameObject = function(slot) {
 	//Let's try to load!
 	var success = false;
-	var saveData = JSON.parse(localStorage[slot]);
+	var saveData = JSON.parse(localStorage.getItem(slot));
     var i;
 	try {
         player = new Player();
@@ -284,8 +285,7 @@ Data.loadGameObject = function(slot) {
         //Key Items
         player.keyItems = [];
         for (i = 0; i < saveData.player.keyItems.length; i++) {
-            player.createKeyItem(saveData.player.keyItems[i].id
-                , saveData.player.keyItems[i].value1, saveData.player.keyItems[i].value2, saveData.player.keyItems[i].value3, saveData.player.keyItems[i].value4);
+            player.createKeyItem(saveData.player.keyItems[i].id, saveData.player.keyItems[i].value1, saveData.player.keyItems[i].value2, saveData.player.keyItems[i].value3, saveData.player.keyItems[i].value4);
             //player.createKeyItem(lookupKeyItem(saveData.player.keyItems[i].id), saveData.player.keyItems[i].value1, saveData.player.keyItems[i].value2, saveData.player.keyItems[i].value3, saveData.player.keyItems[i].value4);
         }
 
@@ -300,22 +300,11 @@ Data.loadGameObject = function(slot) {
         //Spells
         if (saveData.player.spells != undefined) {
             player.spells = [];
-            player.spells.chargeWeapon = saveData.player.spells.chargeWeapon;
-            player.spells.blind = saveData.player.spells.blind;
-            player.spells.whitefire = saveData.player.spells.whitefire;
-            player.spells.arouse = saveData.player.spells.arouse;
-            player.spells.heal = saveData.player.spells.heal;
-            player.spells.might = saveData.player.spells.might;
         }
 
         //Exploration
         if (saveData.exploration != undefined) {
             exploration = [];
-            exploration.explored = saveData.exploration.explored;
-            exploration.exploredForest = saveData.exploration.exploredForest;
-            exploration.exploredLake = saveData.exploration.exploredLake;
-            exploration.exploredDesert = saveData.exploration.exploredDesert;
-            exploration.exploredMountain = saveData.exploration.exploredMountain;
         }
 
         //Other data
@@ -325,6 +314,9 @@ Data.loadGameObject = function(slot) {
 			time.hours = saveData.time.hours;
 			time.minutes = saveData.time.minutes;
 		}
+		
+		//Flags
+		initializeFlags();
         if (saveData.codexFlags != undefined) {
             for (i in saveData.codexFlags) {
                 if (saveData.codexFlags[i] == undefined || saveData.codexFlags[i] == null)
@@ -422,6 +414,11 @@ Data.fixSave = function() {
     for (i in player.breastRows) {
         unfuckBreastRow(player.breastRows[i]);
     }
+	//Favoured attributes
+	if (player.favouredAttribute == "") {
+		playerMenu = CharCreation.attributeSelectMenuP1;
+		showStats();
+	}
 }
 
 //DELETE SAVE
@@ -435,7 +432,7 @@ Data.deletePrompt = function(slot) {
 Data.deleteSave = function(slot) {
 	clearOutput();
 	outputText(slot + " has been deleted.");
-	delete localStorage[slot];
+	localStorage.removeItem(slot);
 	doNext(Data.deleteScreen);
 }
 //SETTINGS DATA SAVE/LOAD
@@ -456,7 +453,7 @@ Data.saveSettings = function() {
         saveData.plushifyEnabled = plushifyEnabled;
 
         //Set save to successful
-        localStorage["Nodd_Main"] = JSON.stringify(saveData);
+        localStorage.setItem("Nodd_Main", JSON.stringify(saveData));
         success = true;
     }
     catch(error) {
@@ -468,11 +465,10 @@ Data.saveSettings = function() {
 }
 Data.loadSettings = function() {
     var success = false;
-    if (GetIEVersion == 0) {
-        if (localStorage["Nodd_Main"] == undefined)
+	var file = localStorage.getItem("Nodd_Main");
+        if (file == undefined || file == null)
             return success;
-    }
-    var saveData = JSON.parse(localStorage["Nodd_Main"]);
+    var saveData = JSON.parse(file);
     try {
         silly = saveData.silly;
         use12Hours = saveData.use12Hours;

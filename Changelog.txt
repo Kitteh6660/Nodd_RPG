@@ -1,9 +1,44 @@
 This is the change log for Nodd RPG, detailing additions and changes.
 
+====================
+[0.1.1] - 2021-11-13
+Notes for developers: Added documentation entry on status effects!
+
+Additions:
++ Attribute selection added to character creation. You can choose your favoured attribute, and your starting attributes.
++ Added Slyne Sorceress as one of the possible random encounters starting at level 3!
++ Added Slyne codex entry.
++ Tease has been split into five parts of your choice. No difference between choices currently though.
++ Wait menu has been added, you can now wait a specified amount of time.
++ Added a stub content for Darkhaze shop. Nothing is buyable yet though...
++ Poison status effect, can happen when a poison bottle hits you.
+
+Changes:
+* Increased the experience needed to level up for levels 1 through 3 by 10 each. XP requirement for higher levels is unaffected.
+* Performing the (still-placeholdery) victory scenes increase gloam reward to be in line with the city indulging nature.
+* Decreased Tank perk from +50 to +25 HP.
+* As long as your combined Satiety and Hydration is at least 120 and both of them are at least 40, you will slowly regen HP over time!
+* Replaced Nurk Rogue's lust attack with a poison bottle.
+* Noddish Dagger drops can now only have a chance to drop if the rogues are level 4 or higher.
+* Noddified the day/time display!
+* Bladder fill rate now slows down after 90. There still are no consequences to full bladder yet.
+* Properly made Nodd RPG incompatible with Internet Explorer 11 and older.
+* Implemented items having different maximum stack size. Equipment stacks only to 1 but consumables stack to 10.
+
+Fixes:
+> Satiety and Hydration can no longer drop below 0.
+> You can now run from combat properly.
+> Purchasing from Black Ditch Couture now properly deducts your Gloam.
+> Resolved issues with saving after the game directory is moved or run on Edge.
+
+Removals:
+- Several unused files, especially the leftover CoC HTML code.
+
+====================
 [0.1.0] - 2021-11-11
 * Initial code release
 
-Added:
+Additions:
 + All six Districts, and the Spire which all are pretty barebones at the moment.
 + Induction, Darkling Row, Outside Inn. All of those are still work in progress.
 + Stub for Grud's Grub and Eggpluck's Discount Familiars. 

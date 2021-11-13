@@ -172,49 +172,8 @@ Inventory.deleteItem = function(item, slotNum) {
 // Use an item
 Inventory.useItem = function(item, fromSlot) {
     item.useText();
-    /*if (item) {
-        player.armor.removeText();
-        item = player.setArmor(item as Armor); //Item is now the player's old armor
-        if (item == null)
-            itemGoNext();
-        else takeItem(item, callNext);
-    }
-    else if (item is Weapon) {
-        player.weapon.removeText();
-        item = player.setWeapon(item as Weapon); //Item is now the player's old weapon
-        if (item == null)
-            itemGoNext();
-        else takeItem(item, callNext);
-    }
-    else if (item is Jewelry) {
-        player.jewelry.removeText();
-        item = player.setJewelry(item as Jewelry); //Item is now the player's old jewelry
-        if (item == null)
-            itemGoNext();
-        else takeItem(item, callNext);
-    }
-    else if (item is Shield) {
-        player.shield.removeText();
-        item = player.setShield(item as Shield); //Item is now the player's old shield
-        if (item == null)
-            itemGoNext();
-        else takeItem(item, callNext);
-    }
-    else if (item is Undergarment) {
-        if (item["type"] == 0) player.upperGarment.removeText();
-        else player.lowerGarment.removeText();
-        item = player.setUndergarment(item as Undergarment, item["type"]); //Item is now the player's old shield
-        if (item == null)
-            itemGoNext();
-        else takeItem(item, callNext);
-    }
-    else {*/
-        currentItemSlot = fromSlot;
-        if (!item.useItem()) Inventory.itemGoNext(); //Items should return true if they have provided some form of sub-menu.
-        //This is used for Reducto and GroPlus (which always present the player with a sub-menu)
-        //and for the Kitsune Gift (which may show a sub-menu if the player has a full inventory)
-    //				if (!item.hasSubMenu()) itemGoNext(); //Don't call itemGoNext if there's a sub menu, otherwise it would never be displayed
-    //}
+	currentItemSlot = fromSlot;
+	if (!item.useItem()) Inventory.itemGoNext(); //Items should return true if they have provided some form of sub-menu.
 }
 
 // Try to take an item when the slot is full
@@ -587,7 +546,7 @@ Inventory.placeIn = function(startSlot, endSlot, slotNum) {
 
 	//First, do we have that item already within the right range of player.itemSlots?
 	for (x = startSlot; x < endSlot; x++) { //Find any slots which already hold the item that is being stored
-		if (player.itemSlots[x].itype == player.itemSlots[slotNum].itype && player.itemSlots[x].quantity < 5) { // If there is an item of the same kind and there is less than five...
+		if (player.itemSlots[x].itype == player.itemSlots[slotNum].itype && player.itemSlots[x].quantity < player.itemSlots[slotNum].itype.getMaxStackSize()) { // If there is an item of the same kind and there is less than five...
 			player.itemSlots[x].quantity += 1; // Increase the quantity in the slot
 			outputText("You add " + player.itemSlots[slotNum].itype.shortName + " into storage slot " + num2Text(x + 1 - startSlot) + ".<br>"); //TODO Take out storage slot number after stash code is complete.
 			player.itemSlots[slotNum].removeOneItem();

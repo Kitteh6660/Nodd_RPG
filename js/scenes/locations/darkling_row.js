@@ -71,13 +71,10 @@ Locations.DarklingRow.explore = function() {
 }
 
 Locations.DarklingRow.rollRandomEncounter = function() {
-	var chooser = Math.random() * (5 + (5 * Math.min(player.level, 3)));
-	if (chooser < 5) {
+	var chooser = Math.random() * 5 * Math.min(player.level, 3); 
+	if (chooser < 5) { // Available at level 1.
 		outputText("You are ambushed by a short figure wielding a dagger! The figure in particular is a Nurk.");
-		if (!codexFlags.unlockedNurk) {
-			outputText("<br><br><b>New codex entry unlocked: Nurks!</b>");
-			codexFlags.unlockedNurk = true;
-		}
+		Codex.unlockCodexEntry("Nurks", "unlockedNurk");
 		monster = new NurkRogue();
 		if (player.level >= 2 && Math.random() >= (0.5 - (player.level - 1) * 0.1)) {
 			monster.level += 1;
@@ -91,14 +88,17 @@ Locations.DarklingRow.rollRandomEncounter = function() {
 			monster.end += 1;
 			monster.dex += 1;
 		}
+		if (player.level >= 4 && Math.random() >= (0.5 - (player.level - 3) * 0.1)) {
+			monster.level += 1;
+			monster.wil += 1;
+			monster.cha += 1;
+			monster.dex += 1;
+		}
 		startCombat(monster);
 	}
-	else {
+	else if (chooser < 10) { // Available at level 2.
 		outputText("A Ravel wings in and ambushes you!");
-		if (!codexFlags.unlockedRavel) {
-			outputText("<br><br><b>New codex entry unlocked: Ravels!</b>");
-			codexFlags.unlockedRavel = true;
-		}
+		Codex.unlockCodexEntry("Ravels", "unlockedRavel");
 		monster = new RavelRogue();
 		if (player.level >= 3 && Math.random() >= (0.5 - (player.level - 2) * 0.1)) {
 			monster.level += 1;
@@ -110,6 +110,24 @@ Locations.DarklingRow.rollRandomEncounter = function() {
 			monster.level += 1;
 			monster.str += 1;
 			monster.end += 1;
+			monster.dex += 1;
+		}
+		startCombat(monster);
+	}
+	else { // Available at level 3.
+		outputText("A feminine-looking Slyne steps out of the corner and glares at you, grinning sadistically! \"<i>I'm going to feed on your suffering,</i>\" she taunts.<br><br>");
+		Codex.unlockCodexEntry("Slynes", "unlockedSlyne");
+		monster = new SlyneSorceress();
+		if (player.level >= 4 && Math.random() >= (0.5 - (player.level - 3) * 0.1)) {
+			monster.level += 1;
+			monster.end += 1;
+			monster.inte+= 1;
+			monster.cha += 1;
+		}
+		if (player.level >= 5 && Math.random() >= (0.5 - (player.level - 4) * 0.1)) {
+			monster.level += 1;
+			monster.wil += 1;
+			monster.inte+= 1;
 			monster.dex += 1;
 		}
 		startCombat(monster);

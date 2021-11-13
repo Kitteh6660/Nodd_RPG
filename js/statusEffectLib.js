@@ -27,23 +27,24 @@ StatusEffects.SlimeCraving = new StatusEffectType("Slime Craving");
 StatusEffects.Feeder = new StatusEffectType("Feeder");
 StatusEffects.Contraceptives = new StatusEffectType("Contraceptives");
 StatusEffects.Eggs = new StatusEffectType("Eggs");
+StatusEffects.Fertilized = new StatusEffectType("Fertilized");
 
 //------------
 // COMBAT
 //------------
 //Debuffs
-StatusEffects.Acid = new StatusEffectType("Acid");
-StatusEffects.Blind = new StatusEffectType("Blind");
-StatusEffects.Bind = new StatusEffectType("Bind"); //Value determines the type.
-StatusEffects.Confusion = new StatusEffectType("Confusion");
-StatusEffects.NoFlee = new StatusEffectType("NoFlee");
-StatusEffects.Poison = new StatusEffectType("Poison");
-StatusEffects.Silence = new StatusEffectType("Silence");
-StatusEffects.StoneLust = new StatusEffectType("StoneLust");
-StatusEffects.Stunned = new StatusEffectType("Stunned");
-StatusEffects.TemporaryHeat = new StatusEffectType("TempHeat");
-StatusEffects.Venom = new StatusEffectType("Venom");
-StatusEffects.ParalyzeVenom = new StatusEffectType("ParalyzeVenom");
-StatusEffects.LustVenom = new StatusEffectType("LustVenom");
+StatusEffects.Acid = new StatusEffectType("Acid", true);
+StatusEffects.Blind = new StatusEffectType("Blind", true);
+StatusEffects.Bind = new StatusEffectType("Bind", true); //Value determines the type.
+StatusEffects.Cloyed = new StatusEffectType("Cloyed", true);
+StatusEffects.Confusion = new StatusEffectType("Confusion", true);
+StatusEffects.NoFlee = new StatusEffectType("NoFlee", true);
+StatusEffects.Poison = new StatusEffectType("Poison", true); //Value 1 is poison duration, value 2 is poison strength.
+StatusEffects.Silence = new StatusEffectType("Silence", true);
+StatusEffects.StoneLust = new StatusEffectType("StoneLust", true);
+StatusEffects.Stunned = new StatusEffectType("Stunned", true);
+StatusEffects.TemporaryHeat = new StatusEffectType("TempHeat", true);
+StatusEffects.Venom = new StatusEffectType("Venom", true);
+StatusEffects.ParalyzeVenom = new StatusEffectType("ParalyzeVenom", true);
+StatusEffects.LustVenom = new StatusEffectType("LustVenom", true);
 
-StatusEffects.Fertilized = new StatusEffectType("Fertilized"); // Used in SandTrap battles.

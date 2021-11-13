@@ -1,12 +1,12 @@
 function mainMenu() {
     // Check to see if the user has a bad browser
-	if (typeof(Storage) !== "undefined") {
-		// All good to go!
-	}
-    else if (GetIEVersion() > 0) {
+    if (GetIEVersion() > 0) {
         errorInternetExplorerEwwww();
         return;
     }
+	if (typeof(Storage) !== "undefined") {
+		// All good to go!
+	}
     else {
 		errorOldBrowser();
         return;
@@ -71,9 +71,11 @@ function errorOldBrowser() {
 }
 function errorInternetExplorerEwwww() {
     clearOutput();
-    outputText("<font size=\"64\"><b>:(</b></font><br>By City's eyes! Really? Your Ego Bracer doesn't approve of the browser you're currently using. Internet Explorer? Like, come on, it's a shitty browser! Do the Council a favour and please switch to a better browser like Firefox or Chrome.");
+	setHeader("Please Don't Use IE!");
+    outputText("<font size=\"64\"><b>:(</b></font><br>By City's eyes! Really? Your Ego Bracer doesn't approve of the browser you're currently using. Internet Explorer? Like, come on, it's a shitty browser! Do the Council a favour and please switch to a better browser like Firefox, Chrome or the new Edge.");
     menu();
     hideMenus();
+	hideStats();
 }
 //------------
 // SETTINGS

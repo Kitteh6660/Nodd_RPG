@@ -67,12 +67,12 @@ function refreshStats() {
 	document.getElementById("bladderBar").style.width = Math.floor((player.bladder / player.maxBladder()) * 100) + "%";
 
 	//Core Stats
-	document.getElementById("strBar").style.width = Math.floor((player.str / 30) * 100) + "%";
-	document.getElementById("dexBar").style.width = Math.floor((player.dex / 30) * 100) + "%";
-	document.getElementById("endBar").style.width = Math.floor((player.end / 30) * 100) + "%";
-	document.getElementById("intBar").style.width = Math.floor((player.inte / 30) * 100) + "%";
-	document.getElementById("wilBar").style.width = Math.floor((player.wil / 30) * 100) + "%";
-	document.getElementById("chaBar").style.width = Math.floor((player.cha / 30) * 100) + "%";
+	document.getElementById("strBar").style.width = Math.floor((player.str / player.maxAttribute("strength")) * 100) + "%";
+	document.getElementById("dexBar").style.width = Math.floor((player.dex / player.maxAttribute("dexterity")) * 100) + "%";
+	document.getElementById("endBar").style.width = Math.floor((player.end / player.maxAttribute("endurance")) * 100) + "%";
+	document.getElementById("intBar").style.width = Math.floor((player.inte / player.maxAttribute("intelligence")) * 100) + "%";
+	document.getElementById("wilBar").style.width = Math.floor((player.wil / player.maxAttribute("willpower")) * 100) + "%";
+	document.getElementById("chaBar").style.width = Math.floor((player.cha / player.maxAttribute("charisma")) * 100) + "%";
 	document.getElementById("libBar").style.width = Math.floor((player.lib / 100) * 100) + "%";
 	document.getElementById("corBar").style.width = Math.floor((player.cor / 100) * 100) + "%";
 	//Advancement
@@ -87,7 +87,7 @@ function refreshStats() {
 function refreshTime() {
 	//Time
 	var timeText = "";
-    timeText += "<b>Day#:</b> " + time.days + "<br><b>Time:</b> ";
+    timeText += "<b>Date:</b> " + Time.getNoddDate() + "<br><b>Time:</b> ";
     if (use12Hours) {
         if (time.hours < 12) { //am
             if (time.hours == 0)
@@ -105,7 +105,7 @@ function refreshTime() {
         }
     }
     else
-        timeText += time.hours + "bl; " + (time.minutes < 10 ? "0" : "") + time.minutes + "ch";
+        timeText += time.hours + " bells; " + (time.minutes < 10 ? "0" : "") + time.minutes + " chimes";
     document.getElementById("timeDisplay").innerHTML = timeText;
 }
 function showStats() {
@@ -131,9 +131,9 @@ function showUpDown(arrowToDisplay, upDown) {
     if (arrowToDisplay == "inteArrow") arrowToDisplay = "intArrow";
     //Display arrow
     if (upDown == "up")
-        document.getElementById(arrowToDisplay).style.backgroundImage = "url(assets/interface/arrow_" + invertedArrows == true ? "red" : "green" + ".png)";
+        document.getElementById(arrowToDisplay).style.backgroundImage = "url(assets/interface/arrow_" + (invertedArrows == true ? "red" : "green") + ".png)";
     else if (upDown == "down")
-        document.getElementById(arrowToDisplay).style.backgroundImage = "url(assets/interface/arrow_" + invertedArrows == true ? "green" : "red" + ".png)";
+        document.getElementById(arrowToDisplay).style.backgroundImage = "url(assets/interface/arrow_" + (invertedArrows == true ? "green" : "red") + ".png)";
     document.getElementById(arrowToDisplay).style.visibility = "visible";
 }
 function displaySprite(spriteId) {
@@ -174,6 +174,8 @@ function menu() {
 }
 
 function genericPlayerButtons() {
+	hideUpDown();
+	refreshStats();
 	addButtonDisabled(5, "Up");
 	addButtonDisabled(6, "North");
 	addButtonDisabled(7, "Down");
@@ -181,7 +183,7 @@ function genericPlayerButtons() {
 	addButtonDisabled(11, "South");
 	addButtonDisabled(12, "East");
 	addButtonDisabled(8, "Masturbate", "Not yet implemented anywhere. For now, please visit Room 6 in the upstairs of Outside Inn.");
-	addButtonDisabled(9, "Wait", "Wait menu not yet implemented.");
+	addButton(9, "Wait", Time.waitMenu);
 	addButton(13, "Inventory", Inventory.inventoryMenu);
 	addButtonDisabled(14, "Map", "Not yet implemented.");
 }

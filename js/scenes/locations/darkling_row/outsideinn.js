@@ -101,6 +101,7 @@ Locations.OutsideInn.getADrink = function() {
 	clearOutput();
 	outputText("You get a drink at the bar. This is just a placeholder text of placeholderiness! Drink choices will be added!<br><br>");
 	player.refillThirst(25);
+	player.fillBladder(5);
 	Time.advanceMinutes(5);
 	doNext(Locations.OutsideInn.approachBar);
 }

@@ -111,10 +111,13 @@ function Creature() {
 	//Breasts
 	this.breastRows = [];
 	this.lactationMultiplier = 0;
+	
+	this.sexualPrefs = [];
 
     this.keyItems = [];
 	this.statusEffects = [];
 	this.perks = [];
+	this.favouredAttribute = "";
 
 	//Victory/defeat
 	this.victory = cleanupAfterCombat;
@@ -209,7 +212,7 @@ Creature.prototype.maxHP = function() {
 	var temp = 50;
 	temp += this.end * 5;
 	temp += this.bonusHP;
-    if (this.findPerk(PerkLib.Tank) >= 0) temp += 50;
+    if (this.findPerk(PerkLib.Tank) >= 0) temp += 25;
     if (this.findPerk(PerkLib.Tank2) >= 0) temp += this.end;
 	if (this == player) {
         if (temp < 50) temp = 50; //Anti-softlock
@@ -262,6 +265,12 @@ Creature.prototype.maxBowels = function() {
 	return temp;
 }
 
+Creature.prototype.maxAttribute = function(attribute) {
+	var temp = 30;
+	if (this.favouredAttribute == attribute) temp += 5;
+	return temp;
+}
+
 Creature.prototype.HPRatio = function() {
     return this.HP / this.maxHP();
 }
@@ -270,7 +279,7 @@ Creature.prototype.HPRatio = function() {
 Creature.prototype.baseDamage = function() {
 	var baseDmg = this.str + this.weapon.attack;
 	if (baseDmg < 10) baseDmg = 10; //Clamp minimum damage to 10 if under.
-	if (baseDmg > 9999) baseDmg = 9999; //Clamp maximum damage to 9999 if over.
+	if (baseDmg > 999) baseDmg = 999; //Clamp maximum damage to 999 if over.
 	return baseDmg;
 }
 Creature.prototype.accuracy = function() {
@@ -376,6 +385,31 @@ Creature.prototype.changeHP = function(amount, display, newpg) {
 		refreshStats();
 	}
 }
+Creature.prototype.changeMana = function(amount, display, newpg) {
+    //Defaulting
+    if (display == undefined) display = false;
+    if (newpg == undefined) newpg = true;
+	this.MP += amount;
+	if (this.MP > this.maxMP()) this.MP = this.maxMP();
+	if (this.MP < 0) this.MP = 0;
+	if (display) {
+		if (amount < 0)
+            outputText(capitalize(this.a) + " " + this.refName + " " + this.isAre + " drained of <font color=\"#D00000\"><b>" + Math.abs(amount) + "</b></font> mana!");
+		else if (amount > 0)
+            outputText(capitalize(this.a) + " " + this.refName + " " + this.isAre + " recovered for <font color=\"#0000D0\"><b>" + Math.abs(amount) + "</b></font> MP!");
+        if (newpg)
+            outputText("<br><br>");
+        else
+            outputText(" ");
+	}
+	if (this == player) {
+        if (amount < 0)
+            showUpDown("hpArrow", "down");
+        else if (amount > 0)
+            showUpDown("hpArrow", "up");
+		refreshStats();
+	}
+}
 Creature.prototype.changeLust = function(amount, display, newpg, resisted) {
     //Defaulting
     if (display == undefined) display = false;
@@ -441,19 +475,6 @@ Creature.prototype.damagePercent = function(displayMode, applyModifiers) {
     if (this.findPerk(PerkLib.ImmovableObject) >= 0 && this.end >= 75) {
         mult *= 0.9;
     }
-
-    //--STATUS AFFECTS--
-    //Black cat beer = 25% reduction!
-    if (this.statusEffectValue(StatusEffects.BlackCatBeer, 1) > 0)
-        mult *= 0.75;
-    // Uma's Massage bonuses
-    /*var statIndex = this.findStatusEffect(StatusEffects.UmasMassage);
-    if (statIndex >= 0) {
-        if (this.findStatusEffect(statIndex).value1 == UmasShop.MASSAGE_RELAXATION) {
-            mult *= this.findStatusEffect(statIndex).value2;
-        }
-    }*/
-    //Round things off.
     mult = Math.round(mult);
     //Caps damage reduction at 80%.
     if (mult < 20) mult = 20;
@@ -463,17 +484,6 @@ Creature.prototype.damagePercent = function(displayMode, applyModifiers) {
 Creature.prototype.teased = function(lustDelta) {
     lustDelta = Math.round(lustDelta);
     this.outputDefaultTeaseReaction(lustDelta);
-    if (lustDelta > 0) {
-        //Imp mob uber interrupt!
-        if (this.findStatusEffect(StatusEffects.ImpUber) >= 0) { // TODO move to proper class
-            outputText("<br>The imps in the back stumble over their spell, their loincloths tenting obviously as your display interrupts their casting. One of them spontaneously orgasms, having managed to have his spell backfire. He falls over, weakly twitching as a growing puddle of whiteness surrounds his defeated form.");
-            //(-5% of max enemy HP)
-            this.changeHP(this.maxHP() * 0.05, true);
-            this.changeLust(-15, true);
-            this.removeStatusEffect(StatusEffects.ImpUber);
-            this.createStatusEffect(StatusEffects.ImpSkip,0,0,0,0);
-        }
-    }
     this.changeLust(lustDelta, true);
 }
 
@@ -739,13 +749,13 @@ Creature.prototype.addStatusValue = function(stype, valueIdx, bonus) {
     if (counter < 0) return;
     if (valueIdx < 1 || valueIdx > 4) return;
     if (valueIdx == 1)
-        this.statusEffects[stype].value1 += bonus;
+        this.statusEffects[counter].value1 += bonus;
     if (valueIdx == 2)
-        this.statusEffects[stype].value2 += bonus;
+        this.statusEffects[counter].value2 += bonus;
     if (valueIdx == 3)
-        this.statusEffects[stype].value3 += bonus;
+        this.statusEffects[counter].value3 += bonus;
     if (valueIdx == 4)
-        this.statusEffects[stype].value4 += bonus;
+        this.statusEffects[counter].value4 += bonus;
 }
 Creature.prototype.changeStatusValue = function(stype, valueIdx, newNum) {
     var counter = this.findStatusEffect(stype);
@@ -753,13 +763,13 @@ Creature.prototype.changeStatusValue = function(stype, valueIdx, newNum) {
     if (counter < 0) return;
     if (valueIdx < 1 || valueIdx > 4) return;
     if (valueIdx == 1)
-        this.statusEffects[stype].value1 = newNum;
+        this.statusEffects[counter].value1 = newNum;
     if (valueIdx == 2)
-        this.statusEffects[stype].value2 = newNum;
+        this.statusEffects[counter].value2 = newNum;
     if (valueIdx == 3)
-        this.statusEffects[stype].value3 = newNum;
+        this.statusEffects[counter].value3 = newNum;
     if (valueIdx == 4)
-        this.statusEffects[stype].value4 = newNum;
+        this.statusEffects[counter].value4 = newNum;
 }
 
 //-------

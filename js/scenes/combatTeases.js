@@ -1,3 +1,47 @@
+teaseMenu = function() {
+	menu();
+	addButton(0, "Chest", tease, 0);
+	addButton(1, "Ass", tease, 1);
+	if (player.hasLongTail()) addButton(3, "Tail", tease, 2);
+	if (player.hasCock()) addButton(4, "Penis", tease, 3);
+	if (player.hasVagina()) addButton(5, "Vagina", tease, 4);
+	addButton(14, "Back", battleMenu);
+}
+
+tease = function(part, justText) {
+    //Default to false
+    if (justText == undefined) justText = false;
+    //Go on!
+	if (!justText) clearOutput();
+    //You can't tease a blind guy!
+    if (monster.findStatusEffect(StatusEffects.Blind) >= 0) {
+        outputText("You do your best to seduce " + monster.a + monster.refName + " with your body. It doesn't work - you blinded " + monster.himHer + ", remember?<br><br>", true);
+        return;
+    }
+    if (player.findStatusEffect(StatusEffects.Sealed) >= 0 && player.statusEffectValue(StatusEffects.Sealed, 2) == 1) {
+        outputText("You do your best to seduce " + monster.a + monster.refName + " with your body. Your artless twirls have no effect, as <b>your ability to tease is sealed.</b><br><br>", true);
+        return;
+    }
+    //Proceed!
+    teaseMain(justText);
+	if (part == 0) {
+		teaseChest();
+	}
+	else if (part == 1) {
+		teaseButt();
+	}
+	else if (part == 2) {
+		teaseTail();
+	}
+	else if (part == 3) {
+		teaseCock();
+	}
+	else if (part == 4) {
+		teasePussy();
+	}
+    combatRoundOver();
+}
+
 function teaseMain(justText) {
     fatigueRecovery();
     var damage;
@@ -20,11 +64,15 @@ function teaseMain(justText) {
     //Determine basic success chance.
     //==============================
     chance = 60;
-    //5% chance for each tease level.
-    chance += player.teaseLevel * 5;
-    //Extra chance for sexy undergarments.
-    //chance += player.upperGarment.sexiness;
-    //chance += player.lowerGarment.sexiness;
+    //3% chance for each tease level.
+    chance += player.teaseLevel * 3;
+	//0.5% chance for each Charisma.
+	chance += Math.floor(player.cha * 0.5);
+    //Extra chance for sexiness.
+	chance += player.weapon.sexiness;
+	chance += player.armor.sexiness;
+    chance += player.upperGarment.sexiness;
+    chance += player.lowerGarment.sexiness;
     //10% for seduction perk
     if (player.findPerk(PerkLib.Seduction) >= 0) chance += 10;
     //10% for sexy armor types
@@ -46,26 +94,15 @@ function teaseMain(justText) {
     if (player.findPerk(PerkLib.SensualLover) >= 0) {
         chance += 2;
     }
-    //if (player.findPerk(PerkLib.ChiReflowLust) >= 0) chance += UmasShop.NEEDLEWORK_LUST_TEASE_MULTI;
+	// Enemy's Willpower reduces chance, Libido increases chance.
+	chance -= monster.wil;
+	chance += Math.floor(monster.lib / 8);
     //==============================
     //Determine basic damage.
     //==============================
     damage = 6 + rand(3);
-    if (player.findPerk(PerkLib.SensualLover) >= 0) {
-        damage += 2;
-    }
-    if (player.findPerk(PerkLib.Seduction) >= 0) damage += 5;
-    //+ slutty armor bonus
-    if (player.findPerk(PerkLib.SluttySeduction) >= 0) damage += player.perkValue(PerkLib.SluttySeduction, 1);
-    //10% for bimbo shits
-    if (bimbo || bro || futa) {
-        damage += 5;
-        bimbo = true;
-    }
-    if (player.level < 30) damage += player.level;
-    else if (player.level < 60) damage += 30 + ((player.level - 30) / 2);
-    else damage += 45 + ((player.level - 60) / 5);
-    damage += player.teaseLevel*2;
+	damage += rand(Math.floor(player.cha * 0.4)) + rand(Math.floor(player.lib * 0.2)) + rand(Math.floor(player.cor * 0.1));
+    damage += player.teaseLevel * 2;
     //==============================
     //TEASE SELECT CHOICES
     //==BASICS========
@@ -1361,28 +1398,44 @@ function teaseMain(justText) {
         if (monster.plural) damage *= 1.3;
         damage = (damage + rand(bonusDamage)) * monster.lustVuln;
 
-        //if (monster.name == "Jean Claude") monster.handleTease(damage, true);
-        //else if (monster is Doppleganger && monster.findStatusEffect(StatusEffects.Stunned) < 0) (monster as Doppleganger).mirrorTease(damage, true);
-        /*else */if (!justText) monster.teased(damage);
+		if (!justText) monster.teased(damage);
 
-        if (gameFlags[PC_FETISH] >= 1/* && !urtaQuest.isUrta()*/) {
+        /*if (gameFlags[PC_FETISH] >= 1) {
             if (player.lust < 75)
                 outputText("<br>Flaunting your body in such a way gets you a little hot and bothered. ");
             else
                 outputText("<br>If you keep exposing yourself you're going to get too horny to fight back. This exhibitionism fetish makes it hard to resist just stripping naked and giving up. ");
             if (!justText) player.changeLust(2 + rand(3));
-        }
+        }*/
 
         // Similar to fetish check, only add XP if the player IS the player...
-        if (!justText/* && !urtaQuest.isUrta()*/) teaseXP(1);
+        if (!justText) teaseXP(1);
     }
     //Nuttin honey
     else {
-        if (!justText/* && !urtaQuest.isUrta()*/) teaseXP(5);
-
-    //if (monster is JeanClaude) (monster as JeanClaude).handleTease(0, false);
-    //else if (monster is Doppleganger) (monster as Doppleganger).mirrorTease(0, false);
-    /*else*/ if (!justText) outputText("<br>" + capitalizeFirstLetter(monster.a) + monster.refName + " seems unimpressed.");
+        if (!justText) teaseXP(5);
+		if (!justText) outputText("<br>" + capitalizeFirstLetter(monster.a) + monster.refName + " does not look at all impressed by your teasing acts.");
     }
     outputText("<br><br>");
+}
+
+// To do: Add teases for different body parts.
+function teaseChest() {
+	outputText("You make an attempt to seduce using your chest/tits.");
+}
+
+function teaseButt() {
+	outputText("You make an attempt to seduce using your rear.");
+}
+
+function teaseTail() {
+	outputText("You make an attempt to seduce using your tail. Tail suckling, licking, etc.");
+}
+
+function teaseCock() {
+	outputText("You make an attempt to seduce using your peepee.");
+}
+
+function teasePussy() {
+	outputText("You make an attempt to seduce using your puss-puss.");
 }

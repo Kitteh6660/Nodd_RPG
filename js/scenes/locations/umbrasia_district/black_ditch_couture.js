@@ -34,7 +34,7 @@ Locations.UmbrasiaDistrict.BlackDitchCouture.addBuyButton = function(slot, item)
 
 Locations.UmbrasiaDistrict.BlackDitchCouture.shopBuyItemPrompt = function(item) {
 	clearOutput();
-	if (player.gloam >= item.value) {
+	if (player.gloam >= item.value * 2) {
 		outputText("Would you like to purchase " + item.longName + " for " + (item.value * 2) + " gloam?");
 		doYesNo(createCallBackFunction(Locations.UmbrasiaDistrict.BlackDitchCouture.shopBuyItem, item), Locations.UmbrasiaDistrict.BlackDitchCouture.shopBuyMenu);
 	}
@@ -46,5 +46,7 @@ Locations.UmbrasiaDistrict.BlackDitchCouture.shopBuyItemPrompt = function(item) 
 
 Locations.UmbrasiaDistrict.BlackDitchCouture.shopBuyItem = function(item) {
 	clearOutput();
+	player.gloam -= (item.value * 2);
+	refreshStats();
 	Inventory.takeItem(item, Locations.UmbrasiaDistrict.BlackDitchCouture.shopBuyMenu);
 }

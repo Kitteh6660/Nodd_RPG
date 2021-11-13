@@ -2,6 +2,7 @@ Codex = [];
 Codex.Sapient = [];
 Codex.Bestial = [];
 Codex.Factions = [];
+Codex.Artifacts = [];
 
 // Text Formatting
 Codex.formatHeaderText = function(txt) {
@@ -12,6 +13,13 @@ Codex.formatSubheaderText = function(txt) {
 }
 
 // Main Functionality
+Codex.unlockCodexEntry = function(txt, entry) {
+	if (codexFlags[entry] == undefined || codexFlags[entry] == false) {
+		codexFlags[entry] = true;
+		outputText("<b>New codex entry unlocked: " + txt + "!</b><br><br>");
+	}
+}
+
 Codex.menu = function() {
 	clearOutput();
 	setHeader("Codex");
@@ -20,6 +28,7 @@ Codex.menu = function() {
 	addButton(0, "Sapient Species", Codex.Sapient.page);
 	addButton(1, "Bestial Species", Codex.Bestial.page);
 	addButton(2, "Houses & Cults", Codex.Factions.page);
+	addButton(3, "Artifacts", Codex.Artifacts.page);
 	addButton(14, "Back", enterEgoBracerMenu);
 }
 
@@ -31,7 +40,7 @@ Codex.Sapient.page = function() {
 	if (codexFlags.unlockedPetrid) addButton(1, "Petrid", Codex.Sapient.entryPetrid);
 	else addButtonDisabled(1, "NYI", "(NOT YET IMPLEMENTED) You have not discovered this species yet.");
 	if (codexFlags.unlockedSlyne) addButton(2, "Slyne", Codex.Sapient.entrySlyne);
-	else addButtonDisabled(2, "NYI", "(NOT YET IMPLEMENTED) You have not discovered this species yet.");
+	else addButtonDisabled(2, "???", "You have not discovered this species yet.");
 	if (codexFlags.unlockedKrudge) addButton(3, "Krudge", Codex.Sapient.entryKrudge);
 	else addButtonDisabled(3, "NYI", "(NOT YET IMPLEMENTED) You have not discovered this species yet.");
 	if (codexFlags.unlockedOggorus) addButton(4, "Oggorus", Codex.Sapient.entryOggorus);
@@ -84,6 +93,27 @@ Codex.Sapient.entryRavel = function() {
 Codex.Sapient.entryPetrid = function() {
 	clearOutput();
 	setHeader("Codex: Petrid");
+	outputText("<b>Myth:</b> <br>");
+	outputText("<b>Aspect:</b> <br>");
+	outputText("<b>Average Height:</b> <br>");
+	outputText("<b>Average Weight:</b> <br>");
+	outputText("<b>Looks Like:</b> <br>");
+	outputText("<b>Sounds Like:</b> <br>");
+	outputText("<b>Feels Like:</b> <br>");
+	outputText("<b>Smells Like:</b> <br>");
+	outputText("<b>Tastes Like:</b> <br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Behaviour & Speech");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Naming Conventions");
+	outputText("<br><br>");
 	outputText("");
 	Codex.Sapient.page();
 }
@@ -91,6 +121,28 @@ Codex.Sapient.entryPetrid = function() {
 Codex.Sapient.entrySlyne = function() {
 	clearOutput();
 	setHeader("Codex: Slyne");
+	Codex.formatHeaderText("The Slyne");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Behaviour & Speech");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Naming Conventions");
+	outputText("<br><br>");
 	outputText("");
 	Codex.Sapient.page();
 }
@@ -98,6 +150,27 @@ Codex.Sapient.entrySlyne = function() {
 Codex.Sapient.entryKrudge = function() {
 	clearOutput();
 	setHeader("Codex: Krudge");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Behaviour & Speech");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Naming Conventions");
+	outputText("<br><br>");
 	outputText("");
 	Codex.Sapient.page();
 }
@@ -105,6 +178,27 @@ Codex.Sapient.entryKrudge = function() {
 Codex.Sapient.entryOggorus = function() {
 	clearOutput();
 	setHeader("Codex: Oggorus");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Behaviour & Speech");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Naming Conventions");
+	outputText("<br><br>");
 	outputText("");
 	Codex.Sapient.page();
 }
@@ -112,6 +206,27 @@ Codex.Sapient.entryOggorus = function() {
 Codex.Sapient.entryLehlt = function() {
 	clearOutput();
 	setHeader("Codex: Lehlt");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Behaviour & Speech");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Naming Conventions");
+	outputText("<br><br>");
 	outputText("");
 	Codex.Sapient.page();
 }
@@ -158,6 +273,12 @@ Codex.Bestial.page = function() {
 
 // Districts
 Codex.Factions.page = function() {
+	menu();
+	addButton(14, "Back", Codex.menu);
+}
+
+// Districts
+Codex.Artifacts.page = function() {
 	menu();
 	addButton(14, "Back", Codex.menu);
 }

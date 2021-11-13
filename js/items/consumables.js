@@ -14,11 +14,17 @@ Items.Consumables.SkeweredSloach.consumeEffect = ConsumableEffects.SkeweredSloac
 Items.Consumables.SkeweredSloach.value = 10;
 
 //------------
+// DISPOSABLES
+//------------
+
+
+
+//------------
 // SPECIAL CONSUMABLES
 //------------
 Items.Consumables.Condom = new Item("Condom", "Condom", "a condom packet", ITEM_TYPE_CONSUMABLE);
 Items.Consumables.Condom.description = "This wrapper contains a latex condom that can be worn over penis. It's designed to prevent pregnancy most of the time. Can be used in certain sex scenes.";
-Items.Consumables.Condom.consumeEffect = outputText("You look at the unopened packet of condom.  If applicable, you can use the condom to prevent pregnancy most of the time. And STDs too!");
+Items.Consumables.Condom.consumeEffect = createCallBackFunction(outputText, "You look at the unopened packet of condom. If applicable, you can use the condom to prevent pregnancy most of the time. And STDs too!");
 Items.Consumables.Condom.value = 6;
 
 //------------

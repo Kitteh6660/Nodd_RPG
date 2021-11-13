@@ -192,6 +192,18 @@ player.changeMoney(amt)
 How much gloam to give the player. Or take away accordingly.
 
 
+> Inventory
+===========
+Inventory.takeItem(item, func)
+Give the player an item. The parameter 'item' is the item type, you can check the item files.
+The parameter 'func' is the function to execute after the item is either taken or abandoned.
+
+
+
+player.destroyItems(item, qty)
+Removes an item of that type from the player. The parameter 'qty' is the amount to remove from player.
+
+
 > Key Items
 ===========
 player.createKeyItem(keyID, val1, val2, val3, val4)
@@ -208,22 +220,43 @@ player.addKeyValue(keyID, valueIdx, bonus)
 Increments or decrements the key item's value. 
 'keyID' is the key item to find, 'valueIdx' must be between 1 and 4, bonus is how much to add or subtract.
 
+player.addKeyValue(keyID, valueIdx, bonus)
+Increments or decrements the key item's value. 
+'keyID' is the key item to find, 'valueIdx' must be between 1 and 4, bonus is how much to add or subtract.
+
 player.removeKeyItem(keyID)
 Removes the key item from the player's inventory if the player has it.
-
-> Inventory
-===========
-Inventory.takeItem(item, func)
-Give the player an item. The parameter 'item' is the item type, you can check the item files.
-The parameter 'func' is the function to execute after the item is either taken or abandoned.
-
-player.destroyItems(item, qty)
-Removes an item of that type from the player. The parameter 'qty' is the amount to remove from player.
 
 
 > Status Effects
 ===========
-(I feel a bit lazy. Sorry! This section will be filled out though.)
+Status Effects can be called on both creature and player.
+
+creature.addStatusEffect(statusEffect, val1, val2, val3, val4)
+Adds status effect to the entity.
+The parameter 'statusEffect' is which status effect to add.
+The parameters 'val1', 'val2', 'val3', 'val4' set the initial values to the status effects.
+
+creature.findStatusEffect(statusEffect)
+Returns the positional value of status effect. If it's absent, returns -1. If present, returns 0 at minimum.
+
+creature.removeStatusEffect(statusEffect)
+Removes the status effect from the list of entity's status effects.
+
+creature.statusEffectValue(statusEffect, value)
+Returns the value of the status effect. If the status effect is absent, returns 0.
+The parameter 'statusEffect' is the status effect to access.
+The parameter 'value' is which value to access, can be between 1 and 4.
+
+creature.addStatusValue(statusEffect, value, amt)
+Increases or decreases the value of the status effect. 
+The parameter 'statusEffect' is the status effect to access.
+The parameter 'value' is which value to access, can be between 1 and 4. The parameter 'amt' is how much to increase or decrease.
+
+creature.changeStatusValue(statusEffect, value, amt)
+Arbitrarily sets the status effect.
+The parameter 'statusEffect' is the status effect to access.
+The parameter 'value' is which value to access, can be between 1 and 4. The parameter 'amt' is how much to set the value to.
 
 
 ========================
@@ -231,7 +264,7 @@ Removes an item of that type from the player. The parameter 'qty' is the amount 
 ========================
 Now here comes the sweet part. You can insert functions that will describe player's parts, even sexual endowments!
 
-
+(This section is still a stub but you can use functions like cockDescript, etc. Just check out creature file.)
 
 ========================
 ##  Debugging Errors  ##

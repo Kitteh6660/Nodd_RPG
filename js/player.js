@@ -50,7 +50,9 @@ function Player() {
 
     //Equipment
 	this.weapon = Items.NOTHING;
-	this.armor = Items.Armor.ComfortableClothes;
+	this.armor = Items.NOTHING;
+	this.upperGarment = Items.NOTHING;
+	this.lowerGarment = Items.NOTHING;
 
     this.teaseLevel = 0;
     this.teaseXP = 0;
@@ -61,6 +63,7 @@ function Player() {
     for (var i = 0; i < 56; i++) {
         this.itemSlots.push(new ItemSlot());
     }
+	this.sexualPrefs = [];
 	this.keyItems = [];
 	this.statusEffects = [];
 	this.perks = [];
@@ -363,124 +366,21 @@ Player.prototype.clothedOrNaked = function(clothedText, nakedText) {
 
 Player.prototype.clothedOrNakedUpper = function(clothedText, nakedText) {
     if (nakedText == undefined) nakedText = "";
-    return (this.armor.equipmentName != "nothing" && this.upperGarment.equipmentName == "nothing" ? clothedText : nakedText);
+    return (this.armor != Items.NOTHING && this.upperGarment == Items.NOTHING ? clothedText : nakedText);
 }
 
 Player.prototype.clothedOrNakedLower = function(clothedText, nakedText) {
     if (nakedText == undefined) nakedText = "";
-    return (this.armor.equipmentName != "nothing" && (this.armor.equipmentName != "lethicite armor" && this.lowerGarment.equipmentName == "nothing") && !this.isTaur() ? clothedText : nakedText);
+    return (this.armor != Items.NOTHING && this.lowerGarment == Items.NOTHING && !this.isTaur() ? clothedText : nakedText);
 }
 
 //CLEAR STATUSES
 Player.prototype.clearStatuses = function() {
-    while (this.findStatusEffect(StatusEffects.Web) >= 0) {
-        this.modStats("spe", this.statusEffectValue(StatusEffects.Web, 1));
-        this.removeStatusEffect(StatusEffects.Web);
-    }
-    if (this.findStatusEffect(StatusEffects.Shielding) >= 0) this.removeStatusEffect(StatusEffects.Shielding);
-    if (this.findStatusEffect(StatusEffects.HolliConstrict) >= 0) this.removeStatusEffect(StatusEffects.HolliConstrict);
-    if (this.findStatusEffect(StatusEffects.LustStones) >= 0) this.removeStatusEffect(StatusEffects.LustStones);
-    if (monster.findStatusEffect(StatusEffects.Sandstorm) >= 0) monster.removeStatusEffect(StatusEffects.Sandstorm);
-    if (this.findStatusEffect(StatusEffects.Sealed) >= 0) this.removeStatusEffect(StatusEffects.Sealed);
-    if (this.findStatusEffect(StatusEffects.Berzerking) >= 0) this.removeStatusEffect(StatusEffects.Berzerking);
-    if (monster.findStatusEffect(StatusEffects.TailWhip) >= 0) monster.removeStatusEffect(StatusEffects.TailWhip);
-    if (this.findStatusEffect(StatusEffects.UBERWEB) >= 0) this.removeStatusEffect(StatusEffects.UBERWEB);
-    if (this.findStatusEffect(StatusEffects.DriderKiss) >= 0) this.removeStatusEffect(StatusEffects.DriderKiss);
-    if (this.findStatusEffect(StatusEffects.WebSilence) >= 0) this.removeStatusEffect(StatusEffects.WebSilence);
-    if (this.findStatusEffect(StatusEffects.GooArmorSilence) >= 0) this.removeStatusEffect(StatusEffects.GooArmorSilence);
-
-    if (this.findStatusEffect(StatusEffects.Whispered) >= 0) this.removeStatusEffect(StatusEffects.Whispered);
-    if (this.findStatusEffect(StatusEffects.AkbalSpeed) >= 0) {
-        this.modStats("spe", -this.statusEffectValue(StatusEffects.AkbalSpeed, 1));
-        this.removeStatusEffect(StatusEffects.AkbalSpeed);
-    }
-    if (this.findStatusEffect(StatusEffects.AmilyVenom) >= 0) {
-        this.modStats("str", this.statusEffectValue(StatusEffects.AmilyVenom, 1));
-        this.modStats("spe", this.statusEffectValue(StatusEffects.AmilyVenom, 2));
-        this.removeStatusEffect(StatusEffects.AmilyVenom);
-    }
-    while (this.findStatusEffect(StatusEffects.Blind) >= 0) this.removeStatusEffect(StatusEffects.Blind);
-    if (this.findStatusEffect(StatusEffects.SheilaOil) >= 0) this.removeStatusEffect(StatusEffects.SheilaOil);
-    if (this.findStatusEffect(StatusEffects.TwuWuv) >= 0) {
-        this.modStats("int", this.statusEffectValue(StatusEffects.TwuWuv, 1));
-        this.removeStatusEffect(StatusEffects.TuvWuv);
-    }
-    if (this.findStatusEffect(StatusEffects.Bind) >= 0) this.removeStatusEffect(StatusEffects.Bind);
-    if (this.findStatusEffect(StatusEffects.Venom) >= 0) {
-        if (this.statusEffectValue(StatusEffects.Venom, 1) == VENOM_TYPE_BEE) {
-            this.modStats("str", this.statusEffectValue(StatusEffects.Venom, 2));
-            this.modStats("spe", this.statusEffectValue(StatusEffects.Venom, 3));
-        }
-        this.removeStatusEffect(StatusEffects.Venom);
-    }
-    if (this.findStatusEffect(StatusEffects.Silence) >= 0) this.removeStatusEffect(StatusEffects.Silence);
-
-    if (this.findStatusEffect(StatusEffects.StoneLust) >= 0) this.removeStatusEffect(StatusEffects.StoneLust);
-    this.removeStatusEffect(StatusEffects.FirstAttack);
-    if (this.findStatusEffect(StatusEffects.TemporaryHeat) >= 0) this.removeStatusEffect(StatusEffects.TemporaryHeat);
-    if (this.findStatusEffect(StatusEffects.NoFlee) >= 0) this.removeStatusEffect(StatusEffects.NoFlee);
-    if (this.findStatusEffect(StatusEffects.Poison) >= 0) this.removeStatusEffect(StatusEffects.Poison);
-    if (this.findStatusEffect(StatusEffects.IsabellaStunned) >= 0) this.removeStatusEffect(StatusEffects.IsabellaStunned);
-    if (this.findStatusEffect(StatusEffects.Stunned) >= 0) this.removeStatusEffect(StatusEffects.Stunned);
-    if (this.findStatusEffect(StatusEffects.Confusion) >= 0) this.removeStatusEffect(StatusEffects.Confusion);
-    if (this.findStatusEffect(StatusEffects.ThroatPunch) >= 0) this.removeStatusEffect(StatusEffects.ThroatPunch);
-    if (this.findStatusEffect(StatusEffects.KissOfDeath) >= 0) this.removeStatusEffect(StatusEffects.KissOfDeath);
-    if (this.findStatusEffect(StatusEffects.AcidSlap) >= 0) this.removeStatusEffect(StatusEffects.AcidSlap);
-    if (this.findStatusEffect(StatusEffects.CalledShot) >= 0) {
-        this.modStats("spe", this.statusEffectValue(StatusEffects.CalledShot, 1));
-        this.removeStatusEffect(StatusEffects.CalledShot);
-    }
-    if (this.findStatusEffect(StatusEffects.DemonSeed) >= 0) this.removeStatusEffect(StatusEffects.DemonSeed);
-    if (this.findStatusEffect(StatusEffects.InfestAttempted) >= 0) this.removeStatusEffect(StatusEffects.InfestAttempted);
-    if (this.findStatusEffect(StatusEffects.Might) >= 0) {
-        this.modStats("str", -this.statusEffectValue(StatusEffects.Might, 1));
-        this.modStats("tou", -this.statusEffectValue(StatusEffects.Might, 2));
-        this.removeStatusEffect(StatusEffects.Might);
-    }
-    if (this.findStatusEffect(StatusEffects.ChargeWeapon) >= 0) this.removeStatusEffect(StatusEffects.ChargeWeapon);
-    if (this.findStatusEffect(StatusEffects.Disarmed) >= 0) {
-        this.removeStatusEffect(StatusEffects.Disarmed);
-    }
-    if (this.findStatusEffect(StatusEffects.AnemoneVenom) >= 0) {
-        this.modStats("str", this.statusEffectValue(StatusEffects.AnemoneVenom, 1));
-        this.modStats("spe", this.statusEffectValue(StatusEffects.AnemoneVenom, 2));
-        this.removeStatusEffect(StatusEffects.AnemoneVenom);
-    }
-    if (this.findStatusEffect(StatusEffects.GnollSpear) >= 0) {
-        this.modStats("spe", this.statusEffectValue(StatusEffects.AnemoneVenom, 1));
-        this.removeStatusEffect(StatusEffects.GnollSpear);
-    }
-    if (this.findStatusEffect(StatusEffects.BasiliskCompulsion) >= 0) this.removeStatusEffect(StatusEffects.BasiliskCompulsion);
-    if (this.findStatusEffect(StatusEffects.BasiliskSlow) >= 0) {
-        this.modStats("spe", this.statusEffectValue(StatusEffects.AnemoneVenom, 1));
-        this.removeStatusEffect(StatusEffects.BasiliskSlow);
-    }
-    if (this.findStatusEffect(StatusEffects.GiantGrabbed) >= 0) this.removeStatusEffect(StatusEffects.GiantGrabbed);
-    if (this.findStatusEffect(StatusEffects.GiantBoulder) >= 0) this.removeStatusEffect(StatusEffects.GiantBoulder);
-    if (this.findStatusEffect(StatusEffects.GiantStrLoss) >= 0) {
-        this.modStats("str", this.statusEffectValue(StatusEffects.GiantStrLoss, 1));
-        this.removeStatusEffect(StatusEffects.GiantStrLoss);
-    }
-    if (this.findStatusEffect(StatusEffects.LizanBlowpipe) >= 0) {
-        this.modStats("str", this.statusEffectValue(StatusEffects.LizanBlowpipe, 1));
-        this.modStats("tou", this.statusEffectValue(StatusEffects.LizanBlowpipe, 2));
-        this.modStats("spe", this.statusEffectValue(StatusEffects.LizanBlowpipe, 3));
-        this.modStats("sen", -this.statusEffectValue(StatusEffects.LizanBlowpipe, 4));
-        this.removeStatusEffect(StatusEffects.LizanBlowpipe);
-    }
-    while (this.findStatusEffect(StatusEffects.IzmaBleed) >= 0) this.removeStatusEffect(StatusEffects.IzmaBleed);
-    if (this.findStatusEffect(StatusEffects.GardenerSapSpeed) >= 0) {
-        this.modStats("spe", this.statusEffectValue(StatusEffects.GardenerSapSpeed, 1));
-        this.removeStatusEffect(StatusEffects.GardenerSapSpeed);
-    }
-    if (this.findStatusEffect(StatusEffects.KnockedBack) >= 0) this.removeStatusEffect(StatusEffects.KnockedBack);
-    if (this.findStatusEffect(StatusEffects.RemovedArmor) >= 0) this.removeStatusEffect(StatusEffects.RemovedArmor);
-    if (this.findStatusEffect(StatusEffects.JCLustLevel) >= 0) this.removeStatusEffect(StatusEffects.JCLustLevel);
-    if (this.findStatusEffect(StatusEffects.MirroredAttack) >= 0) this.removeStatusEffect(StatusEffects.MirroredAttack);
-    if (this.findStatusEffect(StatusEffects.Tentagrappled) >= 0) this.removeStatusEffect(StatusEffects.Tentagrappled);
-    if (this.findStatusEffect(StatusEffects.TentagrappleCooldown) >= 0) this.removeStatusEffect(StatusEffects.TentagrappleCooldown);
-    if (this.findStatusEffect(StatusEffects.ShowerDotEffect) >= 0) this.removeStatusEffect(StatusEffects.ShowerDotEffect);
-    if (this.findStatusEffect(StatusEffects.VineHealUsed) >= 0) this.removeStatusEffect(StatusEffects.VineHealUsed);
+	for (var i = 0; i < player.statusEffects.length; i++) {
+		if (player.statusEffects[i].stype.isCombat) {
+			player.removeStatusEffect(player.statusEffects[i].stype);
+		}
+	}
 }
 
 Player.prototype.setFurColor = function(colorArray) {
@@ -554,6 +454,7 @@ Player.prototype.fillBladder = function(amt) {
 }
 Player.prototype.emptyBladder = function() {
 	this.bladder = 0;
+	showUpDown("bladderArrow", "down");
 }
 
 Player.prototype.fillBowels = function(amt) {
@@ -565,6 +466,7 @@ Player.prototype.fillBowels = function(amt) {
 }
 Player.prototype.emptyBowels = function() {
 	this.bowels = 0;
+	//showUpDown("bowelArrow", "down");
 }
 
 //ITEMS
@@ -594,7 +496,7 @@ Player.prototype.itemCount = function(itype) {
 
 Player.prototype.roomInExistingStack = function(itype) {
 	for (var i = 0; i < 10; i++) {
-		if (this.itemSlots[i].itype == itype && this.itemSlots[i].quantity != 0 && this.itemSlots[i].quantity < 5)
+		if (this.itemSlots[i].itype == itype && this.itemSlots[i].quantity != 0 && player.itemSlots[slotNum].itype.getMaxStackSize())
 			return i;
 	}
 	return -1;
@@ -632,6 +534,9 @@ Player.prototype.getXPNeeded = function() {
 	var temp = 0;
 	for (var i = 0; i <= player.level; i++) {
 		temp += i * 10;
+	}
+	if (player.level < 4) {
+		temp += 10;
 	}
 	if (player.level >= 45) {
 		temp = 9999;

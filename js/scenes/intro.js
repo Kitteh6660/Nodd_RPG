@@ -1073,6 +1073,172 @@ CharCreation.setCockSize = function(size, isLength) {
 	CharCreation.menuCockSize();
 }
 
+CharCreation.attributeSelectMenuP1 = function() {
+	clearOutput();
+	refreshStats();
+	outputText("Which aspect of you do you strongly excel in?<br><br>");
+	outputText("This will add +3 to one attribute of your choice and marks it as Favoured Attribute.<br><br>");
+	outputText("A Favoured attribute can reach the maximum of 35 as opposed to 30.<br><br>");
+	menu();
+	addButton(1, "Strength", CharCreation.favouredAttributeChoice, "strength");
+	addButton(2, "Dexterity", CharCreation.favouredAttributeChoice, "dexterity");
+	addButton(3, "Endurance", CharCreation.favouredAttributeChoice, "endurance");
+	addButton(6, "Intelligence", CharCreation.favouredAttributeChoice, "intelligence");
+	addButton(7, "Willpower", CharCreation.favouredAttributeChoice, "willpower");
+	addButton(8, "Charisma", CharCreation.favouredAttributeChoice, "charisma");
+}
+CharCreation.favouredAttributeChoice = function(choice, confirmation) {
+	clearOutput();
+	if (confirmation != undefined) {
+		if (choice == "strength") {
+			player.str += 3;
+			player.favouredAttribute = "strength";
+		}
+		else if (choice == "dexterity") {
+			player.dex += 3;
+			player.favouredAttribute = "dexterity";
+		}
+		else if (choice == "endurance") {
+			player.end += 3;
+			player.favouredAttribute = "endurance";
+		}
+		else if (choice == "intelligence") {
+			player.inte += 3;
+			player.favouredAttribute = "intelligence";
+		}
+		else if (choice == "willpower") {
+			player.wil += 3;
+			player.favouredAttribute = "willpower";
+		}
+		else if (choice == "charisma") {
+			player.cha += 3;
+			player.favouredAttribute = "charisma";
+		}
+		refreshStats();
+		player.tempStr = 0;
+		player.tempDex = 0;
+		player.tempEnd = 0;
+		player.tempInt = 0;
+		player.tempWil = 0;
+		player.tempCha = 0;
+		CharCreation.attributeSelectMenuP2();
+		return;
+	}
+	outputText("You have chosen " + choice + " as your favoured attribute. Is this okay?");
+	doYesNo(createCallBackFunction(CharCreation.favouredAttributeChoice, choice, true), CharCreation.attributeSelectMenuP1);
+}
+CharCreation.attributeSelectMenuP2 = function() {
+	clearOutput();
+	outputText("Next, assign " + CharCreation.getAvailablePoints() + " point" + (CharCreation.getAvailablePoints() == 1 ? "" : "s") + " to your attributes.<br><br>");
+	outputText("You cannot bring your starting attributes above 10.<br><br>");
+	outputText("<b></b>Strength:</b> " + player.str + " + <b>" + player.tempStr + "</b> → " + (player.str + player.tempStr) + "<br>");
+	outputText("<b>Dexterity:</b> " + player.dex + " + <b>" + player.tempDex + "</b> → " + (player.dex + player.tempDex) + "<br>");
+	outputText("<b>Endurance:</b> " + player.end + " + <b>" + player.tempEnd + "</b> → " + (player.end + player.tempEnd) + "<br>");
+	outputText("<b>Intelligence:</b> " + player.inte + " + <b>" + player.tempInt + "</b> → " + (player.inte + player.tempInt) + "<br>");
+	outputText("<b>Willpower:</b> " + player.wil + " + <b>" + player.tempWil + "</b> → " + (player.wil + player.tempWil) + "<br>");
+	outputText("<b>Charisma:</b> " + player.cha + " + <b>" + player.tempCha + "</b> → " + (player.cha + player.tempCha) + "<br>");
+	menu();
+	if (player.str + player.tempStr < 10 && CharCreation.getAvailablePoints() > 0) addButton(0, "STR +", CharCreation.addOrSubtractAttribute, "str", true);
+	else addButtonDisabled(0, "STR +");
+	if (player.dex + player.tempDex < 10 && CharCreation.getAvailablePoints() > 0) addButton(5, "DEX +", CharCreation.addOrSubtractAttribute, "dex", true);
+	else addButtonDisabled(5, "DEX +");
+	if (player.end + player.tempEnd < 10 && CharCreation.getAvailablePoints() > 0) addButton(10, "END +", CharCreation.addOrSubtractAttribute, "end", true);
+	else addButtonDisabled(10, "END +");
+	if (player.inte+ player.tempInt < 10 && CharCreation.getAvailablePoints() > 0) addButton(2, "INT +", CharCreation.addOrSubtractAttribute, "int", true);
+	else addButtonDisabled(2, "INT +");
+	if (player.wil + player.tempWil < 10 && CharCreation.getAvailablePoints() > 0) addButton(7, "WIL +", CharCreation.addOrSubtractAttribute, "wil", true);
+	else addButtonDisabled(7, "WIL +");
+	if (player.cha + player.tempCha < 10 && CharCreation.getAvailablePoints() > 0) addButton(12, "CHA +", CharCreation.addOrSubtractAttribute, "cha", true);
+	else addButtonDisabled(12, "CHA +");
+	if (player.tempStr > 0) addButton(1, "STR -", CharCreation.addOrSubtractAttribute, "str", false);
+	else addButtonDisabled(1, "STR -");
+	if (player.tempDex > 0) addButton(6, "DEX -", CharCreation.addOrSubtractAttribute, "dex", false);
+	else addButtonDisabled(6, "DEX -");
+	if (player.tempEnd > 0) addButton(11, "END -", CharCreation.addOrSubtractAttribute, "end", false);
+	else addButtonDisabled(11, "END -");
+	if (player.tempInt > 0) addButton(3, "INT -", CharCreation.addOrSubtractAttribute, "int", false);
+	else addButtonDisabled(3, "INT -");
+	if (player.tempWil > 0) addButton(8, "WIL -", CharCreation.addOrSubtractAttribute, "wil", false);
+	else addButtonDisabled(8, "WIL -");
+	if (player.tempCha > 0) addButton(13, "CHA -", CharCreation.addOrSubtractAttribute, "cha", false);
+	else addButtonDisabled(13, "CHA -");
+	addButton(9, "Reset", CharCreation.resetAttributeChoices);
+	if (CharCreation.getAvailablePoints() <= 0 || CharCreation.antiSoftLockCheck()) addButton(14, "Finish", CharCreation.finishAttributeChoices);
+}
+CharCreation.getAvailablePoints = function() {
+	var amt = 3;
+	amt -= player.tempStr;
+	amt -= player.tempDex;
+	amt -= player.tempEnd;
+	amt -= player.tempInt;
+	amt -= player.tempWil;
+	amt -= player.tempCha;
+	return amt;
+}
+CharCreation.antiSoftLockCheck = function() {
+	// Prevent softlocks where you have any leftover points and cannot distribute.
+	var softLockFactor = 0;
+	if (player.str + player.tempStr >= 10) softLockFactor++;
+	if (player.dex + player.tempDex >= 10) softLockFactor++;
+	if (player.end + player.tempEnd >= 10) softLockFactor++;
+	if (player.inte+ player.tempInt >= 10) softLockFactor++;
+	if (player.wil + player.tempWil >= 10) softLockFactor++;
+	if (player.cha + player.tempCha >= 10) softLockFactor++;
+	if (CharCreation.getAvailablePoints() > 0) softLockFactor++;
+	return softLockFactor >= 7;
+}
+CharCreation.addOrSubtractAttribute = function(choice, addOrSub) {
+	if (choice == "str") {
+		(addOrSub ? player.tempStr++ : player.tempStr--);
+	}
+	if (choice == "dex") {
+		(addOrSub ? player.tempDex++ : player.tempDex--);
+	}
+	if (choice == "end") {
+		(addOrSub ? player.tempEnd++ : player.tempEnd--);
+	}
+	if (choice == "int") {
+		(addOrSub ? player.tempInt++ : player.tempInt--);
+	}
+	if (choice == "wil") {
+		(addOrSub ? player.tempWil++ : player.tempWil--);
+	}
+	if (choice == "cha") {
+		(addOrSub ? player.tempCha++ : player.tempCha--);
+	}
+	CharCreation.attributeSelectMenuP2();
+}
+CharCreation.resetAttributeChoices = function() {
+	player.tempStr = 0;
+	player.tempDex = 0;
+	player.tempEnd = 0;
+	player.tempInt = 0;
+	player.tempWil = 0;
+	player.tempCha = 0;
+	CharCreation.attributeSelectMenuP2();
+}
+CharCreation.finishAttributeChoices = function() {
+	player.str += player.tempStr;
+	player.dex += player.tempDex;
+	player.end += player.tempEnd;
+	player.inte+= player.tempInt;
+	player.wil += player.tempWil;
+	player.cha += player.tempCha;
+	player.tempStr = 0;
+	player.tempDex = 0;
+	player.tempEnd = 0;
+	player.tempInt = 0;
+	player.tempWil = 0;
+	player.tempCha = 0;
+	refreshStats();
+	if (questFlags.inductionProgress < 10) {
+		Intro.advanceToGame();
+	}
+	else {
+		resumeFromMenu();
+	}
+}
+
 //------------
 // IN(TRO)DUCTION
 //------------
@@ -1225,9 +1391,8 @@ Intro.egoBracerGET = function() {
 	outputText("\"<i>Your Ego Bracer will create an Ego File based on your identity and preferences, and will update with your time spent in Nodd. Make sure it looks right before doing much exploration.</i>\"");
 	outputText("<b>Key Item Acquired: 800 Series Omnillian Ego Bracer</b><br><br>");
 	player.createKeyItem(KeyItems.EgoBracer, 0, 0, 0, 0);
-	outputText("The final door opens to reveal the City itself in its full glory.");
 	menu();
-	addButton(0, "Proceed", Intro.advanceToGame);
+	addButton(0, "Select Attributes", CharCreation.attributeSelectMenuP1); hint(0, "It's time to choose which of your attributes will suit you best.");
 	addButton(1, "Read Manual", window.open, "https://docs.google.com/document/d/1ow7uoGJqfiBYQmHPzyNy0y6loJM6rSlhbLTzqzMVGMI/"); hint(1, "Read the User's Manual for your newly-acquired Ego Bracer. This should give you an good idea on how to use your new acqusition.");
 	addButton(4, "Visit Noddule", window.open, "https://www.cityofnodd.com/induction", null, null, "Experience the Induction Noddule for yourself!");
 }
@@ -1236,8 +1401,9 @@ Intro.advanceToGame = function() {
 	showMenus();
 	questFlags.inductionProgress = 10; // Quest is now marked as complete.
 	clearOutput();
+	outputText("The final door opens to reveal the City itself in its full glory.<br><br>");
 	outputText("<b>Quest Completed: Induction</b><br><br>");
 	outputText("Your new adventures await in the City of Nodd, now go forth and indulge!");
-	doNext(Locations.DarklingRow.enter);
+	addButton(0, "Proceed", Locations.DarklingRow.enter);
 	addButton(4, "Visit Noddule", window.open, "https://www.cityofnodd.com/induction", null, null, "Experience the Induction Noddule for yourself!");
 }

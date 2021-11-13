@@ -39,3 +39,11 @@ Items.Weapons.HornedWand.verb = "stab";
 Items.Weapons.HornedWand.value = 200;
 Items.Weapons.HornedWand.attack = 4;
 Items.Weapons.HornedWand.accuracy = 9;
+
+Items.Weapons.RailGun = new Item("RailGun", "Rail Gun", "a rail gun", ITEM_TYPE_WEAPON);
+Items.Weapons.RailGun.description = "A large, technologically advanced rifle with a long barrel, it fires a very heavy projectile that is very devastating. Requires reload after each use.";
+Items.Weapons.RailGun.equipmentName = "rail gun";
+Items.Weapons.RailGun.verb = "stab";
+Items.Weapons.RailGun.value = 2500;
+Items.Weapons.RailGun.attack = 20;
+Items.Weapons.RailGun.accuracy = 5;

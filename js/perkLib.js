@@ -10,7 +10,7 @@ PerkLib.Runner = new PerkType("Runner", "Runner", "Increases chances of escaping
 PerkLib.Spellpower = new PerkType("Spellpower", "Spellpower", "Increases base spell strength by 50%.", "You choose the 'Spellpower' perk. Thanks to your sizeable intellect and willpower, you are able to more effectively use magic, boosting base spell effects by 50%.");
 PerkLib.StrongBack = new PerkType("StrongBack", "Strong Back", "Enables fourth item slot.", "You choose the 'Strong Back' perk, enabling an additional item slot.");
 PerkLib.StrongBack2 = new PerkType("StrongBack2", "Strong Back 2: Strong Harder", "Enables fifth item slot.", "You choose the 'Strong Back 2: Strong Harder' perk, enabling another additional item slot.");
-PerkLib.Tank = new PerkType("Tank", "Tank", "Raises max HP by 50.", "You choose the 'Tank' perk, giving you an additional 50 HP!");
+PerkLib.Tank = new PerkType("Tank", "Tank", "Raises max HP by 25.", "You choose the 'Tank' perk, giving you an additional 25 HP!");
 PerkLib.Tank2 = new PerkType("Tank2", "Tank 2", "Raises max HP by 1 per point of Toughness.", "You choose the 'Tank 2' perk, granting an extra maximum HP for each point of toughness.");
 
 //------------

@@ -9,6 +9,7 @@ Items.Armor.RibbedDuster.defense = 2;
 Items.Armor.RibbedDuster.evasion = 6;
 Items.Armor.RibbedDuster.sexiness = 0;
 Items.Armor.RibbedDuster.weight = "light";
+Items.Armor.RibbedDuster.resistances = [RESISTANCE_FIRE, 30, RESISTANCE_ICE, 30];
 
 Items.Armor.ClassyClothes = new Item("ClCloth", "Classy Clothes", "a set of classy clothes", ITEM_TYPE_ARMOUR);
 Items.Armor.ClassyClothes.description = "A set of old English-styled, classy clothes for those with highly sophisticated tastes.";
@@ -18,15 +19,29 @@ Items.Armor.ClassyClothes.defense = 1;
 Items.Armor.ClassyClothes.evasion = 7;
 Items.Armor.ClassyClothes.sexiness = 0;
 Items.Armor.ClassyClothes.weight = "light";
+Items.Armor.ClassyClothes.resistances = [RESISTANCE_FIRE, 20, RESISTANCE_ICE, 20];
 
 Items.Armor.RubberSuit = new Item("RbrSuit", "Rubber Suit", "a full rubber suit", ITEM_TYPE_ARMOUR);
 Items.Armor.RubberSuit.description = "A full suit made of shiny rubber. A popular choice of wear among the Nameless.";
 Items.Armor.RubberSuit.equipmentName = "rubber suit";
-Items.Armor.RubberSuit.value = 250;
+Items.Armor.RubberSuit.value = 500;
 Items.Armor.RubberSuit.defense = 1;
 Items.Armor.RubberSuit.evasion = 4;
 Items.Armor.RubberSuit.sexiness = 3;
 Items.Armor.RubberSuit.weight = "light";
+Items.Armor.RubberSuit.itemFlags = [ITEM_FLAG_SKINTIGHT, ITEM_FLAG_WATERPROOF];
+Items.Armor.RubberSuit.resistances = [RESISTANCE_CRUSH, 10, RESISTANCE_POISON, 30, RESISTANCE_ACID, 70, RESISTANCE_LIGHTNING, 30, RESISTANCE_FIRE, -20, RESISTANCE_ICE, -20];
+
+Items.Armor.RubberSheathSuit = new Item("RbrSSut", "Rubber Sheath Suit", "a full rubber suit with a penis sheath", ITEM_TYPE_ARMOUR);
+Items.Armor.RubberSheathSuit.description = "A full suit made of shiny rubber. This particular suit has a latex sheath that would form nicely around your penis if you have one. A tiny opening at the end of the sheath ensures you don't need to take the suit off for sexytimes.";
+Items.Armor.RubberSheathSuit.equipmentName = "rubber sheath suit";
+Items.Armor.RubberSheathSuit.value = 550;
+Items.Armor.RubberSheathSuit.defense = 1;
+Items.Armor.RubberSheathSuit.evasion = 4;
+Items.Armor.RubberSheathSuit.sexiness = 4;
+Items.Armor.RubberSheathSuit.weight = "light";
+Items.Armor.RubberSheathSuit.itemFlags = [ITEM_FLAG_SKINTIGHT, ITEM_FLAG_WATERPROOF, ITEM_FLAG_BLOCKS_UNDERWEAR, ITEM_FLAG_NO_STRIP_NEEDED];
+Items.Armor.RubberSheathSuit.resistances = [RESISTANCE_CRUSH, 10, RESISTANCE_POISON, 30, RESISTANCE_ACID, 70, RESISTANCE_LIGHTNING, 30, RESISTANCE_FIRE, -20, RESISTANCE_ICE, -20];
 
 /* Various vulturewear! */
 Items.Armor.RavelVulturewear = new Item("RaVltWr", "Ravel Vulturewear", "a ravel vulturewear", ITEM_TYPE_ARMOUR);
@@ -75,7 +90,7 @@ Items.Armor.OggorusVulturewear.sexiness = 1;
 Items.Armor.OggorusVulturewear.weight = "medium";
 
 Items.Armor.LehltVulturewear = new Item("LeVltWr", "Lehlt Vulturewear", "a lehlt vulturewear", ITEM_TYPE_ARMOUR);
-Items.Armor.LehltVulturewear.description = "A vulturewear made from the furred hides of a deceased Vurk. The hood still exhibits the dried hair of a Lehlt and a pair of ridged horns add to the appearance.";
+Items.Armor.LehltVulturewear.description = "A vulturewear made from the furred hides of a deceased Lehlt. The hood still exhibits the dried hair of a Lehlt and a pair of ridged horns add to the appearance.";
 Items.Armor.LehltVulturewear.equipmentName = "Lehlt vulturewear";
 Items.Armor.LehltVulturewear.value = 100;
 Items.Armor.LehltVulturewear.defense = 4;
@@ -101,6 +116,7 @@ Items.Armor.ArmouredDuster.defense = 7;
 Items.Armor.ArmouredDuster.evasion = 2;
 Items.Armor.ArmouredDuster.sexiness = 0;
 Items.Armor.ArmouredDuster.weight = "medium";
+Items.Armor.ArmouredDuster.resistances = [RESISTANCE_STAB, 30, RESISTANCE_SLASH, 30, RESISTANCE_CRUSH, 30, RESISTANCE_LIGHTNING, 15, RESISTANCE_FIRE, 10, RESISTANCE_ICE, 10];
 
 Items.Armor.BoneArmour = new Item("BoneAmr", "Bone Armour", "a set of bone armour", ITEM_TYPE_ARMOUR);
 Items.Armor.BoneArmour.description = "A macabre set of armour made from sturdy, assorted bones hand-picked from the Abattoir. The helmet resembles an imposing skull that is guaranteed to strike fear into the hearts of anyone who is easily scared! The chestplate is made of interlocking bone plates and the pauldrons exhibit boney spikes. The thick leather straps allow the bones to stay in place and cover you reasonably.";
@@ -110,6 +126,8 @@ Items.Armor.BoneArmour.defense = 7;
 Items.Armor.BoneArmour.evasion = 4;
 Items.Armor.BoneArmour.sexiness = 0;
 Items.Armor.BoneArmour.weight = "medium";
+Items.Armor.BoneArmour.flags = [ITEM_FLAG_MACABRE];
+Items.Armor.BoneArmour.resistances = [RESISTANCE_STAB, -10, RESISTANCE_SLASH, 40, RESISTANCE_CRUSH, 25];
 
 Items.Armor.ExoskeletonArmour = new Item("ExoArmr", "Exoskeleton Armour", "a set of insectoid exoskeleton armour", ITEM_TYPE_ARMOUR);
 Items.Armor.ExoskeletonArmour.description = "A relatively macabre set of armour made from sturdy exoskeleton from some sort of large insectoid species. The helmet resembles the upper head of a menacing-looking insect. The armour set looks quite colourful!";
@@ -119,6 +137,8 @@ Items.Armor.ExoskeletonArmour.defense = 6;
 Items.Armor.ExoskeletonArmour.evasion = 5;
 Items.Armor.ExoskeletonArmour.sexiness = 1;
 Items.Armor.ExoskeletonArmour.weight = "medium";
+Items.Armor.BoneArmour.flags = [ITEM_FLAG_MACABRE];
+Items.Armor.ExoskeletonArmour.resistances = [RESISTANCE_STAB, 30, RESISTANCE_SLASH, 55, RESISTANCE_CRUSH, 10, RESISTANCE_FIRE, -5, RESISTANCE_ICE, -5];
 
 Items.Armor.PetridArmour = new Item("PetrAmr", "Petrid Armour", "a petrid armour", ITEM_TYPE_ARMOUR);
 Items.Armor.PetridArmour.description = "A suit of armour made from the stones of a shattered Petrid. The horned helmet resembles the head of a Petrid with a missing lower jaw. Due to the rigid and heavy nature of the stones, this will greatly hamper your evasion. However, the near-indestructible nature of the stone provides excellent protection and this would make for excellent armour. Requires 13+ Strength to equip.";
@@ -128,3 +148,4 @@ Items.Armor.PetridArmour.defense = 10;
 Items.Armor.PetridArmour.evasion = -2;
 Items.Armor.PetridArmour.sexiness = 0;
 Items.Armor.PetridArmour.weight = "heavy";
+Items.Armor.PetridArmour.resistances = [RESISTANCE_STAB, 55, RESISTANCE_SLASH, 40, RESISTANCE_CRUSH, -10, RESISTANCE_ARCANE, 10, RESISTANCE_LIGHTNING, 30, RESISTANCE_FIRE, -5, RESISTANCE_ICE, -5];

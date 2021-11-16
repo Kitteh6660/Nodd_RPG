@@ -16,7 +16,10 @@ Locations.DarklingRow.enter = function() {
 	menu();
 	genericPlayerButtons();
 	addButton(0, "Explore", Locations.DarklingRow.explore); hint(0, "Explore the Darkling Row to discover new locations.", "Explore Darkling Row");
-	addButton(1, "Outside Inn", moveToLocation, Locations.OutsideInn.roomLobby, 2); hint(1, "Enter the Outside Inn, every Outsider's first choice.");
+	if (locFlags.darklingRowFoundOutsideInn) {
+		addButton(1, "Outside Inn", moveToLocation, Locations.OutsideInn.roomLobby, 2); hint(1, "Enter the Outside Inn, every Outsider's first choice.");
+	}
+	else addButtonDisabled(1, "???", "You don't know about this location yet. Perhaps you should try exploring the Darkling Row more?");
 	addButton(2, "Shops", Locations.DarklingRow.shopMenu);
 	addButton(4, "Visit Noddule", window.open, "https://www.cityofnodd.com/darkling-row", null, null, "Experience the Darkling Row Noddule for yourself!");
 	addButton(6, "North", moveToLocation, Locations.ViviriaDistrict.enter, 60);
@@ -25,38 +28,116 @@ Locations.DarklingRow.enter = function() {
 	if (player.hasKeyItem(KeyItems.EgoBracer) < 0) {
 		Intro.inductionPartNine();
 	}
+	if (time.days < 2) {
+		addButtonDisabled(6, "North", "You should keep exploring the Darkling Row for now.");
+		addButtonDisabled(11, "South", "You should keep exploring the Darkling Row for now.");
+		addButtonDisabled(9, "Wait", "You should keep exploring the Darkling Row for now.");
+	}
 }
 
 Locations.DarklingRow.shopMenu = function() {
 	menu();
 	addButton(0, "Cart", Locations.DarklingRow.placeholderCartSell);
-	addButtonDisabled(1, "Darkhaze", "Not yet added.");
-	if (locFlags.darklingRowFoundAlley) {
+	if (locFlags.darklingRowFoundDarkhaze) {
+		addButton(1, "Darkhaze", Locations.DarklingRow.Darkhaze.enter);
+	}
+	else addButtonDisabled(1, "???", "You don't know about this location yet. Perhaps you should try exploring the Darkling Row more?");
+	if (locFlags.darklingRowFoundGrudsGrub) {
 		addButton(2, "Grud's Grub", Locations.DarklingRow.Grud.approachGrud);
 		hint(2, "Visit the food bar run by Grud.");
 	}
-	else addButtonDisabled(2, "???", "You don't know about this location. Perhaps you should try exploring the Darkling Row more?");
-	if (locFlags.darklingRowFoundAlley) {
+	else addButtonDisabled(2, "???", "You don't know about this location yet. Perhaps you should try exploring the Darkling Row more?");
+	if (locFlags.darklingRowFoundEggplucks) {
 		addButton(3, "Eggpluck's", Locations.DarklingRow.Eggpluck.visitEggpluck); 
 		hint(3, "Visit the familiars shop run by Eggpluck's.", "Eggpluck's Discount Familiars");
 	}
-	else addButtonDisabled(3, "???", "You don't know about this location. Perhaps you should try exploring the Darkling Row more?");
+	else addButtonDisabled(3, "???", "You don't know about this location yet. Perhaps you should try exploring the Darkling Row more?");
 	addButton(14, "Back", Locations.DarklingRow.enter);
 }
 
 Locations.DarklingRow.explore = function() {
 	clearOutput();
-	Time.advanceMinutes(30);
+	if (locFlags.darklingRowExploreCounter < 10) {
+		Time.advanceMinutes(15);
+	}
+	else {
+		Time.advanceMinutes(30);
+	}
 	locFlags.darklingRowExploreCounter++;
-	outputText("You decide to go off in random directions in the alley of Darkling Row to try to discover something new.<br><br>");
+	if (locFlags.darklingRowExploreCounter == 1 || (locFlags.darklingRowExploreCounter > 1 && !locFlags.darklingRowFoundDarkhaze)) {
+		outputText("The first thing on your mind being to explore and to get good bearings of your whereabouts, you walk down the streets, piles of garbage litter the sides. Occasional, strange goose-like creature frolicks around the trash piles as if scavenging for something to eat.<br><br>");
+		outputText("While the buildings seem uninteresting, one of them catches your eyes. A building exhibiting a glowing sign next to a door declares it to be 'Darkhaze'. Pipes, hookahs, and odd devices are all display neatly on shelves behind a large, green-tinted window.<br><br>");
+		outputText("Given how the city encourages the citizens to indulge, including drugs, it should come off as no surprise. You can visit the shop later if you desire.<br><br>");
+		outputText("<b>You have discovered Darkhaze!</b> You can visit by accessing the shop from Shops menu.");
+		locFlags.darklingRowFoundDarkhaze = true;
+		doNext(Locations.DarklingRow.enter);
+		return;
+	}
+	outputText("You decide to go off in random directions in the streets and alleys of Darkling Row to try to discover something new.<br><br>");
+	if (locFlags.darklingRowExploreCounter == 2 || (locFlags.darklingRowExploreCounter > 2 && !locFlags.darklingRowFoundVendorCart)) {
+		outputText("You walk down a street and the first thing you notice is the amount of carts and stalls lining the streets, run by their corresponding vendors of varying species and genders.<br><br>");
+		outputText("Most of the stalls don't even catch your interest save for one. Curiosity leads you as you approach the stall.<br><br>");
+		outputText("\"<i>Hey there, Outsider!</i>\" The vendor shouts. \"<i>Anything I can do for ya to make this city feel a little more like, eh... wherever it is ya come from?</i>\" He gestures with a scaly hand towards his wares.<br><br>");
+		outputText("All sorts of strange products line the cart and you hear hissing sound coming from a cage. A pair of glowing orange eyes stare into your eyes. There's nothing on display that would remind you of your home world. You continue on your way.<br><br>");
+		Codex.unlockCodexEntry("Ravels", "unlockedRavel");
+		locFlags.darklingRowFoundVendorCart = true;
+		doNext(Locations.DarklingRow.enter);
+		return;
+	}
+	if (locFlags.darklingRowExploreCounter == 3 || (locFlags.darklingRowExploreCounter > 3 && !locFlags.darklingRowFoundGrudsGrub)) {
+		outputText("You enter an alley that appears to be unremarkable at first glance, the streets twisting and turning in random directions, more posters put up on the wall reminding the citizens to indulge. You pass by various doors and unremarkable, smelling refuse piles.<br><br>");
+		outputText("The monotonosity is broken only by what appears to be a food joint run by a large, bouldering male. As you approach the food bar, you make out the sign that reads 'Grud's Grub' and indeed, food is served there.<br><br>");
+		outputText("<b>You have discovered Grud's Grub!</b> You can return by accessing the food joint from Shops menu.");
+		locFlags.darklingRowFoundGrudsGrub = true;
+		menu();
+		addButton(0, "Visit Grud", Locations.DarklingRow.Grud.approachGrud);
+		addButton(1, "Return", Locations.DarklingRow.enter);
+		return;
+	}
+	if (locFlags.darklingRowExploreCounter == 4) {
+		Locations.DarklingRow.greepLovers();
+		doNext(Locations.DarklingRow.enter);
+		return;
+	}
+	if (locFlags.darklingRowExploreCounter == 5 || (locFlags.darklingRowExploreCounter > 5 && !locFlags.darklingRowFoundEggplucks)) {
+		outputText("You once again retrace your steps through the alley and back to the familiar food joint run by the large figure Grud.<br><br>");
+		outputText("As soon as you arrive at the food joint, you make your focus on exploring deeper and it doesn't take long until you also stumble across another building with a different sign. 'Eggpluck's Discount Familiars' The sign reads. As you get within certain proximity, the strong smell assaults your nostrils, nearly overwhelming you and making you feel lightheaded.<br><br>");
+		outputText("Once you get the strong smell out of the way, you peek through the door which is conveniently ajar. As you peer into the shop, you easily make out what the shop is for. It appears to be a pet shop of sorts, with caged creatures.<br><br>");
+		outputText("<b>You have discovered Eggpluck's Discount Familiars!</b> You can return by accessing the shop from Shops menu.");
+		locFlags.darklingRowFoundEggplucks = true;
+		doNext(Locations.DarklingRow.enter);
+		return;
+	}
+	if (locFlags.darklingRowExploreCounter == 6) {
+		outputText("As you continue exploring the unfamiliar alleys of the Darkling Row for anything of interest, a short, mammaloid creature pounces out of the shadows! He snarls at you and he looks naked, not even covered in any piece of clothing. Clenched in his right hand is a pointy dagger that looks fairly rusty.<br><br>");
+		outputText("\"<i>Give me your shinies!</i>\" The Nurk yells at you with an intimidating scowl but knowing the small nature, you could probably beat this guy.<br><br>");
+		outputText("<b>It looks like you will have to fight him!</b><br><br>");
+		monster = new NurkRogue();
+		monster.end -= 2;
+		monster.str -= 1;
+		monster.dex -= 3;
+		monster.gloam += 10;
+		monster.additionalXP += 5;
+		monster.clearDrops();
+		monster.addDrop(Items.Weapons.Dagger, 100);
+		monster.victory = Locations.DarklingRow.nurkRogueFirstVictory;
+		Codex.unlockCodexEntry("Nurks", "unlockedNurk");
+		startCombat(monster);
+		return;
+	}
+	if (locFlags.darklingRowExploreCounter == 7 || (locFlags.darklingRowExploreCounter > 7 && !locFlags.darklingRowFoundOutsideInn)) {
+		outputText("After your recent run-in with the hostile Nurk, you figure that a safe place to recuperate would be nice.<br><br>");
+		outputText("You head back to the streets and walk down the streets more, nothing out of the ordinary happening other than the occasional noises of the Greeps that wander aimlessly.<br><br>");
+		outputText("A two-storey building proudly exhibiting a large purple sign comes into sight. 'The Outside Inn' it reads. The building design is just like everything else, Noddish in design, green-tinted windows, and twisted-looking pair of doors.<br><br>");
+		outputText("<b>You have discovered the Outside Inn!</b>");
+		locFlags.darklingRowFoundOutsideInn = true;
+		menu();
+		addButton(0, "Enter Inn", Locations.OutsideInn.roomLobby);
+		return;
+	}
 	var rng = Math.random() * 100;
-	if (rng < 30) {
-		if (!locFlags.darklingRowFoundAlley) {
-			Locations.DarklingRow.discoverAlley();
-		}
-		else {
-			outputText("Despite your time spent exploring, you fail to find anything new.");
-		}
+	if (rng < 30) { //Nothing found.
+		outputText("Despite your time spent exploring, you fail to find anything new.");
 	}
 	else if (rng < 70) {
 		Locations.DarklingRow.rollRandomEncounter();
@@ -71,24 +152,24 @@ Locations.DarklingRow.explore = function() {
 }
 
 Locations.DarklingRow.rollRandomEncounter = function() {
-	var chooser = Math.random() * 5 * Math.min(player.level, 3); 
+	var chooser = Math.random() * 5 * Math.min(getScaledLevel(), 3); 
 	if (chooser < 5) { // Available at level 1.
 		outputText("You are ambushed by a short figure wielding a dagger! The figure in particular is a Nurk.");
 		Codex.unlockCodexEntry("Nurks", "unlockedNurk");
 		monster = new NurkRogue();
-		if (player.level >= 2 && Math.random() >= (0.5 - (player.level - 1) * 0.1)) {
+		if (getScaledLevel() >= 2 && Math.random() >= (0.5 - (getScaledLevel() - 1) * 0.1)) {
 			monster.level += 1;
 			monster.str += 1;
 			monster.end += 1;
 			monster.dex += 1;
 		}
-		if (player.level >= 3 && Math.random() >= (0.5 - (player.level - 2) * 0.1)) {
+		if (getScaledLevel() >= 3 && Math.random() >= (0.5 - (getScaledLevel() - 2) * 0.1)) {
 			monster.level += 1;
 			monster.str += 1;
 			monster.end += 1;
 			monster.dex += 1;
 		}
-		if (player.level >= 4 && Math.random() >= (0.5 - (player.level - 3) * 0.1)) {
+		if (getScaledLevel() >= 4 && Math.random() >= (0.5 - (getScaledLevel() - 3) * 0.1)) {
 			monster.level += 1;
 			monster.wil += 1;
 			monster.cha += 1;
@@ -100,17 +181,23 @@ Locations.DarklingRow.rollRandomEncounter = function() {
 		outputText("A Ravel wings in and ambushes you!");
 		Codex.unlockCodexEntry("Ravels", "unlockedRavel");
 		monster = new RavelRogue();
-		if (player.level >= 3 && Math.random() >= (0.5 - (player.level - 2) * 0.1)) {
+		if (getScaledLevel() >= 3 && Math.random() >= (0.5 - (getScaledLevel() - 2) * 0.1)) {
 			monster.level += 1;
 			monster.str += 1;
 			monster.end += 1;
 			monster.dex += 1;
 		}
-		if (player.level >= 4 && Math.random() >= (0.5 - (player.level - 3) * 0.1)) {
+		if (getScaledLevel() >= 4 && Math.random() >= (0.5 - (getScaledLevel() - 3) * 0.1)) {
 			monster.level += 1;
 			monster.str += 1;
 			monster.end += 1;
 			monster.dex += 1;
+		}
+		if (getScaledLevel() >= 5 && Math.random() >= (0.5 - (getScaledLevel() - 4) * 0.1)) {
+			monster.level += 1;
+			monster.dex += 1;
+			monster.end += 1;
+			monster.wil += 1;
 		}
 		startCombat(monster);
 	}
@@ -118,13 +205,13 @@ Locations.DarklingRow.rollRandomEncounter = function() {
 		outputText("A feminine-looking Slyne steps out of the corner and glares at you, grinning sadistically! \"<i>I'm going to feed on your suffering,</i>\" she taunts.<br><br>");
 		Codex.unlockCodexEntry("Slynes", "unlockedSlyne");
 		monster = new SlyneSorceress();
-		if (player.level >= 4 && Math.random() >= (0.5 - (player.level - 3) * 0.1)) {
+		if (getScaledLevel() >= 4 && Math.random() >= (0.5 - (player.level - 3) * 0.1)) {
 			monster.level += 1;
 			monster.end += 1;
 			monster.inte+= 1;
 			monster.cha += 1;
 		}
-		if (player.level >= 5 && Math.random() >= (0.5 - (player.level - 4) * 0.1)) {
+		if (getScaledLevel() >= 5 && Math.random() >= (0.5 - (player.level - 4) * 0.1)) {
 			monster.level += 1;
 			monster.wil += 1;
 			monster.inte+= 1;
@@ -134,9 +221,20 @@ Locations.DarklingRow.rollRandomEncounter = function() {
 	}
 }
 
-Locations.DarklingRow.discoverAlley = function() {
-	outputText("(Placeholder) You find Grud's Grub and Eggpluck in the alley.");
-	locFlags.darklingRowFoundAlley = true;
+Locations.DarklingRow.greepLovers = function() {
+	outputText("Whilst wandering the warm streets of Nodd you come across an oddly comforting sight of two lovers sharing a passionate dance. A pair of greeps are circling each other and running their bills up and down each other’s necks whilst making soft, trilling sounds at each other. You watch this dance with a smile on their face as they continue this for another minute. Then they stand with their necks fully straight and squawk again before making more noise and then waddling away down an alleyway together.<br><br>");
+	Codex.unlockCodexEntry("Greeps", "unlockedGreep");
+}
+Locations.DarklingRow.randomCitizenComments = function() {
+	// Not yet added.
+}
+Locations.DarklingRow.nurkRogueFirstVictory = function() {
+	outputText("The Nurk falls before you, being too badly beaten to put up any more significant fight. It's clear that he is only a pushover. You grab the dagger from his defeated form, this could be useful for defending yourself from the dangers of the streets of Nodd.");
+	cleanupAfterCombat();
+}
+Locations.DarklingRow.nurkRogueFirstDefeat = function() {
+	outputText("You fall down, too badly beaten to continue fighting. The Nurk searches you all over and grumbles in disappointment when he cannot find anything of value and slams his foot into your groin, causing you to wince in pain. The small creature walks away in frustration.");
+	cleanupAfterCombat();
 }
 
 Locations.DarklingRow.placeholderCartSell = function() {

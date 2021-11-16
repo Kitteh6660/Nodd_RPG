@@ -11,9 +11,9 @@ Inventory.inventoryMenu = function() {
     hideMenus();
 	clearOutput();
     outputText("<b><u>Equipment:</u></b><br>");
-	outputText("<b>Weapon:</b> " + player.weapon.equipmentName + " (Attack: " + player.weapon.attack + ")<br>");
-	//outputText("<b>Shield:</b> " + player.shield.equipmentName + " (Block Rating: " + player.shieldBlock + ")<br>");
-	outputText("<b>Armour:</b> " + player.armor.equipmentName + " (Defense: " + player.armor.defense + ")<br>");
+	outputText("<b>Weapon:</b> " + player.weapon.equipmentName + "<br>");
+	//outputText("<b>Shield:</b> " + player.shield.equipmentName + "<br>");
+	outputText("<b>Armour:</b> " + player.armor.equipmentName + "<br>");
 	outputText("<b>Upper underwear:</b> " + player.upperGarment.equipmentName + "<br>");
 	outputText("<b>Lower underwear:</b> " + player.lowerGarment.equipmentName + "<br>");
 	//outputText("<b>Accessory:</b> " + player.jewelryName.equipmentName + "<br>");

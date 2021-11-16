@@ -17,6 +17,7 @@ Time.increment = function() {
 }
 
 Time.advanceMinutes = function(minutes) {
+	var needNext = false;
 	for (i = 0; i < minutes; i++) {
 		Time.increment();
 		player.pregnancyAdvance(); // Advances the Player's pregnancy.
@@ -39,13 +40,17 @@ Time.advanceMinutes = function(minutes) {
 			player.thirst -= 0.05;
 			if (player.thirst < 0) player.thirst = 0;
 		}
-		//Gradual HP & MP regen
+		// Gradual HP & MP regen
 		if (time.minutes % 10 == 0 && player.hunger > 40 && player.thirst > 40 && player.hunger + player.thirst >= 120 && player.HP < player.maxHP()) {
 			player.HP += 1;
 		}
 		if (player.MP < player.maxMP() && player.gloam > 0) {
 			player.MP += Math.ceil(player.maxMP() * 0.1);
 			player.gloam -= 1;
+		}
+		// Gradual lust gain based on libido
+		if (player.lib > 0 && player.lust < player.maxLust() * 0.5 + (player.lib * 0.5)) {
+			player.lust += player.lib * 0.002;
 		}
 		// Bladder fills over time!
 		if (player.isSleeping) {
@@ -64,6 +69,17 @@ Time.advanceMinutes = function(minutes) {
 		// Increment amount of hours since cum
 		if (minutes == 0) {
 			player.hoursSinceCum++;
+		}
+		// Re-check status
+		if (player.isNakedLower() && player.findPerk(PerkLib.Gymnophobia) >= 0 && player.findStatusEffect(StatusEffects.Gymnophobia) < 0) {
+			outputText("Uh-oh, you're not clothed down there! How embarrassing of you to be naked! <b>Gained Status Effect: Gymnophobia Penalty!</b> While naked, your Libido is decreased by 25 points, and you suffer a penalty to -2 to your attributes except for Endurance and Intelligence.<br><br>");
+			player.createStatusEffect(StatusEffects.Gymnophobia, 0, 0, 0, 0);
+			player.modStats("lib", -25, "str", -2, "dex", -2, "wil", -2, "cha", -2);
+		}
+		else if (!player.isNakedLower() && player.findStatusEffect(StatusEffects.Gymnophobia) >= 0) {
+			outputText("You breathe a sigh of relief as you are no longer naked. <b>Lost Status Effect: Gymnophobia!</b> Your affected stats have been restored.<br><br>");
+			player.removeStatusEffect(StatusEffects.Gymnophobia);
+			player.modStats("lib", 25, "str", 2, "dex", 2, "wil", 2, "cha", 2);
 		}
 	}
 	refreshTime();
@@ -102,7 +118,7 @@ Time.waitMenu = function() {
 }
 Time.wait = function(timeLength, isHour) {
 	clearOutput();
-	outputText("You wait " + num2Text(timeLength) + " " + (isHour == true ? "hour" : "minute") + (timeLength == 1 ? "" : "s") + ".");
+	outputText("You wait " + num2Text(timeLength) + " " + (isHour == true ? "hour" : "minute") + (timeLength == 1 ? "" : "s") + ".<br><br>");
 	if (isHour) {
 		Time.advanceHours(timeLength);
 	}

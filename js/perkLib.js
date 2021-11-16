@@ -39,5 +39,6 @@ PerkLib.Dragonfire = new PerkType("Dragonfire", "Dragonfire", "TO BE ADDED");
 PerkLib.SlimeCore = new PerkType("SlimeCore", "Slime Core", "TO BE ADDED");
 
 //----------
-// UNKNOWN
-//---------
+// CREATION
+//----------
+PerkLib.Gymnophobia = new PerkType("Gymnophobia", "Gymnophobia", "You have an irrational fear of being naked. You will generally avoid stripping whenever possible, and you cannot unequip if it will leave you completely naked. If forced to be naked, -25 Libido and -2 penalty to all attributes except Intelligence and Endurance.");

@@ -48,10 +48,12 @@ h2 {
 	margin-bottom: 0;
 	color: rgba(0, 255, 128, 1);
 	width: 100%;
+	text-shadow: 1px 1px 5px #333333;
 }
 h3 {
 	font-size: 200%;
 	line-height: 4px;
+	padding-top: 10px;
 	margin-top: 10px;
 	margin-bottom: 2px;
 }
@@ -91,6 +93,7 @@ a:active {
 	text-align: center;
 	color: rgba(0, 255, 128, 1);
 	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", sans-serif;
+	left: 100px;
 	margin-left: auto;
 	margin-right: 5vw;
 	width: 388px;
@@ -108,7 +111,7 @@ a:active {
 	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
 	font-size: 1.0em;
 	margin-left: 0;
-	margin-right: auto;
+	margin-right: 1vw;
 	color: rgba(0, 255, 128, 1);
 	width: 288px;
 	height: 41px;
@@ -146,8 +149,8 @@ a:active {
 #stats {
 	display: inline-block;
 	width: 246px;
-	height: 642px;
-	/*margin-left: auto;*/
+	height: 380px;
+	left: auto;
 	margin-right: 0;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -161,7 +164,7 @@ a:active {
 }
 #stats p {
 	width: 220px;
-	padding-left: 5px;
+	padding-left: 0px;
 	margin-top: 0;
 	line-height: 1.4em;
 	overflow-x: visible;
@@ -173,7 +176,7 @@ a:active {
 	height: 20px;
 	width: 200px;
 	display: block;
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(0, 0, 0, 0.5);
 	border: 2px ridge #000000;
 	border-radius: 2px;
 }
@@ -184,7 +187,6 @@ a:active {
 	height: 20px;
 	width: 200px;
 	display: block;
-	/*border: 2px ridge #000000;*/
 	padding: 2px;
 }
 .statbar {
@@ -201,7 +203,7 @@ a:active {
 	padding: 0;
 	margin: 0;
 	height: 0;
-	width: 100px;
+	width: 100%;
 	display: block;
 	color: rgba(220, 220, 220, 1);
 	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", sans-serif;
@@ -215,11 +217,11 @@ a:active {
 .statnum {
 	position: relative;
 	top: -2px;
-	right: 30px;
+	left: -30px;
 	padding: 0;
 	margin: 0;
 	height: 0;
-	width: 60px;
+	width: 220px;
 	text-align: right;
 	color: rgba(220, 220, 220, 1);
 	font-family: "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
@@ -245,6 +247,23 @@ a:active {
 
 #lustArrow, #bladderArrow, #bowelArrow {
 	transform: rotate(180deg);
+}
+
+#map {
+	display: inline-block;
+	width: 246px;
+	height: 245px;
+	left: auto;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 5px;
+	border-width: 6px;
+	border-style: solid;
+	border-color: #000000;
+	border-image: url(assets/interface/ui_border.png);
+	border-image-slice: 6 fill;
+	border-image-repeat: repeat;
+	float: right;
 }
 
 /* Buttons */
@@ -353,13 +372,12 @@ a:active {
 
 /* Others */
 #perkselect { min-width: 200px; }
-#tooltip {
+.tooltip {
     position: absolute;
     display: block;
-    visibility: hidden;
     z-index: 10;
-    left: 100px;
-    bottom: 100px;
+    left: 0px;
+    bottom: 0px;
     width: 400px;
     height: 240px;
 	border-width: 6px;
@@ -369,7 +387,14 @@ a:active {
 	border-image-slice: 6 fill;
 	border-image-repeat: repeat;
 }
-#tooltip h5 {
+#tooltipStats {
+    visibility: hidden;
+	width: 240px;
+}
+#tooltipMain {
+    visibility: hidden;
+}
+#tooltipMain h5 {
     margin: 0px 5px 0px;
     padding-top: 5px;
     padding-left: 5px;
@@ -378,7 +403,7 @@ a:active {
 	font-size: 1.2em;
 	font-weight: bold;
 }
-#tooltip p {
+#tooltipMain p {
     margin-top: 0px;
     margin-left: 10px;
     margin-right: 10px;

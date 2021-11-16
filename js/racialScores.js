@@ -18,6 +18,8 @@ Player.prototype.race = function() {
         race = "lizan";
     if (this.dragonScore() >= 4) {
         race = "dragon";
+		if (this.wingType == WING_TYPE_NONE)
+			race = "drake";
         if (this.faceType == 0)
             race = "dragon-" + this.mf("man", "girl");
     }
@@ -158,7 +160,7 @@ Player.prototype.race = function() {
     if (this.sirenScore() >= 4) {
         race = "siren";
     }
-    if (this.sergalScore() >= 4) {
+    if (this.sergalScore() >= 5) {
         race = "sergal";
     }
     //</mod>
@@ -933,6 +935,8 @@ Player.prototype.sergalScore = function() {
     if (this.tailType == TAIL_TYPE_SERGAL)
         score += 2;
     if (this.lowerBody == LOWER_BODY_TYPE_SERGAL)
+        score++;
+    if (this.armType == ARM_TYPE_SERGAL)
         score++;
     //Fur only counts if some canine features are present
     if (this.skinType == 1 && score >= 4)

@@ -400,10 +400,17 @@ Data.fixSave = function() {
 		player.upperGarment = Items.NOTHING;
     if (player.upperGarment != undefined && player.upperGarment.getTooltipDescription == undefined)
         delete player.upperGarment.getTooltipDescription;
+	if (player.upperGarment.equipmentName == undefined || player.upperGarment.equipmentName == "leathery skin") {
+		player.upperGarment.equipmentName = lookupItem(player.upperGarment.id).equipmentName;
+	}
 	if (player.lowerGarment == undefined)
 		player.lowerGarment = Items.NOTHING;
     if (player.lowerGarment != undefined && player.lowerGarment.getTooltipDescription == undefined)
         delete player.lowerGarment.getTooltipDescription;
+	if (player.lowerGarment.equipmentName == undefined || player.lowerGarment.equipmentName == "leathery skin") {
+		player.lowerGarment.equipmentName = lookupItem(player.lowerGarment.id).equipmentName;
+	}
+		
 	//Fix body parts
     for (i in player.cocks) {
         fixCock(player.cocks[i]);

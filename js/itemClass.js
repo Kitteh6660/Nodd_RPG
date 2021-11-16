@@ -12,13 +12,14 @@ ITEM_TYPE_SHIELD = "Shield";
 //Item Flags
 ITEM_FLAG_LIFE_LEECH = "life_leech";
 
-ITEM_FLAG_SKINTIGHT = "skintight";
 ITEM_FLAG_CROTCHLESS = "crotchless";
+ITEM_FLAG_ASSLESS = "assless";
+ITEM_FLAG_SKINTIGHT = "skintight";
 ITEM_FLAG_TRANSPARENT = "transparent";
-ITEM_FLAG_BLOCKS_UNDERWEAR = "no_underwear"
-ITEM_FLAG_NO_STRIP_NEEDED = "no_strip";
 ITEM_FLAG_WATERPROOF = "waterproof";
 ITEM_FLAG_MACABRE = "macabre";
+ITEM_FLAG_BLOCKS_UNDERWEAR = "no_underwear"
+ITEM_FLAG_NO_STRIP_NEEDED = "no_strip";
 
 //Resistances
 RESISTANCE_STAB = "stab_res";

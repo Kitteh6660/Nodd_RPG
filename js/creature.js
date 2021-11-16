@@ -58,6 +58,7 @@ function Creature() {
 	this.hairLength = 0;
     this.beardStyle = 0;
     this.beardLength = 0;
+	this.eyeColor = "";
 	this.furColor = "";
 	this.furColor2 = ""; // Secondary fur colour for use with striped and spotted.
 	this.furPattern = FUR_PATTERN_SOLID;
@@ -3407,7 +3408,7 @@ Creature.prototype.hasLongTail = function() {
     //14 - dagron tail
     if (this.isNaga())
         return true;
-    if (this.tailType == 2 || this.tailType == 3 || this.tailType == 4 || this.tailType == 7 || this.tailType == 8 || this.tailType == 9 || this.tailType == 12 || this.tailType == 13 || this.tailType == 14 || this.tailType == 15 || this.tailType == 16 || this.tailType == 17 || this.tailType == 18 || this.tailType == 20)
+    if (this.tailType == 2 || this.tailType == 3 || this.tailType == 4 || this.tailType == 7 || this.tailType == 8 || this.tailType == 9 || this.tailType == 12 || this.tailType == 13 || this.tailType == 14 || this.tailType == 15 || this.tailType == 16 || this.tailType == 17 || this.tailType == 18 || this.tailType == 20 || this.tailType == 26)
         return true;
     return false;
 }

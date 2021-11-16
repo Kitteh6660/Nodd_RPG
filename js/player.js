@@ -342,36 +342,48 @@ Player.prototype.lengthChange = function(amount, ncocks) {
 }
 
 //Armour Descript & Clothed or Naked!
-Player.prototype.armorDescript = function(nakedText) {
+Player.prototype.armorDescript = function(nakedText, lowerOnly) {
     //Default
     if (nakedText == undefined) nakedText = "gear";
+	if (lowerOnly == undefined) lowerOnly = false;
     //Main Function
     var textArray = [];
     var text = "";
-    if (this.armor != Items.NOTHING) text += this.armor.equipmentName;
+    if (this.armor.id != Items.NOTHING.id) text += this.armor.equipmentName;
     //Join text.
-    if (this.armor.equipmentName != "naked") textArray.push(this.armor.equipmentName);
-    if (this.upperGarment != Items.NOTHING) textArray.push(this.upperGarment.equipmentName);
-    if (this.lowerGarment != Items.NOTHING) textArray.push(this.lowerGarment.equipmentName);
+    if (this.armor.id != Items.NOTHING.id) textArray.push(this.armor.equipmentName);
+    if (this.upperGarment.id != Items.NOTHING.id && !lowerOnly) textArray.push(this.upperGarment.equipmentName);
+    if (this.lowerGarment.id != Items.NOTHING.id) textArray.push(this.lowerGarment.equipmentName);
     if (textArray.length > 0) text = formatStringArray(textArray);
     //Naked?
-    if (this.upperGarment == Items.NOTHING && this.lowerGarment == Items.NOTHING && this.armor == Items.NOTHING) text = nakedText;
+    if (this.isNaked()) text = nakedText;
     return text;
 }
 
 Player.prototype.clothedOrNaked = function(clothedText, nakedText) {
     if (nakedText == undefined) nakedText = "";
-    return (this.armorDescript() != "nothing" ? clothedText : nakedText);
+    return ((this.isNakedLower() && this.isNakedUpper()) ? nakedText : clothedText);
 }
-
 Player.prototype.clothedOrNakedUpper = function(clothedText, nakedText) {
     if (nakedText == undefined) nakedText = "";
-    return (this.armor != Items.NOTHING && this.upperGarment == Items.NOTHING ? clothedText : nakedText);
+    return (this.isNakedUpper() ? nakedText : clothedText);
 }
-
 Player.prototype.clothedOrNakedLower = function(clothedText, nakedText) {
     if (nakedText == undefined) nakedText = "";
-    return (this.armor != Items.NOTHING && this.lowerGarment == Items.NOTHING && !this.isTaur() ? clothedText : nakedText);
+    return (this.isNakedLower() ? nakedText : clothedText);
+}
+
+Player.prototype.isNaked = function() {
+	return this.isNakedUpper() && this.isNakedLower();
+}
+Player.prototype.isNakedUpper = function() {
+	return this.armor.id == Items.NOTHING.id && this.upperGarment.id == Items.NOTHING.id;
+}
+Player.prototype.isNakedLower = function() {
+	return this.armor.id == Items.NOTHING.id && this.lowerGarment.id == Items.NOTHING.id;
+}
+Player.prototype.isExposedLower = function() {
+	return (this.armor == Items.NOTHING || this.armor.hasFlag(ITEM_FLAG_NO_STRIP_NEEDED)) && this.lowerGarment == Items.NOTHING;
 }
 
 //CLEAR STATUSES
@@ -496,7 +508,7 @@ Player.prototype.itemCount = function(itype) {
 
 Player.prototype.roomInExistingStack = function(itype) {
 	for (var i = 0; i < 10; i++) {
-		if (this.itemSlots[i].itype == itype && this.itemSlots[i].quantity != 0 && player.itemSlots[slotNum].itype.getMaxStackSize())
+		if (this.itemSlots[i].itype == itype && this.itemSlots[i].quantity != 0 && player.itemSlots[i].itype.getMaxStackSize())
 			return i;
 	}
 	return -1;

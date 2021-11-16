@@ -22,6 +22,7 @@ StatusEffects.Infested = new StatusEffectType("Infested");
 StatusEffects.WormPlugged = new StatusEffectType("Worm Plugged");
 StatusEffects.Dysfunction = new StatusEffectType("Dysfunction");
 StatusEffects.SlimeCraving = new StatusEffectType("Slime Craving");
+StatusEffects.Gymnophobia = new StatusEffectType("Gymnophobia");
 
 //Neutral
 StatusEffects.Feeder = new StatusEffectType("Feeder");

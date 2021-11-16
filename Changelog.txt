@@ -1,6 +1,32 @@
 This is the change log for Nodd RPG, detailing additions and changes.
 
 ====================
+[0.1.2] - 2021-11-16
+This release adds Darkling Row exploration scenes! Drusk also gets some talk scenes to add a bit of lore.
+Drusk has finally unveiled the menu of beverages for you to try out! But be careful with Nightmare Fuel!
+
+Added:
++ More Darkling Inn exploration scenes added! Until you discover the Outside Inn, the encounters are predetermined. This should add to the excitement!
++ Outside Inn additions: Drusk talk scenes and drinks menu.
++ Added eye colour!
++ Added sergal appearance description.
++ Added the rest of the codex entries for Sapient Species. Petrid codex entry is now unlockable.
+
+Changes:
+* The shops and the Outside Inn are now initially locked.
+* Room 6 now requires the key to access. Make sure to talk to Drusk. Currently, it's free, but there will be costs for subsequent nights. No gloam? Suck the bartender off.
+* The no-IE page now has buttons that will link you to the corresponding browsers to download.
+* Restroom use function is now less placeholdery, with variants depending on whether you have a dick or not. It even accounts for Latex Sheath Suit!
+* Moved the player appearance function to its own file due to the size. Should be no visible gameplay changes overall.
+* Lust now slowly increases over time, up to a threshold that is dictated by your Libido stat.
+* Moved the attribute bars to a tooltip to create room for something new like a map down the line.
+* Sergal tails now count as long tails.
+* Penile masturbation scene is now much less placeholdery. Thanks Kat!
+
+Fixes:
+> Fixed improper nudity description in player appearance screen.
+
+====================
 [0.1.1] - 2021-11-13
 Notes for developers: Added documentation entry on status effects!
 

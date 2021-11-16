@@ -32,6 +32,7 @@ CharCreation.initializeNewGame = function() {
 	player.cor = 15;
     player.HP = player.maxHP();
 	player.MP = player.maxMP();
+	player.eyeColour = "black";
     player.weapon = Items.NOTHING;
     player.armor = Items.NOTHING;
 	player.createBreastRow();
@@ -50,8 +51,8 @@ CharCreation.customizeCharacterMenu = function() {
 	outputText("<b>Gender:</b> " + player.maleFemaleHerm(true) + "<br>");
 	outputText("<b>Species:</b> " + player.race() + "<br>");
     outputText("<b>Height:</b> " + Math.floor(player.tallness / 12) + "'" + player.tallness % 12 + "\"<br>");
+	outputText("<b>Eye colour:</b> " + player.eyeColor + "<br>");
 	outputText("<b>Skin tone:</b> " + player.skinTone + "<br>");
-	
     outputText("<b>Hair colour:</b> " + player.hairColor + "<br>");
     if (player.skinType == SKIN_TYPE_FUR) {
 		outputText("<b>Fur colour:</b> " + player.furColor + "<br>");
@@ -75,15 +76,16 @@ CharCreation.customizeCharacterMenu = function() {
 	addButton(2, "Species", CharCreation.speciesSelectMenu);
     addButton(3, "Build", CharCreation.chooseBuild);
     addButton(4, "Set Height", CharCreation.chooseHeight);
-    addButton(5, "Skin Complexion", CharCreation.menuSkinComplexion);
-    addButton(6, "Hair Colour", CharCreation.menuHairColour);
-	addButtonDisabled(7, "Fur Colour");
-    if (player.skinType == SKIN_TYPE_FUR) addButton(7, "Fur Colour", CharCreation.menuFurColour);
-	if (player.skinType == SKIN_TYPE_SCALES) addButton(7, "Scale Colour", CharCreation.menuFurColour);
+	addButton(5, "Eye Colour", CharCreation.menuEyeColour);
+    addButton(6, "Skin Complexion", CharCreation.menuSkinComplexion);
+    addButton(7, "Hair Colour", CharCreation.menuHairColour);
+	addButtonDisabled(8, "Fur Colour");
+    if (player.skinType == SKIN_TYPE_FUR) addButton(8, "Fur Colour", CharCreation.menuFurColour);
+	if (player.skinType == SKIN_TYPE_SCALES) addButton(8, "Scale Colour", CharCreation.menuFurColour);
     if (player.mf("m", "f") == "m") {
-        addButton(8, "Beard Style", CharCreation.menuBeardSettings);
+        addButton(9, "Beard Style", CharCreation.menuBeardSettings);
     }
-	else addButtonDisabled(8, "Beard");
+	else addButtonDisabled(9, "Beard");
     if (player.hasCock()) addButton(10, "Cock Size", CharCreation.menuCockSize);
     addButton(11, "Breast Size", CharCreation.menuBreastSize);
     addButton(14, "Finish", CharCreation.finishCreationPrompt);
@@ -179,7 +181,7 @@ CharCreation.speciesSelectSubmenu = function(category) {
 		addButton(0, "Shark", CharCreation.speciesSelection, "shark");
 	}
 	else if (category == "exotic") {
-		addButton(0, "Sergal", CharCreation.speciesSelection, "sergal");
+		addButton(0, "Sergal", CharCreation.speciesSelection, "sergal"); hint(0, "Originating from the world of Tal, sergals are naturally lean and the appearance resemble that of sharks, rabbits, wolves, kangaroos, and others. They also have subspecies based on the region. <br><br>Original Sergal species by mick39");
 		//addButton(1, "Minotaur", CharCreation.speciesSelection, "minotaur");
 	}
 	addButton(14, "Back", CharCreation.speciesSelectMenu);
@@ -550,7 +552,7 @@ CharCreation.speciesSelection = function(species) {
 		player.horns = 0;
 		player.gills = false;
 		player.antennae = ANTENNAE_NONE;
-		player.armType = ARM_TYPE_HUMAN;
+		player.armType = ARM_TYPE_SERGAL;
 		player.clawType = CLAW_TYPE_NORMAL;
 		player.lowerBody = LOWER_BODY_TYPE_SERGAL;
 		player.tailType = TAIL_TYPE_SERGAL;
@@ -760,6 +762,22 @@ CharCreation.setBuild = function(build) {
             break;
         default:
     }
+    CharCreation.customizeCharacterMenu();
+}
+
+//Eye Colours
+CharCreation.menuEyeColour = function() {
+	menu();
+	addButton(0, "Black", CharCreation.confirmEyeColour, "black");
+	addButton(1, "Brown", CharCreation.confirmEyeColour, "brown");
+	addButton(2, "Hazelnut", CharCreation.confirmEyeColour, "hazelnut");
+	addButton(3, "Blue", CharCreation.confirmEyeColour, "blue");
+	addButton(4, "Green", CharCreation.confirmEyeColour, "green");
+	addButton(5, "Purple", CharCreation.confirmEyeColour, "purple");
+	addButton(14, "Back", CharCreation.customizeCharacterMenu);
+}
+CharCreation.confirmEyeColour = function(colour) {
+    player.eyeColor = colour;
     CharCreation.customizeCharacterMenu();
 }
 
@@ -1130,8 +1148,8 @@ CharCreation.favouredAttributeChoice = function(choice, confirmation) {
 CharCreation.attributeSelectMenuP2 = function() {
 	clearOutput();
 	outputText("Next, assign " + CharCreation.getAvailablePoints() + " point" + (CharCreation.getAvailablePoints() == 1 ? "" : "s") + " to your attributes.<br><br>");
-	outputText("You cannot bring your starting attributes above 10.<br><br>");
-	outputText("<b></b>Strength:</b> " + player.str + " + <b>" + player.tempStr + "</b> → " + (player.str + player.tempStr) + "<br>");
+	outputText("You cannot bring your starting non-favoured attributes above 10.<br><br>");
+	outputText("<b>Strength:</b> " + player.str + " + <b>" + player.tempStr + "</b> → " + (player.str + player.tempStr) + "<br>");
 	outputText("<b>Dexterity:</b> " + player.dex + " + <b>" + player.tempDex + "</b> → " + (player.dex + player.tempDex) + "<br>");
 	outputText("<b>Endurance:</b> " + player.end + " + <b>" + player.tempEnd + "</b> → " + (player.end + player.tempEnd) + "<br>");
 	outputText("<b>Intelligence:</b> " + player.inte + " + <b>" + player.tempInt + "</b> → " + (player.inte + player.tempInt) + "<br>");
@@ -1388,7 +1406,7 @@ Intro.egoBracerGET = function() {
 	outputText("As soon as you enter the room, a door closes behind you with a gentle thud and you are presented with a strange device you are not familiar with.<br><br>");
 	outputText("\"<i>This is an Ego Bracer. It will help you get your bearings in Nodd. Everything you need to know is in the User's Manual.</i>\"<br><br>");
 	outputText("You take the Ego Bracer and attempt to put it on your left wrist and after some perseverance, the bracer seemingly squirms and moves about a bit as if alive, and it fits nicely against your wrist without any signs of discomfort.<br><br>");
-	outputText("\"<i>Your Ego Bracer will create an Ego File based on your identity and preferences, and will update with your time spent in Nodd. Make sure it looks right before doing much exploration.</i>\"");
+	outputText("\"<i>Your Ego Bracer will create an Ego File based on your identity and preferences, and will update with your time spent in Nodd. Make sure it looks right before doing much exploration.</i>\"<br><br>");
 	outputText("<b>Key Item Acquired: 800 Series Omnillian Ego Bracer</b><br><br>");
 	player.createKeyItem(KeyItems.EgoBracer, 0, 0, 0, 0);
 	menu();
@@ -1404,6 +1422,7 @@ Intro.advanceToGame = function() {
 	outputText("The final door opens to reveal the City itself in its full glory.<br><br>");
 	outputText("<b>Quest Completed: Induction</b><br><br>");
 	outputText("Your new adventures await in the City of Nodd, now go forth and indulge!");
+	menu();
 	addButton(0, "Proceed", Locations.DarklingRow.enter);
 	addButton(4, "Visit Noddule", window.open, "https://www.cityofnodd.com/induction", null, null, "Experience the Induction Noddule for yourself!");
 }

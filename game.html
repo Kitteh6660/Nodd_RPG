@@ -25,6 +25,16 @@
 						<div class="statframe"><div class="statbar" id="hungerBar"><p class="statlabel" title="This is a measure of how hungry or full you are. This value slowly decreases over time and can be refilled by consuming food. Starving has a bad effect on you.">Satiety:</p><p class="statnum" id="hungerNum">100 / 100</p></div><div class="statupdown" id="hungerArrow"></div></div>
 						<div class="statframe"><div class="statbar" id="thirstBar"><p class="statlabel" title="This is a measure of how hydrated you are. This value slowly decreases over time and can be refilled by drinking beverages. Being dehydrated has a bad effect on you.">Hydration:</p><p class="statnum" id="thirstNum">100 / 100</p></div><div class="statupdown" id="thirstArrow"></div></div>
 						<div class="statframe"><div class="statbar" id="bladderBar"><p class="statlabel" title="This is a measure of how full your bladder is. This value slowly fills over time and can be emptied by urinating. Try to avoid being embarrassed!">Bladder:</p><p class="statnum" id="bladderNum">100 / 100</p></div><div class="statupdown" id="bladderArrow"></div></div>
+						<h2>Advancement</h2>
+						<div class="statframeblank"><p class="statlabel">Level:</p><p class="statnum" id="levelNum">99</p></div>
+						<div class="statframe"><div class="statbar" id="xpBar"><p class="statlabel" title="Your XP is a measure of your current progress towards level up.">XP:</p><p class="statnum" id="xpNum">9999 / 9999</p></div></div>
+						<div class="statframeblank"><p class="statlabel">Gloam:</p><p class="statnum" id="moneyNum">999,999,999</p></div>
+						<div id="spriteDisplay"></div>
+					</div>
+					<div id="map">
+					
+					</div>
+					<div class="tooltip" id="tooltipStats">
 						<h2>Attributes</h2>
 						<div class="statframe"><div class="statbar" id="strBar"><p class="statlabel" title="Strength affects how much physical damage you can do.">Strength:</p><p class="statnum" id="strNum">100</p></div><div class="statupdown" id="strArrow"></div></div>
 						<div class="statframe"><div class="statbar" id="dexBar"><p class="statlabel" title="Dexterity affects how nimble and fast you are. Higher speed makes it easier to dodge enemies and run from combat.">Dexterity:</p><p class="statnum" id="dexNum">100</p></div><div class="statupdown" id="dexArrow"></div></div>
@@ -34,11 +44,6 @@
 						<div class="statframe"><div class="statbar" id="chaBar"><p class="statlabel" title="Charisma affects how easier it is for you to charm the denizens of Nodd.">Charisma:</p><p class="statnum" id="chaNum">100</p></div><div class="statupdown" id="chaArrow"></div></div>
 						<div class="statframe"><div class="statbar" id="libBar"><p class="statlabel" title="Libido determines how easier it is for you to get horny.">Libido:</p><p class="statnum" id="libNum">100</p></div><div class="statupdown" id="libArrow"></div></div>
 						<div class="statframe"><div class="statbar" id="corBar"><p class="statlabel" title="Corruption determines how perverted and warped your mind is. Higher corruption may make it easier to encounter Bad Ends.">Corruption:</p><p class="statnum" id="corNum">100</p></div><div class="statupdown" id="corArrow"></div></div>
-						<h2>Advancement</h2>
-						<div class="statframeblank"><p class="statlabel">Level:</p><p class="statnum" id="levelNum">99</p></div>
-						<div class="statframe"><div class="statbar" id="xpBar"><p class="statlabel" title="Your XP is a measure of your current progress towards level up.">XP:</p><p class="statnum" id="xpNum">9999 / 9999</p></div></div>
-						<div class="statframeblank"><p class="statlabel">Gloam:</p><p class="statnum" id="moneyNum">999,999,999</p></div>
-						<div id="spriteDisplay"></div>
 					</div>
 					<div id="leftbuttonset">
 						<div class="leftbuttonrow">
@@ -77,7 +82,7 @@
 						</div>
 					</div>
 				</div>
-                <div id="tooltip">
+                <div class="tooltip" id="tooltipMain">
                     Tooltip Text
                 </div>
 			</main>
@@ -121,8 +126,9 @@
 		<script type="text/javascript" src="js/statusEffectLib.js"></script>
 
 		<script type="text/javascript" src="js/main.js"></script>
-		<script type="text/javascript" src="js/playerInfo.js"></script>
+		<script type="text/javascript" src="js/playerAppearance.js"></script>
 		<script type="text/javascript" src="js/playerQuests.js"></script>
+		<script type="text/javascript" src="js/playerInfo.js"></script>
 
 		<script type="text/javascript" src="js/scenes/codex.js"></script>
 		<script type="text/javascript" src="js/scenes/locations.js"></script>
@@ -165,13 +171,11 @@
 		
 		<script type="text/javascript" src="js/scenes/locations/morphoria_district.js"></script>
 		
-		
 		<script type="text/javascript" src="js/scenes/locations/darkling_row.js"></script>
-		<script type="text/javascript" src="js/scenes/locations/darkling_row/outsideinn.js"></script>
+		<script type="text/javascript" src="js/scenes/locations/darkling_row/darkhaze.js"></script>
 		<script type="text/javascript" src="js/scenes/locations/darkling_row/grudsgrub.js"></script>
 		<script type="text/javascript" src="js/scenes/locations/darkling_row/eggplucks.js"></script>
-		
-        <!--Places-->
+		<script type="text/javascript" src="js/scenes/locations/darkling_row/outsideinn.js"></script>
 
         <!--Generic Monsters-->
 		<script type="text/javascript" src="js/scenes/monsters/nurk_rogue.js"></script>
@@ -179,6 +183,7 @@
 		<script type="text/javascript" src="js/scenes/monsters/slyne_mage.js"></script>
 		
         <!--NPCs-->
+		<script type="text/javascript" src="js/scenes/npcs/drusk.js"></script>
 
 		<script type="text/javascript" src="js/debug.js"></script>
 

@@ -125,6 +125,7 @@ const ARM_TYPE_HUMAN            =   0;
 const ARM_TYPE_HARPY            =   1;
 const ARM_TYPE_SPIDER           =   2;
 const ARM_TYPE_INSECT           =   3;
+const ARM_TYPE_SERGAL           =   4;
 
 // clawType
 const CLAW_TYPE_NORMAL          =   0;

@@ -66,16 +66,29 @@ function GetIEVersion() {
 function errorOldBrowser() {
 	clearOutput();
 	outputText("<b><u>ERROR</u></b><br>Sorry, your browser is too old to be able to use local storage. Please use a modern browser.");
-	menu();
     hideMenus();
+	hideStats();
+	hideRow(2);
+	hideRow(3);	
+	menu();
+	addButton(0, "Firefox", window.open, "https://www.mozilla.org/en-CA/firefox/");
+	addButton(1, "Chrome", window.open, "https://www.google.com/intl/en_ca/chrome/");
+	addButton(2, "MS Edge", window.open, "https://www.microsoft.com/en-us/edge");
+	addButton(3, "Opera", window.open, "https://www.opera.com/");
 }
 function errorInternetExplorerEwwww() {
     clearOutput();
 	setHeader("Please Don't Use IE!");
     outputText("<font size=\"64\"><b>:(</b></font><br>By City's eyes! Really? Your Ego Bracer doesn't approve of the browser you're currently using. Internet Explorer? Like, come on, it's a shitty browser! Do the Council a favour and please switch to a better browser like Firefox, Chrome or the new Edge.");
-    menu();
     hideMenus();
 	hideStats();
+	hideRow(2);
+	hideRow(3);	
+	menu();
+	addButton(0, "Firefox", window.open, "https://www.mozilla.org/en-CA/firefox/");
+	addButton(1, "Chrome", window.open, "https://www.google.com/intl/en_ca/chrome/");
+	addButton(2, "MS Edge", window.open, "https://www.microsoft.com/en-us/edge");
+	addButton(3, "Opera", window.open, "https://www.opera.com/");
 }
 //------------
 // SETTINGS

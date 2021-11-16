@@ -8,11 +8,14 @@ document.onmousemove = getMousePosition;
 initializeTooltipEvents();
 
 function getMousePosition(event) {
-    document.getElementById("tooltip").style.top = (event.clientY - 280) + "px";
-    if (event.clientX + 20 < document.documentElement.clientWidth - 420)
-        document.getElementById("tooltip").style.left = (event.clientX + 20) + "px";
+	document.getElementById("tooltipMain").style.top = (event.clientY - 280) + "px";
+	document.getElementById("tooltipStats").style.top = (event.clientY) + "px";
+    if (event.clientX + 20 < document.documentElement.clientWidth - 420) {
+		document.getElementById("tooltipMain").style.left = (event.clientX + 20) + "px";
+		document.getElementById("tooltipStats").style.left = (event.clientX + 20) + "px";
+	}
     else
-        document.getElementById("tooltip").style.left = (document.documentElement.clientWidth - 420) + "px";
+        document.getElementById("tooltipMain").style.left = (document.documentElement.clientWidth - 420) + "px";
 }
 
 //Stats Pane
@@ -111,10 +114,12 @@ function refreshTime() {
 function showStats() {
 	refreshStats();
 	document.getElementById("stats").style.visibility = "visible";
+	document.getElementById("map").style.visibility = "visible";
 	document.getElementById("timeDisplay").style.visibility = "visible";
 }
 function hideStats() {
 	document.getElementById("stats").style.visibility = "hidden";
+	document.getElementById("map").style.visibility = "hidden";
 	document.getElementById("timeDisplay").style.visibility = "hidden";
 }
 
@@ -173,15 +178,17 @@ function menu() {
 	}
 }
 
-function genericPlayerButtons() {
+function genericPlayerButtons(noNavButtons) {
 	hideUpDown();
 	refreshStats();
-	addButtonDisabled(5, "Up");
-	addButtonDisabled(6, "North");
-	addButtonDisabled(7, "Down");
-	addButtonDisabled(10, "West");
-	addButtonDisabled(11, "South");
-	addButtonDisabled(12, "East");
+	if (!noNavButtons) {
+		addButtonDisabled(5, "Up");
+		addButtonDisabled(6, "North");
+		addButtonDisabled(7, "Down");
+		addButtonDisabled(10, "West");
+		addButtonDisabled(11, "South");
+		addButtonDisabled(12, "East");
+	}
 	addButtonDisabled(8, "Masturbate", "Not yet implemented anywhere. For now, please visit Room 6 in the upstairs of Outside Inn.");
 	addButton(9, "Wait", Time.waitMenu);
 	addButton(13, "Inventory", Inventory.inventoryMenu);
@@ -253,13 +260,6 @@ function setMenuButton(menuButton, text, func) {
 	document.getElementById(menuButton).onclick = func;
 }
 
-function setHeader(text) {
-	document.getElementById("headertext").innerHTML = text;
-}
-function clearHeader() {
-	document.getElementById("headertext").innerHTML = "";
-}
-
 //Hook function too
 function hint(pos, txt, hdr) {
 	if (hdr != undefined) {
@@ -273,6 +273,7 @@ function hint(pos, txt, hdr) {
 
 //Tooltip
 function initializeTooltipEvents() {
+	//Hooks tooltips to buttons.
     for (var i = 0; i < 15; i++) {
 		var btn = document.getElementById("button" + i);
         //Create blank variable
@@ -281,12 +282,20 @@ function initializeTooltipEvents() {
         //Hook events
         btn.onmouseover = (function(event) {
             if (event.currentTarget.tooltipText != undefined) {
-                document.getElementById("tooltip").style.visibility = "visible";
-                document.getElementById("tooltip").innerHTML = "<h5>" + event.currentTarget.tooltipHeader + "</h5><p>" + event.currentTarget.tooltipText + "</p>";
+                document.getElementById("tooltipMain").style.visibility = "visible";
+                document.getElementById("tooltipMain").innerHTML = "<h5>" + event.currentTarget.tooltipHeader + "</h5><p>" + event.currentTarget.tooltipText + "</p>";
             }
         });
         btn.onmouseout = function() {
-            document.getElementById("tooltip").style.visibility = "hidden";
+            document.getElementById("tooltipMain").style.visibility = "hidden";
         }
     }
+	//Hooks tooltips to stats.
+	var stats = document.getElementById("stats");
+	stats.onmouseover = (function(event) {
+		document.getElementById("tooltipStats").style.visibility = "visible";
+	});
+	stats.onmouseout = function() {
+		document.getElementById("tooltipStats").style.visibility = "hidden";
+	}
 }

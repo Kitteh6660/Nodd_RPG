@@ -1313,20 +1313,14 @@ Appearance.vaginaDescript = function(i_creature, i_vaginaIndex, forceDesc) {
     if (description != "")
         description += " ";
 
-    if (SFWMode > 0) { //Removes something that might offend sensitive people.
-        options = ["cooter",
-            "entrance"];
-    }
-    else {
-        options = ["vagina",
-            "pussy",
-            "cooter",
-            "twat",
-            "cunt",
-            "snatch",
-            "fuck-hole",
-            "muff"];
-    }
+	options = ["vagina",
+		"pussy",
+		"cooter",
+		"twat",
+		"cunt",
+		"snatch",
+		"fuck-hole",
+		"muff"];
     description += randomChoice(options);
     //Something that would be nice to have but needs a variable in Creature or Character.
     //if (i_creature.bunnyScore() >= 3) description += "rabbit hole";
@@ -1425,9 +1419,6 @@ Appearance.clitDescription = function(i_creature) {
         "clit",
         "clit",
         "button"];
-    if (SFWMode > 0) {
-        options = ["bump", "button"];
-    }
     description += randomChoice(options);
 
     return description;

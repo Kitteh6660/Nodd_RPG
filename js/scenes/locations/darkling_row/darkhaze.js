@@ -1,6 +1,6 @@
-Locations.DarklingRow.DarkHaze = [];
+Locations.DarklingRow.Darkhaze = [];
 
-Locations.Darkling.DarkHaze.enter = function() {
+Locations.DarklingRow.Darkhaze.enter = function() {
 	clearOutput();
 	outputText("(Placeholder) The shop contains all sorts of pipes and hookahs.");
 	menu();

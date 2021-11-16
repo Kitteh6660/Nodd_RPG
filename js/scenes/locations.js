@@ -1,4 +1,5 @@
 Locations = [];
+NPCs = [];
 
 moveToLocation = function(callback, time) {
 	Time.advanceMinutes(time);

@@ -18,7 +18,7 @@ Locations.OutsideInn.roomLobby = function() {
 	addButton(7, "Restroom", moveToLocation, Locations.OutsideInn.roomRestroom, 1);
 	addButton(10, "Hallway", moveToLocation, Locations.OutsideInn.roomHallwayF1, 1);
 	addButton(11, "Exit", moveToLocation, Locations.DarklingRow.enter, 2);
-	if (time.days <= 1 && time.hours >= 20) addButtonDisabled(11, "Exit", "It's too dangerous to head back outside, the streets are dark now and you'd rather not run into another dangerous adversary at this time of day.");
+	if (time.days <= 1 && time.hours >= 20) addButtonDisabled(11, "Exit", "It's too dangerous to head back outside, the streets are dark now and you'd rather not run into another dangerous adversary with your recent run-in with the Nurk previously.");
 }
 
 Locations.OutsideInn.roomRestroom = function() {
@@ -60,7 +60,7 @@ Locations.OutsideInn.roomHallwayF2 = function() {
 	genericPlayerButtons();
 	addButton(7, "Down", moveToLocation, Locations.OutsideInn.roomHallwayF1, 1);
 	if (player.hasKeyItem(KeyItems.OutsideInnRoomKey) >= 0) addButton(0, "Room 6", moveToLocation, Locations.OutsideInn.roomRoom6, 1);
-	else addButtonDisabled(0, "Room 6", "You don't have the key to this room.")
+	else addButtonDisabled(0, "Room 6", "You don't have the key to this room.");
 }
 
 Locations.OutsideInn.roomRoom6 = function() {
@@ -141,7 +141,8 @@ Locations.OutsideInn.getADrink = function(selection) {
 			break;
 		case 4:
 			outputText("You are handed a glass filled with vivid purple liquid, garnished with what appears to be an odd worm curled around a stick, the head ending in an arrow shape.<br><br>");
-			outputText("You bring the glass up to your lips and take every careful moment of tasting the unusual liquid. A sense of pain forms in your forehead and you give your forehead a rub as if trying to get rid of the headache. It thankfully passes quickly.");
+			outputText("You bring the glass up to your lips and take every careful moment of tasting the unusual liquid. A sense of pain forms in your forehead and you give your forehead a rub as if trying to get rid of the headache. It thankfully passes quickly.<br><br>");
+			outputText("Perhaps the mind-altering spells supposedly in the drink are still being tweaked and perfected?");
 			break;
 		case 5:
 			outputText("You are handed a wine glass filled with what appears to be an odd, black liquid.<br><br>");
@@ -164,6 +165,7 @@ Locations.OutsideInn.getADrink = function(selection) {
 	player.refillThirst(35);
 	player.fillBladder(5);
 	Time.advanceMinutes(5);
+	NPCs.DruskVaurn.affection(1);
 	doNext(Locations.OutsideInn.approachBar);
 }
 
@@ -255,7 +257,7 @@ Locations.OutsideInn.useRestroomToilet = function() {
 	doNext(Locations.OutsideInn.roomRestroom);
 }
 
-Locations.OutsideInn.useRoomToilInnRet = function() {
+Locations.OutsideInn.useRoomToilet = function() {
 	clearOutput();
 	if (player.bladder < 50 && (player.bowels < 50 && scatEnabled)) {
 		outputText("You do not feel the need to use the toilet at the moment.");

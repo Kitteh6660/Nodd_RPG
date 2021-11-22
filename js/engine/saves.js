@@ -175,14 +175,11 @@ Data.saveGameObject = function(slot) {
         saveData.buttPregnancyType = player.buttPregnancyType;
         saveData.player.pregnancyEventNum = player.pregnancyEventNum;
 
-        //Spells
-        saveData.player.spells = {};
-        saveData.player.spells.chargeWeapon = player.spells.chargeWeapon;
-        saveData.player.spells.blind = player.spells.blind;
-        saveData.player.spells.whitefire = player.spells.whitefire;
-        saveData.player.spells.arouse = player.spells.arouse;
-        saveData.player.spells.heal = player.spells.heal;
-        saveData.player.spells.might = player.spells.might;
+		//Spells
+		saveData.player.spells = [];
+        for (i = 0; i < player.spells.length; i++) {
+            saveData.player.spells.push(player.spells[i]);
+        }
 
         //Other Data
         saveData.time = {};
@@ -262,13 +259,13 @@ Data.loadGameObject = function(slot) {
 
         //Set items
         player.itemSlots = [];
-        for (var i = 0; i < 56; i++) {
+        for (i = 0; i < 56; i++) {
             player.itemSlots.push(new ItemSlot());
         }
         for (i = 0; i < saveData.player.itemSlots.length; i++) {
             player.itemSlots[i].setItemAndQty(lookupItem(saveData.player.itemSlots[i].id), saveData.player.itemSlots[i].quantity);
         }
-
+		
         //Perks
         player.perks = [];
         for (i = 0; i < saveData.player.perks.length; i++) {
@@ -300,6 +297,9 @@ Data.loadGameObject = function(slot) {
         //Spells
         if (saveData.player.spells != undefined) {
             player.spells = [];
+			for (var i = 0; i < saveData.player.spells.length; i++) {
+				player.spells.push(saveData.player.spells[i]);
+			}
         }
 
         //Exploration

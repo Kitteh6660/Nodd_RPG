@@ -6,6 +6,7 @@ Items.Weapons.Dagger.equipmentName = "dagger";
 Items.Weapons.Dagger.verb = "stab";
 Items.Weapons.Dagger.value = 25;
 Items.Weapons.Dagger.attack = 3;
+Items.Weapons.Dagger.damage = [DAMAGE_TYPE_PUNCTURE, 3];
 Items.Weapons.Dagger.accuracy = 10;
 
 Items.Weapons.Sword = new Item("Sword", "Sword", "a sword", ITEM_TYPE_WEAPON);
@@ -14,6 +15,7 @@ Items.Weapons.Sword.equipmentName = "sword";
 Items.Weapons.Sword.verb = "slash";
 Items.Weapons.Sword.value = 40;
 Items.Weapons.Sword.attack = 6;
+Items.Weapons.Sword.damage = [DAMAGE_TYPE_SLASH, 6];
 Items.Weapons.Sword.accuracy = 6;
 
 Items.Weapons.NoddDagger = new Item("NDagger", "Noddish Dagger", "a dagger of Noddish origin", ITEM_TYPE_WEAPON);
@@ -22,6 +24,7 @@ Items.Weapons.NoddDagger.equipmentName = "Noddish dagger";
 Items.Weapons.NoddDagger.verb = "stab";
 Items.Weapons.NoddDagger.value = 70;
 Items.Weapons.NoddDagger.attack = 5;
+Items.Weapons.NoddDagger.damage = [DAMAGE_TYPE_PUNCTURE, 5];
 Items.Weapons.NoddDagger.accuracy = 10;
 
 Items.Weapons.NoddSword = new Item("NSword", "Noddish Sword", "a sword of Noddish origin", ITEM_TYPE_WEAPON);
@@ -30,6 +33,7 @@ Items.Weapons.NoddSword.equipmentName = "Noddish sword";
 Items.Weapons.NoddSword.verb = "slash";
 Items.Weapons.NoddSword.value = 120;
 Items.Weapons.NoddSword.attack = 8;
+Items.Weapons.NoddSword.damage = [DAMAGE_TYPE_SLASH, 8];
 Items.Weapons.NoddSword.accuracy = 6;
 
 Items.Weapons.HornedWand = new Item("HrnWand", "Horned Wand", "a horned wand", ITEM_TYPE_WEAPON);
@@ -38,7 +42,9 @@ Items.Weapons.HornedWand.equipmentName = "horned wand";
 Items.Weapons.HornedWand.verb = "stab";
 Items.Weapons.HornedWand.value = 200;
 Items.Weapons.HornedWand.attack = 4;
+Items.Weapons.HornedWand.damage = [DAMAGE_TYPE_PUNCTURE, 4, DAMAGE_TYPE_ARCANE, 2];
 Items.Weapons.HornedWand.accuracy = 9;
+Items.Weapons.HornedWand.spellMod = 5;
 
 Items.Weapons.RailGun = new Item("RailGun", "Rail Gun", "a rail gun", ITEM_TYPE_WEAPON);
 Items.Weapons.RailGun.description = "A large, technologically advanced rifle with a long barrel, it fires a very heavy projectile that is very devastating. Requires reload after each use.";
@@ -46,4 +52,5 @@ Items.Weapons.RailGun.equipmentName = "rail gun";
 Items.Weapons.RailGun.verb = "stab";
 Items.Weapons.RailGun.value = 2500;
 Items.Weapons.RailGun.attack = 20;
+Items.Weapons.RailGun.damage = [DAMAGE_TYPE_CRUSH, 20];
 Items.Weapons.RailGun.accuracy = 5;

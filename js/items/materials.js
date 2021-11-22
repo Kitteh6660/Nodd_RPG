@@ -1,13 +1,11 @@
 Items.Materials = {};
 
-Items.Materials.GreenGel = new Item("GreenGl", "Green Gel", "a clump of green gel", ITEM_TYPE_MATERIAL);
-Items.Materials.GreenGel.description = "This tough substance has no obvious use that you can discern.";
-Items.Materials.GreenGel.useText = function() { outputText("You examine the gel thoroughly, noting it is tough and resiliant, yet extremely pliable. Somehow you know eating it would not be a good idea."); return false; };
+Items.Materials.NurkPelt = new Item("NurkPlt", "Nurk Pelt", "a sheet of Nurk pelt", ITEM_TYPE_MATERIAL);
+Items.Materials.NurkPelt.Description = "A sheet of intact pelt taken from a Nurk. It looks drab in colours.";
+Items.Materials.NurkPelt.consumeEffect = createCallBackFunction(outputText, "The pelt feels rather soft to the touch and it's a bit smelly. Perhaps this will be of use in crafting?");
+Items.Materials.NurkPelt.Value = 15;
 
-Items.Materials.BeeChitin = new Item("B.Chitn", "B.Chitin", "a large shard of chitinous plating", ITEM_TYPE_MATERIAL);
-Items.Materials.BeeChitin.description = "A perfect piece of black chitin from a bee-girl. It still has some fuzz on it.";
-Items.Materials.BeeChitin.useText = function() { outputText("You look over the chitin carefully but cannot find a use for it. Maybe someone else will know how to use it."); return false; };
-
-Items.Materials.ImpSkull = new Item("ImpSkull", "Imp Skull", "To Be Added", ITEM_TYPE_MATERIAL);
-Items.Materials.ImpSkull.description = "To be added";
-Items.Materials.ImpSkull.useText = function() { outputText("To Be Added."); return false; };
+Items.Materials.SlyneScales = new Item("SlynScl", "Slyne Scales", "a sheet of Slyne scales", ITEM_TYPE_MATERIAL);
+Items.Materials.SlyneScales.Description = "A sheet of scales taken from a Slyne.";
+Items.Materials.SlyneScales.consumeEffect = createCallBackFunction(outputText, "It feels rather scaly to the touch. Perhaps this will be of use in crafting?");
+Items.Materials.SlyneScales.Value = 15;

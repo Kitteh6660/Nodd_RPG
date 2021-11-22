@@ -69,6 +69,7 @@ Time.advanceMinutes = function(minutes) {
 		// Increment amount of hours since cum
 		if (minutes == 0) {
 			player.hoursSinceCum++;
+			Time.tickHourlyFlags();
 		}
 		// Re-check status
 		if (player.isNakedLower() && player.findPerk(PerkLib.Gymnophobia) >= 0 && player.findStatusEffect(StatusEffects.Gymnophobia) < 0) {
@@ -126,4 +127,10 @@ Time.wait = function(timeLength, isHour) {
 		Time.advanceMinutes(timeLength);
 	}
 	doNext(resumeFromMenu);
+}
+
+Time.tickHourlyFlags = function() {
+	if (npcFlags.outsideInnRestroomNPCCooldown > 0) npcFlags.outsideInnRestroomNPCCooldown--;
+	if (npcFlags.darklingRowSillyModeJerryCooldown > 0) npcFlags.darklingRowSillyModeJerryCooldown--;
+	if (npcFlags.darklingRowPrankNurkCooldown > 0) npcFlags.darklingRowPrankNurkCooldown--;
 }

@@ -1,6 +1,38 @@
 This is the change log for Nodd RPG, detailing additions and changes.
 
 ====================
+[0.1.3] - 2021-11-22
+This release adds a few spells, fixes up the tooltips, and a few things to Grud and Drusk.
+The Darkling Row is also now a bit livelier.
+
+Added:
++ Added barebones talk and sex menus for Grud. He's got a pic. Thanks the Noddule ref!
++ Some additions to Drusk:
+   * Friendship stat. Starts at 0, caps at 100. Talking and having drinks increase Friendship.
+   * Sex menu, scenes are currently barebones. Unlocked at 10 Friendship.
++ Added three spells for testing: Living Salve, Blind, and Rouse. You can purchase the spells from the temporary spell shop.
+   * Living Salve heals you. Amount healed is based on your Intelligence.
+   * Blind has a chance to blind your opponent. Chance is based on your Intelligence versus your opponent's Willpower.
+   * Rouse raises your opponent's arousal. Uses your Intelligence and Corruption versus your opponent's Willpower.
++ Coded more food consumables that will eventually be added. In particular, Sloach. Not accessible yet.
++ Added two random exploration scenes to Darkling Row. One is a silly mode scene, another is a prank from a Nurk.
++ Added blind debuff. Blind halves accuracy.
+
+Changes:
+* Clock interface now dynamically changes between black and green depending on time of day.
+* Grud's Grub has the menu changed. Tenderlings and Sloach are no longer offered but instead, Grub Bowl. How fitting.
+* Increased the gloam cost of recovering mana, and it also now costs 5 energy to recover mana.
+* Enabled Special menu in combat. There are no special attacks yet however...
+* Refactored the shop code. Black Ditch Courture now uses the refactored code. The goal is less function redundancy.
+
+Fixes:
+* Tooltips now properly resize dynamically and the background is also fixed.
+* Tweaked the documentation so status effect documentation points to the correct function.
+
+Removed:
+- A file tooltip_short.png has been removed as it's no longer needed.
+
+====================
 [0.1.2] - 2021-11-16
 This release adds Darkling Row exploration scenes! Drusk also gets some talk scenes to add a bit of lore.
 Drusk has finally unveiled the menu of beverages for you to try out! But be careful with Nightmare Fuel!

@@ -21,17 +21,17 @@ ITEM_FLAG_MACABRE = "macabre";
 ITEM_FLAG_BLOCKS_UNDERWEAR = "no_underwear"
 ITEM_FLAG_NO_STRIP_NEEDED = "no_strip";
 
-//Resistances
-RESISTANCE_STAB = "stab_res";
-RESISTANCE_SLASH = "slash_res";
-RESISTANCE_CRUSH = "crush_res";
-RESISTANCE_LUST = "lust_res";
-RESISTANCE_ARCANE = "arcane_res";
-RESISTANCE_ACID = "acid_res";
-RESISTANCE_POISON = "poison_res";
-RESISTANCE_FIRE = "fire_res";
-RESISTANCE_ICE = "ice_res";
-RESISTANCE_LIGHTNING = "lightning_res";
+//Damage Types
+DAMAGE_TYPE_PUNCTURE = "puncture";
+DAMAGE_TYPE_SLASH = "slash";
+DAMAGE_TYPE_CRUSH = "crus";
+DAMAGE_TYPE_LUST = "lust";
+DAMAGE_TYPE_ARCANE = "arcane";
+DAMAGE_TYPE_ACID = "acid";
+DAMAGE_TYPE_POISON = "poison";
+DAMAGE_TYPE_FIRE = "fire";
+DAMAGE_TYPE_ICE = "ice";
+DAMAGE_TYPE_LIGHTNING = "lightning";
 
 //Item Constructor!
 function Item(itemId, itemShortName, itemLongName, itemType) {
@@ -52,6 +52,8 @@ function Item(itemId, itemShortName, itemLongName, itemType) {
 	this.equipmentName = "";
 	this.attack = 0;
 	this.accuracy = 0;
+	this.critMod = 0;
+	this.spellMod = 0;
 	this.defense = 0;
 	this.evasion = 0;
 	this.sexiness = 0;

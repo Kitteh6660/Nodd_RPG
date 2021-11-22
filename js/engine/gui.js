@@ -8,7 +8,9 @@ document.onmousemove = getMousePosition;
 initializeTooltipEvents();
 
 function getMousePosition(event) {
-	document.getElementById("tooltipMain").style.top = (event.clientY - 280) + "px";
+	var tooltipHt = document.getElementById("tooltipMain").style.height;
+	tooltipHt = parseInt(tooltipHt.replace("px", ""));
+	document.getElementById("tooltipMain").style.top = (event.clientY - (tooltipHt + 20)) + "px";
 	document.getElementById("tooltipStats").style.top = (event.clientY) + "px";
     if (event.clientX + 20 < document.documentElement.clientWidth - 420) {
 		document.getElementById("tooltipMain").style.left = (event.clientX + 20) + "px";
@@ -110,6 +112,14 @@ function refreshTime() {
     else
         timeText += time.hours + " bells; " + (time.minutes < 10 ? "0" : "") + time.minutes + " chimes";
     document.getElementById("timeDisplay").innerHTML = timeText;
+	if (time.hours >= 7 && time.hours < 19) { //Green BG
+		document.getElementById("timeDisplay").style.borderImageSource = "url(assets/interface/tooltip.png)";
+		document.getElementById("timeDisplay").style.color = "#000000";
+	}
+	else { //Dark BG
+		document.getElementById("timeDisplay").style.borderImageSource = "url(assets/interface/ui_border.png)";
+		document.getElementById("timeDisplay").style.color = "";
+	}
 }
 function showStats() {
 	refreshStats();
@@ -282,8 +292,10 @@ function initializeTooltipEvents() {
         //Hook events
         btn.onmouseover = (function(event) {
             if (event.currentTarget.tooltipText != undefined) {
-                document.getElementById("tooltipMain").style.visibility = "visible";
                 document.getElementById("tooltipMain").innerHTML = "<h5>" + event.currentTarget.tooltipHeader + "</h5><p>" + event.currentTarget.tooltipText + "</p>";
+				var ht = document.getElementById("tooltipMain").childNodes[0].clientHeight + document.getElementById("tooltipMain").childNodes[1].clientHeight + 10;
+				document.getElementById("tooltipMain").style.height = ht + "px";
+                document.getElementById("tooltipMain").style.visibility = "visible";
             }
         });
         btn.onmouseout = function() {

@@ -7,8 +7,10 @@ var currentRound = 0;
 //------------
 battleMenu = function() {
 	clearOutput();
+	hideMenus();
     outputText("<b>You are fighting " + monster.a + monster.refName + ".</b><br>");
 	outputText(monster.battleDesc);
+	outputText(monster.outputDebuffs);
 	outputText("<br><br><b><u>" + capitalizeFirstLetter(monster.name) + "'s Stats</u></b>");
 	outputText("<br>Level: " + monster.level);
 	outputText("<br>HP: " + monster.HP + " / " + monster.maxHP() + " (" + (Math.floor(monster.HP / monster.maxHP() * 1000) / 10) + "%)");
@@ -19,12 +21,12 @@ battleMenu = function() {
 	menu();
 	addButton(0, "Attack", attack); hint(0, "Attempt to strike your opponent.");
 	addButton(1, "Tease", teaseMenu); hint(1, "Attempt to seduce your opponent using your different body parts.");
-	addButtonDisabled(2, "Specials", "Not added yet..."); 
+	addButton(2, "Specials", specialMenu); 
 	addButton(3, "Spells", magicMenu); hint(3, "Access your current arsenal of spells.");
     addButton(4, "Items", Inventory.inventoryMenu); hint(4, "Access your inventory to use items.");
 	
-    if (player.gloam >= Math.ceil(player.level / 5) && player.MP < player.maxMP()) {
-		addButton(5, "Recover MP", recoverMana); hint(5, "Spend " + Math.ceil(player.level / 5) + " gloam to recover your mana."); 
+    if (player.gloam >= 5 + Math.ceil(player.level / 5) && player.MP < player.maxMP()) {
+		addButton(5, "Recover MP", recoverMana); hint(5, "Spend " + (5 + Math.ceil(player.level / 5)) + " gloam to recover your mana. This will also cost 5 energy."); 
 	}
 	else addButtonDisabled(5, "Recover MP", player.MP < player.maxMP() ? ("You need " + Math.ceil(player.level / 5) + " gloam to recover your mana.") : "You are already at full mana.");
     addButton(7, "Wait", wait); hint(7, "Do nothing for your turn. This is usually a terrible idea unless some strategy calls for it.");
@@ -237,8 +239,15 @@ flee = function(callHook) { //There are 4 states. Undefined means proceed to esc
 
 recoverMana = function() {
 	clearOutput();
-	var cost = Math.ceil(player.level / 5);
+	if (player.energy < 5) {
+		outputText("You are too exhausted to process any more gloam into mana.");
+		doNext(battleMenu);
+		return;
+	}
+	player.energy -= 5;
+	var cost = 5 + Math.ceil(player.level / 5);
 	player.changeMana(15 + player.inte, true);
+	player.changeMoney(-cost);
 	combatRoundOver();
 }
 
@@ -395,6 +404,14 @@ function tickStatusEffect(entity) {
 			outputText("The effects of the poison have worn off.<br><br>");
 		}
 	}
+	//Blind debuff
+	if (entity.findStatusEffect(StatusEffects.Blind) >= 0) {
+		entity.addStatusValue(StatusEffects.Blind, 1, -1);
+		if (entity.statusEffectValue(StatusEffects.Blind, 1) <= 0) {
+			entity.removeStatusEffect(StatusEffects.Blind);
+			outputText(entity.refName + " can see clearly again now.<br><br>");
+		}
+	}
 }
 
 function combatRoundOver(skipEnemy) {
@@ -456,7 +473,7 @@ function awardPlayer(nextFunc) {
     //Scale down XP gain if 1 level below the cap so you don't hit the level cap too quickly. This will be removed once level cap is ever raised to 20.
     if (player.level >= levelCap - 1) {
         xpGain *= 0.2;
-        xpGain = Math.floor(xpGain);
+        xpGain = Math.ceil(xpGain);
     }
     var moneyGain = Math.floor(monster.gloam);
     outputText("<br><br>You gain " + xpGain + " experience points and you transfer " + moneyGain + " Gloam into your Ego Bracer. ");

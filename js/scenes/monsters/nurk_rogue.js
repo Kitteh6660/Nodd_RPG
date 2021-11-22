@@ -113,6 +113,7 @@ NurkRogue.prototype.doAI = function() {
 
 NurkRogue.poisonBottleThrow = function() {
 	var hitChance = 40 + (monster.dex * 3);
+	if (monster.findStatusEffect(StatusEffects.Blind) >= 0) hitChance -= 30;
 	var evadeChance = 30 + (player.dex * 2);
 	if (player.findPerk(PerkLib.Evasion)) evadeChance += 10;
 	outputText("The Nurk pulls out a glass bottle filled with sloshing, noxious green liquid from his belt and " + (silly ? "yeets" : "throws") + " it at you! ");
@@ -129,7 +130,12 @@ NurkRogue.poisonBottleThrow = function() {
 		}
 	}
 	else {
-		outputText("The bottle goes wide and flies past you, the bottle shattering harmlessly and the contents spill.");
+		if (monster.findStatusEffect(StatusEffects.Blind) >= 0) {
+			outputText("The Nurk doesn't have much luck as he's blind; the bottle goes wide and it doesn't even come remotely close to you at all as it instead hits a wall and shatters.");
+		}
+		else {
+			outputText("The bottle goes wide and flies past you, the bottle shattering harmlessly and the contents spill.");
+		}
 	}
 	monster.poisonBottles--;
 }

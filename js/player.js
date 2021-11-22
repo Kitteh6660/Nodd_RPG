@@ -578,3 +578,12 @@ function getScaledLevel() {
 	if (lvl > Math.ceil(levelCap * 1.2)) lvl = Math.ceil(levelCap * 1.2);
 	return lvl;
 }
+
+function hasSpell(spell) {
+	for (var i = 0; i < player.spells.length; i++) {
+		if (spell.id == player.spells[i]) {
+			return true;
+		}
+	}
+	return false;
+}

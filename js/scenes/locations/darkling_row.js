@@ -52,6 +52,7 @@ Locations.DarklingRow.shopMenu = function() {
 		hint(3, "Visit the familiars shop run by Eggpluck's.", "Eggpluck's Discount Familiars");
 	}
 	else addButtonDisabled(3, "???", "You don't know about this location yet. Perhaps you should try exploring the Darkling Row more?");
+	addButton(4, "PHolder Spell Shop", Locations.DarklingRow.PlaceholderSpellShop); hint(4, "This shop is temporarily in place to allow you to buy spells until a more fitting home is found for the spells.", "Placeholder Spell Shop");
 	addButton(14, "Back", Locations.DarklingRow.enter);
 }
 
@@ -136,10 +137,16 @@ Locations.DarklingRow.explore = function() {
 		return;
 	}
 	var rng = Math.random() * 100;
-	if (rng < 30) { //Nothing found.
-		outputText("Despite your time spent exploring, you fail to find anything new.");
+	if (rng < 25) { //Nothing found.
+		outputText("Despite your time spent exploring the streets of the Darkling Row, you fail to find anything new.");
 	}
-	else if (rng < 70) {
+	else if (rng < 40) { //Random exploration flair.
+		var funcs = [Locations.DarklingRow.greepLovers];
+		if (silly && locFlags.darklingRowSillyModeJerryCooldown <= 0) funcs.push(Locations.DarklingRow.workersWithGlassPaneSMASH);
+		if (locFlags.darklingRowPrankNurkCooldown <= 0) funcs.push(Locations.DarklingRow.pnurked);
+		funcs[rand(funcs.length)]();
+	}
+	else if (rng < 75) {
 		Locations.DarklingRow.rollRandomEncounter();
 		return;
 	}
@@ -225,6 +232,19 @@ Locations.DarklingRow.greepLovers = function() {
 	outputText("Whilst wandering the warm streets of Nodd you come across an oddly comforting sight of two lovers sharing a passionate dance. A pair of greeps are circling each other and running their bills up and down each other’s necks whilst making soft, trilling sounds at each other. You watch this dance with a smile on their face as they continue this for another minute. Then they stand with their necks fully straight and squawk again before making more noise and then waddling away down an alleyway together.<br><br>");
 	Codex.unlockCodexEntry("Greeps", "unlockedGreep");
 }
+Locations.DarklingRow.workersWithGlassPaneSMASH = function() {
+	outputText("A pair of workers are carrying a large glass pane as they make their way into a building across the street from you. You watch with a curious look on your face, this is something that often happens in movies and usually, someone would come running through. As the worker start making their way up the stairs into the building, someone does come running around the corner. It’s a female sergal with red and white fur a look of fear on her face. A pair of female nurks are chasing after her, yelling something about “Not casting random spells!” As the sergal reaches the workers she effortlessly moves around them with the nurks following suit. The workers get into the building safely.<br><br>");
+	outputText("You wait for a moment then start to carry on walking before hearing a loud crash from the inside of the building and then someone yelling “<i>FOR FUCKS SAKE JERRY. THE ONE TIME WE DON’T HAVE SOMEONE RUN INTO US. YOU DROP IT!</i>”");
+	locFlags.darklingRowSillyModeJerryCooldown = 36; // Locks out this scene for 36 hours.
+}
+Locations.DarklingRow.pnurked = function() {
+	outputText("A nurk comes up to you. He’s fully naked and he smiles up at you happily. You raise a brow and look down at him.<br><br>");
+	outputText("“Hello there. Can I have some clothes please?”<br><br>");
+	outputText("You shake your head no. <br><br>");
+	outputText("“Okay. I’ll steal them then!”<br><br>");
+	outputText("Then, he snaps his fingers and runs away. Laughing maniacally as he does so and how he has your clothes! He’s...still naked and you’re still looking the same.<br><br>");
+	locFlags.darklingRowPrankNurkCooldown = 12; // Locks out this scene for 12 hours.
+}
 Locations.DarklingRow.randomCitizenComments = function() {
 	// Not yet added.
 }
@@ -257,4 +277,45 @@ Locations.DarklingRow.sellItem = function(slot) {
 	player.destroyItems(item, 1);
 	player.changeMoney(val);
 	doNext(Locations.DarklingRow.placeholderCartSell);
+}
+
+//Temporary thing.
+Locations.DarklingRow.PlaceholderSpellShop = function() {
+	clearOutput();
+	outputText("The shop is just for purchasing spells to test. Once a more suitable location has been found, this shop will close up and the spells will be moved to thematically-fitting shops.");
+	menu();
+	Locations.DarklingRow.addSpellShopButton(0, Spells.LivingSalve, 300);
+	Locations.DarklingRow.addSpellShopButton(1, Spells.Blind, 300);
+	Locations.DarklingRow.addSpellShopButton(2, Spells.Rouse, 300);
+	addButton(14, "Leave", Locations.DarklingRow.enter);
+}
+
+Locations.DarklingRow.addSpellShopButton = function(loc, spell, cost) {
+	addButton(loc, spell.name, Locations.DarklingRow.buySpellPrompt, spell, cost, null, spell.getTooltipDescription() + "<br><b>Price:</b> " + cost + " gloam", spell.name);
+}
+
+Locations.DarklingRow.buySpellPrompt = function(spell, cost) {
+	clearOutput();
+	if (hasSpell(spell)) {
+		outputText("You already have the spell! There's no reason to buy it again.");
+		doNext(Locations.DarklingRow.PlaceholderSpellShop);
+		return;
+	}
+	if (player.gloam >= cost) {
+		outputText("This will cost you " + cost + " gloam for the spell. Is this okay?");
+		doYesNo(createCallBackFunction(Locations.DarklingRow.buySpell, spell, cost), Locations.DarklingRow.PlaceholderSpellShop);
+
+	}
+	else {
+		outputText("You currently don't have enough gloam to purchase this spell.");
+		doNext(Locations.DarklingRow.PlaceholderSpellShop);
+	}
+}
+Locations.DarklingRow.buySpell = function(spell, cost) {
+	clearOutput();
+	outputText("You have purchased " + spell.name + " for " + cost + " gloam!");
+	player.changeMoney(-cost);
+	player.spells.push(spell.id);
+	refreshStats();
+	doNext(Locations.DarklingRow.PlaceholderSpellShop);
 }

@@ -25,12 +25,15 @@ function initializeFlags() {
 	locFlags.darklingRowFoundGrudsGrub = false;
 	locFlags.darklingRowFoundEggplucks = false;
 	locFlags.darklingRowFoundOutsideInn = false;
+	locFlags.darklingRowSillyModeJerryCooldown = 0;
+	locFlags.darklingRowPrankNurkCooldown = 0;
 	locFlags.outsideInnRestroomUseCounter = 0;
 	locFlags.outsideInnNightmareFuelDrankCounter = 0;
 
 	//NPC variables
 	npcFlags.darklingRowGrudMet = false;
 	npcFlags.darklingRowGrudSuckedOff = 0;
+	npcFlags.outsideInnDruskRelationship = 0; // 0 = not started. Have some chat and drink to raise relationship. 10 unlocks sex menu.
 	npcFlags.outsideInnDruskMet = false;
 	npcFlags.outsideInnDruskBottomedFor = 0;
 	npcFlags.outsideInnDruskTopped = 0;
@@ -41,5 +44,7 @@ function initializeFlags() {
 	npcFlags.outsideInnRestroomKilledNPC = false;
 	npcFlags.outsideInnRestroomNPCCooldown = 36; // Timeout to ensure the NPC doesn't barge in too often.
 
-	npcFlags.darklingRowKillCount = 0; //If there are too many kills in a zone, there will be no more encounters.
+	//Kill Count variables (possibly genocide?)
+	npcFlags.darklingRowKillCount = 0; 
+	npcFlags.viviriaDistrictKillCount = 0;
 }

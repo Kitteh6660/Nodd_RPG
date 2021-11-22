@@ -232,7 +232,7 @@ Removes the key item from the player's inventory if the player has it.
 ===========
 Status Effects can be called on both creature and player.
 
-creature.addStatusEffect(statusEffect, val1, val2, val3, val4)
+creature.createStatusEffect(statusEffect, val1, val2, val3, val4)
 Adds status effect to the entity.
 The parameter 'statusEffect' is which status effect to add.
 The parameters 'val1', 'val2', 'val3', 'val4' set the initial values to the status effects.
@@ -257,6 +257,13 @@ creature.changeStatusValue(statusEffect, value, amt)
 Arbitrarily sets the status effect.
 The parameter 'statusEffect' is the status effect to access.
 The parameter 'value' is which value to access, can be between 1 and 4. The parameter 'amt' is how much to set the value to.
+
+> Shops
+===========
+addBuyButton(pos, item, costMult)
+Creates a button for buying item. The parameter 'pos' sets the location of the button.
+The parameter 'item' is the item that will be purchaseable.
+The parameter 'costMult' is optional and sets the price multiplier.
 
 
 ========================

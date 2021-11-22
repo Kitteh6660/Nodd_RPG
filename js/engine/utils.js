@@ -74,6 +74,10 @@ function lookupItem(id) {
     return ItemLib[id];
 }
 
+function lookupSpell(id) {
+    return SpellLib[id];
+}
+
 function lookupKeyItem(id) {
     return KeyItemIDs[id];
 }

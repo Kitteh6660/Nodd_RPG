@@ -141,7 +141,7 @@ Creature.prototype.attack = function() {
 	else
         enemy = player;
     //Hit or miss?
-    var hitRoll = 50 + this.accuracy() + (this.dex - enemy.dex / 2);
+    var hitRoll = this.accuracy() - Math.floor(enemy.dex / 2);
     var hitNeed = rand(100);
     if (hitRoll < hitNeed) { //Miss
         if (hitRoll - hitNeed >= -5)
@@ -152,7 +152,7 @@ Creature.prototype.attack = function() {
         return;
     }
     //Damage
-	var damage = this.baseDamage() + rand(this.str);
+	var damage = this.baseDamage() + rand(this.str / 2);
     damage *= 1 - ((enemy.armor.defense + Math.random() * (enemy.end * 0.25)) / 100);
 	if (damage < 1) damage = 1;
     //Critical
@@ -165,9 +165,9 @@ Creature.prototype.attack = function() {
 	damage = Math.round(damage);
 	//Display text and apply damage
     if (this == player) {
-        if (damage <= 5) outputText("You struck a glancing blow against " + enemy.a + " " + enemy.refName + ". ");
-        else if (damage <= 10) outputText("You wound " + enemy.a + " " + enemy.refName + "! ");
-        else if (damage <= 20) outputText("You stagger " + enemy.a + " " + enemy.refName + " with the force of your attacks! ");
+        if (damage <= enemy.maxHP() * 0.1 && damage <= 20) outputText("You struck a glancing blow against " + enemy.a + " " + enemy.refName + ". ");
+        else if (damage <= enemy.maxHP() * 0.1 && damage <= 20) outputText("You wound " + enemy.a + " " + enemy.refName + "! ");
+        else if (damage <= enemy.maxHP() * 0.2 && damage <= 40) outputText("You stagger " + enemy.a + " " + enemy.refName + " with the force of your attacks! ");
         else outputText("You mutilate " + enemy.a + " " + enemy.refName + " with a powerful " + this.weapon.verb + "! ");
     }
     else {
@@ -178,20 +178,20 @@ Creature.prototype.attack = function() {
             else
                 outputText("You deflect and block every " + this.weapon.verb + " " + this.a + this.refName + " throws at you. ");
         }
-        else if (damage <= 5) {
+        else if (damage <= enemy.maxHP() * 0.1 && damage <= 20) {
             outputText("You are struck a glancing blow by " + this.a + this.refName + "! ");
         }
-        else if (damage <= 10) {
+        else if (damage <= enemy.maxHP() * 0.2 && damage <= 40) {
             outputText(capitalizeFirstLetter(this.a) + this.refName + " wound");
             if (!this.plural) outputText("s");
             outputText(" you! ");
         }
-        else if (damage <= 20) {
+        else if (damage <= enemy.maxHP() * 0.3 && damage <= 60) {
             outputText(capitalizeFirstLetter(this.a) + this.refName + " stagger");
             if (!this.plural) outputText("s");
             outputText(" you with the force of " + this.hisHer + " " + this.weapon.verb + "! ");
         }
-        else if (damage > 20) {
+        else {
             outputText(capitalizeFirstLetter(this.a) + this.refName + " <b>mutilate");
             if (!this.plural) outputText("s");
             outputText("</b> you with " + this.hisHer + " powerful " + this.weapon.verb + "! ");
@@ -278,35 +278,46 @@ Creature.prototype.HPRatio = function() {
 
 //Combat
 Creature.prototype.baseDamage = function() {
-	var baseDmg = this.str + this.weapon.attack;
+	var baseDmg = 5 + this.str + this.weapon.attack;
 	if (baseDmg < 10) baseDmg = 10; //Clamp minimum damage to 10 if under.
 	if (baseDmg > 999) baseDmg = 999; //Clamp maximum damage to 999 if over.
 	return baseDmg;
 }
 Creature.prototype.accuracy = function() {
-	var acc = 10;
+	var acc = 70;
 	acc += this.dex / 2;
 	if (this.weapon != undefined) {
 		acc += this.weapon.accuracy;
 	}
+	if (this.findStatusEffect(StatusEffects.Blind) >= 0) {
+		acc *= 0.5;
+	}
+	if (acc < 20) acc = 20;
 	return acc;
 }
 Creature.prototype.criticalChance = function() {
     var chance = 5;
 	chance += Math.round(this.dex / 3);
+	if (this.weapon != undefined) {
+		chance += this.weapon.critMod;
+	}
+	if (this.armor != undefined) {
+		chance += this.armor.critMod;
+	}
+	if (this.upperGarment != undefined) {
+		chance += this.upperGarment.critMod;
+	}
+	if (this.lowerGarment != undefined) {
+		chance += this.lowerGarment.critMod;
+	}
     return chance;
 }
 Creature.prototype.spellMod = function() {
-    var multiplier = 1;
-    //Permanent base increase
-    if (this.findPerk(PerkLib.Spellpower) >= 0) {
-        multiplier += 0.5;
-    }
-    //Others
-    if (this.findPerk(PerkLib.WizardsFocus) >= 0) {
-        multiplier += this.perkValue(PerkLib.WizardsFocus, 1);
-    }
-    return multiplier;
+    var modifier = 0;
+	if (this.weapon != undefined) {
+		modifier += this.weapon.spellMod;
+	}
+    return modifier;
 }
 
 //Experience
@@ -405,9 +416,9 @@ Creature.prototype.changeMana = function(amount, display, newpg) {
 	}
 	if (this == player) {
         if (amount < 0)
-            showUpDown("hpArrow", "down");
+            showUpDown("mpArrow", "down");
         else if (amount > 0)
-            showUpDown("hpArrow", "up");
+            showUpDown("mpArrow", "up");
 		refreshStats();
 	}
 }

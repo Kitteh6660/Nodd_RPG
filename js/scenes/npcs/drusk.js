@@ -2,6 +2,13 @@ NPCs.DruskVaurn = [];
 
 const druskDialogueColour = "#C070A0";
 
+NPCs.DruskVaurn.affection = function(amt) {
+	if (amt != undefined) npcFlags.outsideInnDruskRelationship += amt;
+	if (npcFlags.outsideInnDruskRelationship < 0) npcFlags.outsideInnDruskRelationship = 0;
+	if (npcFlags.outsideInnDruskRelationship > 100) npcFlags.outsideInnDruskRelationship = 100;	
+	return npcFlags.outsideInnDruskRelationship;
+}
+
 NPCs.DruskVaurn.approach = function(clearText) {
 	setHeader(npcFlags.outsideInnDruskLearntAboutDruskName ? "Drusk Vaurn" : "Bartender");
 	if (clearText) {
@@ -17,11 +24,15 @@ NPCs.DruskVaurn.approach = function(clearText) {
 		}
 	}
 	menu();
-	addButton(0, "Talk", NPCs.DruskVaurn.talkMenu, true);
-	addButtonDisabled(1, "Sex", "Not yet added.");
+	addButton(0, "Talk", NPCs.DruskVaurn.talkMenu, true); hint(0, "Strike up conversation with Drusk. You could learn more about the City of Nodd from him, perhaps.");
+	if (npcFlags.outsideInnDruskRelationship >= 10) {
+		addButton(1, "Sex", NPCs.DruskVaurn.sexMenu); hint(1, "See if Drusk is up to 'serve' you.");
+	}
+	else addButtonDisabled(1, "Sex", "Maybe try getting to know the bartender more? Try talking to him and ordering drinks.");
 	addButton(4, "Back", Locations.OutsideInn.approachBar);
 }
 
+// Talk Scenes
 NPCs.DruskVaurn.talkMenu = function(clearText) {
 	if (clearText) {
 		clearOutput();
@@ -52,7 +63,10 @@ NPCs.DruskVaurn.talkAboutOutsideInn = function() {
 	outputText("You ask what is the story behind this establishment.<br><br>");
 	outputText("<font color=\"" + druskDialogueColour + "\">\"<i>This establishment? Actually fairly new, been 'round for a few turns actually. I'm sure you get why it's called that. Always 'been the first place to stay where the Chosen Ones visit after the Induction.</i>\"</font> Drusk explains and chuckles.<br><br>");
 	outputText("");
-	if (npcFlags.outsideInnDruskLearntAboutInduction < 1) npcFlags.outsideInnDruskLearntAboutInduction = 1;
+	if (npcFlags.outsideInnDruskLearntAboutInduction < 1) {
+		npcFlags.outsideInnDruskLearntAboutInduction = 1;
+		NPCs.DruskVaurn.affection(2);
+	}
 	NPCs.DruskVaurn.talkMenu();
 	addButtonDisabled(0, "The Outside Inn", "You just already had this discussion.");
 }
@@ -66,6 +80,7 @@ NPCs.DruskVaurn.talkAboutDrusk = function() {
 	outputText("<font color=\"" + druskDialogueColour + "\">\"<i>Will be calling you that from now on. Thank you, " + player.name + ".</i>\"</font> Drusk says, smiling sheepishly.<br><br>");
 	npcFlags.outsideInnDruskGivenYourName = true;
 	npcFlags.outsideInnDruskLearntAboutDruskName = true;
+	NPCs.DruskVaurn.affection(2);
 	NPCs.DruskVaurn.talkMenu();
 	addButtonDisabled(1, "Drusk Vaurn", "You just already had this discussion.");
 }
@@ -108,7 +123,10 @@ NPCs.DruskVaurn.talkAboutInduction = function() {
 	outputText("Oh, that machine. The unusual 'exam table' that you've seen.<br><br>");
 	outputText("<font color=\"" + druskDialogueColour + "\">\"<i>Outsiders say it's unpleasant. Yer a brave one for that.</i>\"</font> The burly-looking, red-eyed bartender remarks.<br><br>");
 	outputText("You sheepishly smile at the positive comments.");
-	npcFlags.outsideInnDruskLearntAboutInduction = 2;
+	if (npcFlags.outsideInnDruskLearntAboutInduction < 2) {
+		npcFlags.outsideInnDruskLearntAboutInduction = 2;
+		NPCs.DruskVaurn.affection(2);
+	}
 	NPCs.DruskVaurn.talkMenu();
 	addButtonDisabled(4, "Induction", "You just already had this discussion.");
 }
@@ -131,3 +149,53 @@ NPCs.DruskVaurn.talkAboutGuards = function() {
 	NPCs.DruskVaurn.talkMenu();
 	addButtonDisabled(6, "Guards", "You just already had this discussion.");
 }
+
+// Sex Scenes
+NPCs.DruskVaurn.sexMenu = function() {
+	clearOutput();
+	outputText("Drusk smiles at the prospect.<br><br>");
+	outputText("<font color=\"" + druskDialogueColour + "\">\"<i>Follow me into the kitchen when 'ya ready for your special serving.</i>\"</font>");
+	menu();
+	addButton(0, "Suck Him Off", NPCs.DruskVaurn.suckDruskOff);
+	addButton(1, "Drink Piss", NPCs.DruskVaurn.drinkDruskPiss);
+	addButton(2, "Take His Dick", NPCs.DruskVaurn.takeHisDick);
+	addButton(3, "Use Him Anally", NPCs.DruskVaurn.tapDatAss);
+	addButton(14, "Back", Locations.DarklingRow.Grud.approachGrud, true);
+}
+
+NPCs.DruskVaurn.suckDruskOff = function() {
+	clearOutput();
+	outputText("PLACEHOLDER sex scene: You suck Drusk's penis off and get a filling.");
+	NPCs.DruskVaurn.affection(2);
+	Time.advanceMinutes(15);
+	player.refillHunger(30);
+	doNext(resumeFromMenu);
+}
+
+NPCs.DruskVaurn.drinkDruskPiss = function() {
+	clearOutput();
+	outputText("PLACEHOLDER sex scene: You'd get to drink Drusk's piss. Thirsty!");
+	NPCs.DruskVaurn.affection(2);
+	Time.advanceMinutes(5);
+	player.refillThirst(25);
+	doNext(resumeFromMenu);
+}
+
+NPCs.DruskVaurn.takeHisDick = function() {
+	clearOutput();
+	outputText("PLACEHOLDER sex scene: You get a good dicking from Drusk.");
+	NPCs.DruskVaurn.affection(2);
+	Time.advanceMinutes(30);
+	player.orgasm();
+	doNext(resumeFromMenu);
+}
+
+NPCs.DruskVaurn.tapDatAss = function() {
+	clearOutput();
+	outputText("PLACEHOLDER sex scene: You'd get to use your dick to fill Drusk anally.");
+	NPCs.DruskVaurn.affection(2);
+	Time.advanceMinutes(30);
+	player.orgasm();
+	doNext(resumeFromMenu);
+}
+

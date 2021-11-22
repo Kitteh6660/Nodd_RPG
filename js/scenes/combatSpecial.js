@@ -3,70 +3,70 @@
 //------------
 magicMenu = function() { //Spells are housed within combatSpecial.js file.
     menu();
-    //White Spells
-    if (player.spells.blind) addButton(0, "Blind", spellBlind);
-    if (player.spells.chargeWeapon) addButton(1, "Charge Weapon", spellChargeWeapon);
-    if (player.spells.whitefire) addButton(2, "Whitefire", spellWhitefire);
-    //Black Spells
-    if (player.spells.arouse) addButton(5, "Arouse", spellArouse);
-    if (player.spells.heal) addButton(6, "Heal", spellHeal);
-    if (player.spells.might) addButton(7, "Might", spellMight);
-    //Special
-    if (player.findPerk(PerkLib.CleansingPalm) >= 0) addButton(10, "CleansingPalm", spellCleansingPalm);
+	for (var i = 0; i < player.spells.length; i++) {
+		var spell = lookupSpell(player.spells[i]);
+		addButton(i, spell.name, castSpell, spell.func, spell.cost);
+		hint(i, spell.getTooltipDescription());
+	}
     addButton(14, "Back", battleMenu);
 }
 
-//White Spells
+function castSpell(spellFunc, cost) {
+	clearOutput();
+	if (player.MP < spellCost(cost)) {
+		outputText("You lack the mana required to cast this spell.");
+		doNext(magicMenu);
+		return;
+	}
+	player.changeMana(-cost);
+	spellFunc();
+	combatRoundOver();
+}
+
+function spellLivingSalve() {
+	outputText("You concentrate and utter some arcane words, ooze manifesting and covering your body, seeking out whatever wounds or injuries you may have on you and the ooze gets to work mending your body. ");
+	var heal = 20 + player.spellMod() + Math.floor(player.inte / 2) + rand(player.inte);
+	player.changeHP(heal, true);
+	spellXP();
+}
+
 function spellBlind() {
-
+	
+	outputText("You concentrate and utter some arcane words. A bright flash appears in front of your opponent!<br><br>");
+	if (monster.findStatusEffect(StatusEffects.Blind) < 0) {
+		//Chance
+		var chance = 50 + player.spellMod() + player.inte;
+		chance -= Math.floor(monster.wil * 1.5);
+		//Roll for blindness
+		if (rand(100) < chance) {
+			outputText("<b>Your opponent is now blinded!</b>");
+			monster.createStatusEffect(StatusEffects.Blind, 3 + rand(3), 0, 0, 0);
+		}
+		else {
+			outputText("<b>Unfortunately, your opponent managed to blink in the nick of time and avoid getting blinded!</b>");
+		}
+	}
+	else {
+		outputText("Unfortunately, your opponent is already blinded! As such, you have wasted your mana.");
+	}
+	outputText("<br><br>");
+	spellXP();
 }
-function spellChargeWeapon(silent) {
-    if (silent) {
-        player.createStatusEffect(StatusEffects.ChargeWeapon, 10 * spellMod(), 0, 0, 0);
-        return;
-    }
-    if (player.findPerk(PerkLib.BloodMage) < 0 && player.fatigue + spellCost(15) > player.maxFatigue()) {
-        outputText("You are too tired to cast this spell.");
-        doNext(magicMenu);
-        return;
-    }
-    player.changeFatigue(spellCost(15), false);
-    outputText("You utter words of power, summoning an electrical charge around your " + player.weapon.equipmentName + ".  It crackles loudly, ensuring you'll do more damage with it for the rest of the fight.<br><br>");
-    player.createStatusEffect(StatusEffects.ChargeWeapon, 10 * spellMod(),0,0,0);
-    gameFlags[SPELLS_CAST]++;
-    spellPerkUnlock();
-    monster.combatAI();
-}
-function spellWhitefire() {
 
-}
-//Black Spells
-function spellArouse() {
-
-}
-function spellHeal() {
-
-}
-function spellMight(silent) {
-
-}
-//Special Spells
-function spellCleansingPalm() {
-
+function spellRouse() {
+	outputText("You concentrate and utter some arcane words and gestures with the intent of arousing your opponent. ");
+	var lustDmg = 10 + player.spellMod() + (player.inte) + rand(Math.round(player.cor / 8));
+	lustDmg -= rand(Math.floor(monster.wil * 1.5));
+	lustDmg += rand(Math.floor(monster.lib / 8));
+	monster.changeLust(lustDmg, true);
+	outputText("<br><br>");
+	spellXP();
 }
 
 //------------
-// P. SPECIAL
+// SPECIALS
 //------------
-physicalSpecials = function() {
-    menu();
-    addButton(14, "Back", battleMenu);
-}
-
-//------------
-// M. SPECIAL
-//------------
-mentalSpecials = function() {
+specialMenu = function() {
     menu();
     addButton(14, "Back", battleMenu);
 }
@@ -86,17 +86,6 @@ function spellMod() {
     return player.spellMod();
 }
 
-function spellPerkUnlock() {
-    if (gameFlags[SPELLS_CAST] >= 5 && player.findPerk(PerkLib.SpellcastingAffinity) < 0) {
-        outputText("<b>You've become more comfortable with your spells, unlocking the Spellcasting Affinity perk and reducing fatigue cost of spells by 20%!</b><br><br>");
-        player.createPerk(PerkLib.SpellcastingAffinity, 20, 0, 0, 0);
-    }
-    if (gameFlags[SPELLS_CAST] >= 15 && player.perkValue(PerkLib.SpellcastingAffinity, 1) < 35) {
-        outputText("<b>You've become more comfortable with your spells, further reducing your spell costs by an additional 15%!</b><br><br>");
-        player.setPerkValue(PerkLib.SpellcastingAffinity, 1, 35);
-    }
-    if (gameFlags[SPELLS_CAST] >= 45 && player.perkValue(PerkLib.SpellcastingAffinity, 1) < 50) {
-        outputText("<b>You've become more comfortable with your spells, further reducing your spell costs by an additional 15%!</b><br><br>");
-        player.setPerkValue(PerkLib.SpellcastingAffinity, 1, 50);
-    }
+function spellXP() {
+
 }

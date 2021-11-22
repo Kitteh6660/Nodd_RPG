@@ -10,8 +10,11 @@ function egoBracerMenu() {
 	addButton(0, "Appearance", appearanceScreen);
 	addButton(1, "Stats", statsScreen);
 	addButton(2, "Perks", perksScreen);
-	addButton(3, "Quests", questsScreen);
-	addButton(4, "Codex", Codex.menu);
+	addButton(3, "Spellbook", spellsScreen);
+	addButton(5, "Quests", questsScreen);
+	addButton(6, "Codex", Codex.menu);
+	addButton(7, "Inventory", Inventory.inventoryMenu);
+	addButtonDisabled(8, "Menagerie", "Coming soon... maybe.");
 	if (player.XP >= player.getXPNeeded() && player.level < levelCap) {
 		addButton(10, "Level Up", levelScreen);
 	}
@@ -249,9 +252,15 @@ function statsScreen() {
 	if (bodyStats.length > 0)
 		outputText("<b><u>Body Stats</u></b><br>" + bodyStats + "<br><br>");
     
+	//Interpersonal Stats
+	var interpersonStats = "";
+	if (npcFlags.outsideInnDruskRelationship > 0);
+		interpersonStats += "<b>Drusk Vaurn Friendship:</b> " + npcFlags.outsideInnDruskRelationship + " points";
+	if (interpersonStats.length > 0)
+		outputText("<b><u>Interpersonal Stats</u></b><br>" + interpersonStats + "<br><br>");
     // Addiction Stats
     var addictStats = "";
-		//Nothing here, but would like to add some addictions to some slug slime.
+		//Nothing here, but would like to add some addictions to some Orolisk slime.
 
     if (addictStats != "")
         outputText("<br><b><u>Addictions</u></b><br>" + addictStats, false);
@@ -380,4 +389,19 @@ function perksScreen() {
 	}
 	egoBracerMenu();
     addButtonDisabled(2, "Perks");
+}
+
+
+function spellsScreen() {
+	clearOutput();
+	if (player.spells.length <= 0) {
+		outputText("You currently don't know any spells...");
+	}
+	else {
+		for (var i = 0; i < player.spells.length; i++) {
+			var spell = lookupSpell(player.spells[i]);
+			outputText("<b>" + spell.name + ":</b> " + spell.cost + " MP - " + spell.description + "<br>");
+		}
+	}
+	addButtonDisabled(5, "Spellbook");
 }

@@ -23,6 +23,7 @@ const HAIR_QUILL                =   5;
 //Beard Type
 const BEARD_NORMAL              =   0;
 const BEARD_GOATEE              =   1;
+const BEARD_MANE                =   2;
 
 //Fur Pattrn
 const FUR_PATTERN_SOLID         =   0;
@@ -66,7 +67,6 @@ const FACE_GOBLIN               =  25;
 const FACE_ORC                  =  26;
 const FACE_WOLF                 =  27;
 const FACE_BIG_CAT              =  28;
-const FACE_CHEETAH              =  29;
 
 //Tongue Type
 const TONGUE_HUMAN              =   0;
@@ -103,6 +103,8 @@ const EARS_DEER                 =  17;
 const EARS_WOLF                 =  18;
 const EARS_SHARK                =  19;
 const EARS_SERGAL               =  20;
+const EARS_BIGCAT               =  21;
+const EARS_TUFTED_CAT           =  22;
 
 //Horn Type
 const HORNS_NONE                =   0;
@@ -165,6 +167,7 @@ const TAIL_TYPE_ECHIDNA         =  23;
 const TAIL_TYPE_DEER            =  24;
 const TAIL_TYPE_WOLF            =  25;
 const TAIL_TYPE_SERGAL          =  26;
+const TAIL_TYPE_LION            =  27;
 
 //Lower Body Type
 const LOWER_BODY_TYPE_HUMAN     =   0;

@@ -14,10 +14,21 @@ function initializeFlags() {
 	codexFlags.unlockedNurk = false;
 	
 	codexFlags.unlockedGreep = false;
+	codexFlags.unlockedMephitoad = false;
+	codexFlags.unlockedMiggwitch = false;
+	codexFlags.unlockedQueril = false;
+	
+	codexFlags.unlockedViviria = false;
+	codexFlags.unlockedVorn = false;
+	codexFlags.unlockedOmnillian = false;
+	codexFlags.unlockedUmbrasia = false;
+	codexFlags.unlockedPsilysium = false;
+	codexFlags.unlockedMorphoria = false;
 
 	//Quest variables
 	questFlags.inductionProgress = 0; // 0 = not started, 10 = completed.
-
+	questFlags.druskQuestProgress = 0; // 0 = not started, 5 = completed. Numbers 5-10 for tracking free drinks.
+	
 	//Location variables
 	locFlags.darklingRowExploreCounter = 0;
 	locFlags.darklingRowFoundVendorCart = false;
@@ -27,6 +38,8 @@ function initializeFlags() {
 	locFlags.darklingRowFoundOutsideInn = false;
 	locFlags.darklingRowSillyModeJerryCooldown = 0;
 	locFlags.darklingRowPrankNurkCooldown = 0;
+	locFlags.darklingRowScarabCrashCooldown = 0;
+	locFlags.darklingRowCarriageDiscovered = false;
 	locFlags.outsideInnRestroomUseCounter = 0;
 	locFlags.outsideInnNightmareFuelDrankCounter = 0;
 

@@ -198,7 +198,12 @@ Inventory.takeItem(item, func)
 Give the player an item. The parameter 'item' is the item type, you can check the item files.
 The parameter 'func' is the function to execute after the item is either taken or abandoned.
 
+player.hasItem(item, qty)
+Checks if the player has the item of that type.
+The optional parameter 'qty' checks if the player has sufficient item quantity of that type.
 
+player.itemCount(item)
+Returns the amount of quantity the player has for the item of that type. Returns 0 if there are no items found.
 
 player.destroyItems(item, qty)
 Removes an item of that type from the player. The parameter 'qty' is the amount to remove from player.

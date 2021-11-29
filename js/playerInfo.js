@@ -11,8 +11,8 @@ function egoBracerMenu() {
 	addButton(1, "Stats", statsScreen);
 	addButton(2, "Perks", perksScreen);
 	addButton(3, "Spellbook", spellsScreen);
-	addButton(5, "Quests", questsScreen);
-	addButton(6, "Codex", Codex.menu);
+	addButton(5, "Codex", Codex.menu);
+	addButton(6, "Quests", questsScreen);
 	addButton(7, "Inventory", Inventory.inventoryMenu);
 	addButtonDisabled(8, "Menagerie", "Coming soon... maybe.");
 	if (player.XP >= player.getXPNeeded() && player.level < levelCap) {
@@ -403,5 +403,6 @@ function spellsScreen() {
 			outputText("<b>" + spell.name + ":</b> " + spell.cost + " MP - " + spell.description + "<br>");
 		}
 	}
-	addButtonDisabled(5, "Spellbook");
+	egoBracerMenu();
+	addButtonDisabled(3, "Spellbook");
 }

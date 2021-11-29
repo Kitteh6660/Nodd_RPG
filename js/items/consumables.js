@@ -58,13 +58,13 @@ Items.Consumables.Cinderbean.value = 6;
 //------------
 // DRUG TOOLS
 //------------
-Items.Consumables.SmokePipe = new Item("SmkPipe", "Smoke Pipe", "a pipe for smoking", ITEM_TYPE_CONSUMABLE);
+Items.Consumables.SmokePipe = new Item("SmkPipe", "Smoke Pipe", "a pipe for smoking", ITEM_TYPE_MATERIAL);
 Items.Consumables.SmokePipe.description = "A pipe that you can use to inhale substance and smoke.";
 Items.Consumables.SmokePipe.consumeEffect = null;
 Items.Consumables.SmokePipe.value = 100;
 Items.Consumables.SmokePipe.reusable = true;
 
-Items.Consumables.Hookah = new Item("Hookah", "Hookah", "a hookah", ITEM_TYPE_CONSUMABLE);
+Items.Consumables.Hookah = new Item("Hookah", "Hookah", "a hookah", ITEM_TYPE_MATERIAL);
 Items.Consumables.Hookah.description = "It's exactly what you think. A hookah that you can set down on a table and there are tubes in which to inhale from.";
 Items.Consumables.Hookah.consumeEffect = null;
 Items.Consumables.Hookah.value = 100;

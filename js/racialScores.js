@@ -14,6 +14,29 @@ Player.prototype.race = function() {
                 race = "cat-" + this.mf("boy", "girl");
         }
     }
+	if (this.bigCatScore() >= 6) {
+		if (this.tailType == TAIL_TYPE_LION && this.furPattern == FUR_PATTERN_SOLID_UNDERSIDE) {
+			race = "lion";
+		}
+		else if (this.tailType == TAIL_TYPE_CAT && (this.furPattern == FUR_PATTERN_STRIPED_UNDERSIDE || this.furPattern == FUR_PATTERN_STRIPED)) {
+			race = "tiger";
+		}
+		else if (this.tailType == TAIL_TYPE_CAT && this.furPattern == FUR_PATTERN_LEOPARD) {
+			race = "leopard";
+		}
+		else if (this.tailType == TAIL_TYPE_CAT && this.furPattern == FUR_PATTERN_JAGUAR) {
+			race = "jaguar";
+		}
+		else if (this.tailType == TAIL_TYPE_CAT && this.furPattern == FUR_PATTERN_SNEP) {
+			race = "snow leopard";
+		}
+		else if (this.tailType == TAIL_TYPE_CAT && (this.furPattern == FUR_PATTERN_CHEETAH || this.furPattern == FUR_PATTERN_KING_CHEETAH)) {
+			race = "cheetah";
+		}
+		else {
+			race = "big cat";
+		}
+	}
     if (this.lizardScore() >= 4)
         race = "lizan";
     if (this.dragonScore() >= 4) {
@@ -69,6 +92,8 @@ Player.prototype.race = function() {
         else
         if (this.hornType == HORNS_UNICORN)
             race = "unicorn";
+		else if (this.furPattern == FUR_PATTERN_STRIPED)
+			race = "zebra";
         else
             race = "horse";
     }
@@ -451,13 +476,13 @@ Player.prototype.foxScore = function() {
 //Determine cat Rating
 Player.prototype.catScore = function() {
     var catCounter = 0;
-    if (this.faceType == 6)
+    if (this.faceType == FACE_CAT)
         catCounter++;
-    if (this.earType == 5)
+    if (this.earType == EARS_CAT)
         catCounter++;
-    if (this.tailType == 8)
+    if (this.tailType == TAIL_TYPE_CAT)
         catCounter++;
-    if (this.lowerBody == 9)
+    if (this.lowerBody == LOWER_BODY_TYPE_CAT)
         catCounter++;
     if (this.countCocksOfType(CockTypesEnum.CAT) > 0)
         catCounter++;
@@ -467,8 +492,30 @@ Player.prototype.catScore = function() {
         catCounter++;
     if (this.breastRows.length > 3)
         catCounter -= 2;
-    //Fur only counts if some canine features are present
-    if (this.skinType == 1 && catCounter > 0)
+    if (this.skinType == SKIN_TYPE_FUR && catCounter > 0)
+        catCounter++;
+    return catCounter;
+}
+
+Player.prototype.bigCatScore = function() {
+    var catCounter = 0;
+    if (this.faceType == FACE_BIG_CAT)
+        catCounter += 2;
+    if (this.earType == EARS_BIGCAT)
+        catCounter += 2;
+    if (this.tailType == TAIL_TYPE_CAT || this.tailType == TAIL_TYPE_LION)
+        catCounter++;
+    if (this.lowerBody == LOWER_BODY_TYPE_CAT)
+        catCounter++;
+    if (this.countCocksOfType(CockTypesEnum.CAT) > 0)
+        catCounter++;
+    if (this.breastRows.length > 1 && catCounter > 0)
+        catCounter++;
+    if (this.breastRows.length == 3 && catCounter > 0)
+        catCounter++;
+    if (this.breastRows.length > 3)
+        catCounter--;
+    if (this.skinType == SKIN_TYPE_FUR && catCounter > 0)
         catCounter++;
     return catCounter;
 }

@@ -84,7 +84,7 @@ SlyneSorceress.lustMagicAttack = function() {
     //Lust check
     if (player.lust < 30) outputText("You feel strangely warm. ");
     if (player.lust >= 30 && player.lust < 60) outputText("Blood rushes to your groin as a surge of arousal hits you, making your knees weak. ");
-    if (player.lust >= 60) outputText("ISorceresss of yourself fellating and fucking the Slyne assault your mind, unnaturally arousing you. ");
+    if (player.lust >= 60) outputText("Images of yourself fellating and fucking the Slyne assault your mind, unnaturally arousing you. ");
     //Genitals check
     if (player.cocks.length > 0) {
         if (player.lust >= 60)

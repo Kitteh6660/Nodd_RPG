@@ -7,7 +7,12 @@ function appearanceScreen() {
     var temp = 0;
 	if (player.race() != player.originalRace)
 		outputText("You were Inducted as a " + player.originalRace + ", but gave that up as you explored the strange realm of Nodd. ");
-	outputText("You are a " + Math.floor(player.tallness / 12) + " foot " + player.tallness % 12 + " inch tall " + player.maleFemaleHerm() + " " + player.race() + ", with " + player.bodyType() + ".");
+	outputText("You are a ");
+	if (useMetrics)
+		outputText(Math.floor(player.tallness * 2.54) + " cm");
+	else
+		outputText(Math.floor(player.tallness / 12) + " foot " + player.tallness % 12 + " inch");
+	outputText(" tall " + player.maleFemaleHerm() + " " + player.race() + ", with " + player.bodyType() + ".");
 	outputText(" <b>You are currently " + (player.isNaked() ? "devoid of any form of clothing" : "wearing your " + player.armorDescript()) + " and using your " + (player.weapon.id != Items.NOTHING.id ? player.weapon.equipmentName : "fists") + " as a weapon.</b>");
     //HEAD DESCRIPTION
     //Face
@@ -124,6 +129,16 @@ function appearanceScreen() {
             if (player.eyeType != EYES_BLACK_EYES_SAND_TRAP)
                 outputText(" Of course, no feline face would be complete without vertically slit eyes.");
             break;
+        case FACE_BIG_CAT:
+            if (player.skinType == SKIN_TYPE_PLAIN || player.skinType == SKIN_TYPE_GOO)
+                outputText(" You have a big cat-like face, complete with a cute, moist nose and whiskers. The " + player.skin() + " that is revealed by your lack of fur looks quite unusual on so feline a face.");
+            if (player.skinType == SKIN_TYPE_FUR)
+                outputText(" You have a big cat-like face, complete with moist nose and whiskers. Your " + player.skinDesc + " is " + player.furColor + ", hiding your " + player.skin(true,false) + " underneath.");
+            if (player.skinType == SKIN_TYPE_SCALES)
+                outputText(" Your facial structure blends humanoid features with those of a big cat. A moist nose and whiskers are included, but overlaid with glittering " + player.skinFurScales() + ".");
+            if (player.eyeType != EYES_BLACK_EYES_SAND_TRAP)
+                outputText(" Of course, no feline face would be complete without vertically slit eyes.");
+            break;
         case FACE_COW_MINOTAUR:
             if (player.skinType == SKIN_TYPE_PLAIN || player.skinType == SKIN_TYPE_GOO)
                 outputText(" You have a face resembling that of a minotaur, with cow-like features, particularly a squared off wet nose. Despite your lack of fur elsewhere, your visage does have a short layer of " + player.furColor + " fuzz.");
@@ -224,6 +239,8 @@ function appearanceScreen() {
             outputText(" A pair of large pointy ears stick out from your skull.");
         else if (player.earType == EARS_CAT)
             outputText(" A pair of cute, fuzzy cat ears have sprouted from the top of your head.");
+        else if (player.earType == EARS_BIGCAT)
+            outputText(" A pair of fuzzy, triangular but rounded big cat ears have sprouted from the top of your head.");
         else if (player.earType == EARS_PIG)
             outputText(" A pair of pointy, floppy pig ears have sprouted from the top of your head.");
         else if (player.earType == EARS_LIZARD)
@@ -269,6 +286,8 @@ function appearanceScreen() {
             outputText(" The " + player.hairDescript() + " on your head is parted by a pair of cute pointed ears, bigger than your old human ones.");
         else if (player.earType == EARS_CAT)
             outputText(" The " + player.hairDescript() + " on your head is parted by a pair of cute, fuzzy cat ears, sprouting from atop your head and pivoting towards any sudden noises.");
+        else if (player.earType == EARS_BIGCAT)
+            outputText(" The " + player.hairDescript() + " on your head is parted by a pair of fuzzy, triangular but rounded big cat ears, sprouting from atop your head and pivoting towards any sudden noises.");
         else if (player.earType == EARS_LIZARD)
             outputText(" The " + player.hairDescript() + " atop your head makes it nigh-impossible to notice the two small rounded openings that are your ears.");
         else if (player.earType == EARS_BUNNY)
@@ -283,7 +302,6 @@ function appearanceScreen() {
             outputText(" The " + player.hairDescript() + " on your head parts around a pair of egg-shaped, furry raccoon ears.");
         else if (player.earType == EARS_MOUSE)
             outputText(" The " + player.hairDescript() + " atop your head is funneled between and around a pair of large, dish-shaped mouse ears that stick up prominently.");
-        //<mod> Mod-added ears
         else if (player.earType == EARS_PIG)
             outputText(" The " + player.hairDescript() + " on your head is parted by a pair of pointy, floppy pig ears. They often flick about when you’re not thinking about it.");
         else if (player.earType == EARS_RHINO)
@@ -292,7 +310,8 @@ function appearanceScreen() {
             outputText(" Your " + player.hairDescript() + " makes it near-impossible to see the small, rounded openings that are your ears.");
         else if (player.earType == EARS_DEER)
             outputText(" The " + player.hairDescript() + " on your head parts around a pair of deer-like ears that grow up from your head.");
-        //</mod>
+        else if (player.earType == EARS_SERGAL)
+            outputText(" Your " + player.hairDescript() + " is parted by a pair of fluffy sergal ears that rise up from the top of your head and extend backwards.");
         if (player.antennae == ANTENNAE_BEE) {
             if (player.earType == EARS_BUNNY)
                 outputText(" Limp antennae also grow from just behind your hairline, waving and swaying in the breeze with your ears.");
@@ -631,6 +650,9 @@ function appearanceScreen() {
             break;
         case TAIL_TYPE_CAT:
             outputText(" A soft " + player.furColor + " cat-tail sprouts just above your " + player.buttDescript() + ", curling and twisting with every step to maintain perfect balance.");
+            break;
+        case TAIL_TYPE_LION:
+            outputText(" A soft " + player.furColor + " lion-tail sprouts just above your " + player.buttDescript() + ", curling and twisting with every step to maintain perfect balance. It has a tuft of fur at the end.");
             break;
         case TAIL_TYPE_LIZARD:
             outputText(" A tapered tail hangs down from just above your " + player.assDescript() + ". It sways back and forth, assisting you with keeping your balance.");

@@ -546,7 +546,7 @@ Inventory.placeIn = function(startSlot, endSlot, slotNum) {
 
 	//First, do we have that item already within the right range of player.itemSlots?
 	for (x = startSlot; x < endSlot; x++) { //Find any slots which already hold the item that is being stored
-		if (player.itemSlots[x].itype == player.itemSlots[slotNum].itype && player.itemSlots[x].quantity < player.itemSlots[slotNum].itype.getMaxStackSize()) { // If there is an item of the same kind and there is less than five...
+		if (player.itemSlots[x].itype == player.itemSlots[slotNum].itype && player.itemSlots[x].quantity < player.itemSlots[x].itype.getMaxStackSize()) { // If there is an item of the same kind and there is less than five...
 			player.itemSlots[x].quantity += 1; // Increase the quantity in the slot
 			outputText("You add " + player.itemSlots[slotNum].itype.shortName + " into storage slot " + num2Text(x + 1 - startSlot) + ".<br>"); //TODO Take out storage slot number after stash code is complete.
 			player.itemSlots[slotNum].removeOneItem();

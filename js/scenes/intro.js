@@ -19,6 +19,8 @@ CharCreation.initializeNewGame = function() {
 		doYesNo(CharCreation.yesToStartWhileGameInProgress, playerMenu);
 		return;
 	}
+	//Reset flags
+	initializeFlags();
     //Initialize player
     player = new Player();
 	player.name = "Outsider";
@@ -99,7 +101,8 @@ CharCreation.finishCreationPrompt = function() {
 CharCreation.speciesSelectMenu = function() {
 	clearOutput();
 	outputText("What are your species?<br><br>");
-	outputText("More species will be added over time as the game development progresses!");
+	outputText("More species will be added over time as the game development progresses!<br><br>");
+	outputText("<b>NOTE:</b> Changing species will reset your height so remember to set your height accordingly!");
 	menu();
 	addButton(0, "Humanoid", CharCreation.speciesSelectSubmenu, "humanoid");
 	addButton(1, "Canine", CharCreation.speciesSelectSubmenu, "canine");
@@ -115,6 +118,8 @@ CharCreation.speciesSelectMenu = function() {
 }
 CharCreation.speciesSelectSubmenu = function(category) {
 	menu();
+	addButtonDisabled(4, "Next");
+	addButtonDisabled(9, "Previous");
 	if (category == "humanoid") {
 		addButton(0, "Human", CharCreation.speciesSelection, "human"); hint(0, "Your typical human, originally native to Earth.");
 		addButton(1, "Elf", CharCreation.speciesSelection, "elf"); hint(1, "Cute humanoid with pointy ears! They live much longer than humans and they tend to have affinity for nature.");
@@ -124,39 +129,40 @@ CharCreation.speciesSelectSubmenu = function(category) {
 		//addButton(6, "Orc", CharCreation.speciesSelection, "orc"); hint(6, "A brutal-looking green-skinned humanoid. Orcs tend to fight for glory, and they pride themselves in being great warriors.");
 	}
 	else if (category == "canine") {
-		addButton(0, "Dog", CharCreation.speciesSelection, "dog");
-		addButton(1, "Wolf", CharCreation.speciesSelection, "wolf");
-		//addButton(2, "Coyote", CharCreation.speciesSelection, "coyote");
-		addButton(3, "Fox", CharCreation.speciesSelection, "fox");
+		addButton(0, "Dog", CharCreation.speciesSelection, "dog"); hint(0, "An anthropomorphic dog species. Woof.");
+		addButton(1, "Wolf", CharCreation.speciesSelection, "wolf"); hint(1, "An anthropomorphic wolf species.");
+		//addButton(2, "Coyote", CharCreation.speciesSelection, "coyote"); hint(2, "An anthropomorphic coyote species.");
+		addButton(3, "Fox", CharCreation.speciesSelection, "fox"); hint(3, "An anthropomorphic fox species.");
 	}
 	else if (category == "feline") {
-		addButton(0, "Cat", CharCreation.speciesSelection, "cat");
-		//addButton(1, "Lion", CharCreation.speciesSelection, "lion");
-		//addButton(2, "Tiger", CharCreation.speciesSelection, "tiger");
-		//addButton(3, "Jaguar", CharCreation.speciesSelection, "jaguar");
-		//addButton(4, "Leopard", CharCreation.speciesSelection, "leopard");
-		//addButton(5, "Snow Leopard", CharCreation.speciesSelection, "snep");
-		//addButton(6, "Cheetah", CharCreation.speciesSelection, "cheetah");
-		//addButton(7, "Caracal", CharCreation.speciesSelection, "caracal");
-		//addButton(8, "Lynx", CharCreation.speciesSelection, "lynx");
-		//addButton(9, "Cougar", CharCreation.speciesSelection, "cougar");
+		addButton(0, "Cat", CharCreation.speciesSelection, "cat"); hint(0, "An anthropomorphic cat species. Cats come in a lot of fur patterns. Meow.");
+		addButton(1, "Lion", CharCreation.speciesSelection, "lion"); hint(1, "An anthropomorphic lion species. Males are known to sport distinct mane and both genders also possess tail tuft at the tip of tail.");
+		addButton(2, "Tiger", CharCreation.speciesSelection, "tiger"); hint(2, "An anthropomorphic tiger species.");
+		addButton(3, "Jaguar", CharCreation.speciesSelection, "jaguar"); hint(3, "An anthropomorphic jaguar species.");
+		addButton(5, "Leopard", CharCreation.speciesSelection, "leopard"); hint(5, "An anthropomorphic leopard species.");
+		addButton(6, (silly ? "Snep" : "Snow Leopard"), CharCreation.speciesSelection, "snep"); hint(6, "An anthropomorphic snow leopard species.");
+		addButton(7, "Cheetah", CharCreation.speciesSelection, "cheetah"); hint(7, "An anthropomorphic cheetah species.");
+		//addButton(8, "Caracal", CharCreation.speciesSelection, "caracal"); hint(8, "An anthropomorphic caracal species. Known for the ear tufts.");
+		//addButton(10, "Lynx", CharCreation.speciesSelection, "lynx"); hint(10, "An anthropomorphic lynx species.");
+		//addButton(11, "Cougar", CharCreation.speciesSelection, "cougar"); hint(11, "An anthropomorphic cougar species.");
 	}
 	else if (category == "equine") {
-		addButton(0, "Horse", CharCreation.speciesSelection, "horse");
-		//addButton(1, "Donkey", CharCreation.speciesSelection, "donkey");
-		//addButton(2, "Zebra", CharCreation.speciesSelection, "zebra");
+		addButton(0, "Horse", CharCreation.speciesSelection, "horse"); hint(0, "An anthropomorphic horse species. Neigh!");
+		//addButton(1, "Donkey", CharCreation.speciesSelection, "donkey"); hint(1, "An anthropomorphic donkey species. Neigh!");
+		addButton(2, "Zebra", CharCreation.speciesSelection, "zebra"); hint(2, "An anthropomorphic zebra species. Neigh!");
+		addButton(3, "Unicorn", CharCreation.speciesSelection, "unicorn"); hint(3, "An anthropomorphic unicorn species. Best known for a singular horn protruding from forehead.");
 	}
 	else if (category == "mammals") {
 		//addButton(0, "Bear", CharCreation.speciesSelection, "bear");
 		//addButton(1, "Wolverine", CharCreation.speciesSelection, "wolverine");
-		addButton(2, "Raccoon", CharCreation.speciesSelection, "raccoon");
+		addButton(2, (silly ? "Trash panda" : "Raccoon"), CharCreation.speciesSelection, "raccoon");
 		//addButton(3, "Badger", CharCreation.speciesSelection, "badger");
-		//addButton(4, "Skunk", CharCreation.speciesSelection, "skunk");
-		//addButton(5, "Deer", CharCreation.speciesSelection, "deer");
-		addButton(6, "Pig", CharCreation.speciesSelection, "pig");
-		addButton(7, "Boar", CharCreation.speciesSelection, "boar");
-		//addButton(8, "Goat", CharCreation.speciesSelection, "goat");
-		//addButton(9, "Rhinoceros", CharCreation.speciesSelection, "rhino");
+		//addButton(5, "Skunk", CharCreation.speciesSelection, "skunk");
+		//addButton(6, "Deer", CharCreation.speciesSelection, "deer");
+		addButton(7, "Pig", CharCreation.speciesSelection, "pig");
+		addButton(8, "Boar", CharCreation.speciesSelection, "boar");
+		//addButton(10, "Goat", CharCreation.speciesSelection, "goat");
+		//addButton(11, "Rhinoceros", CharCreation.speciesSelection, "rhino");
 	}
 	else if (category == "avian") {
 		//addButton(0, "Bird", CharCreation.speciesSelection, "bird");
@@ -168,8 +174,8 @@ CharCreation.speciesSelectSubmenu = function(category) {
 		//addButton(1, "Drake", CharCreation.speciesSelection, "drake");
 		addButton(2, "Dragon", CharCreation.speciesSelection, "dragon");
 		//addButton(3, "Kobold", CharCreation.speciesSelection, "kobold");
-		//addButton(4, "Naga", CharCreation.speciesSelection, "naga");
-		//addButton(5, "Raptor", CharCreation.speciesSelection, "raptor");
+		//addButton(5, "Naga", CharCreation.speciesSelection, "naga");
+		//addButton(6, "Raptor", CharCreation.speciesSelection, "raptor"); hint(5, "An anthropomorphic dinosaur species. The original species were thought to be extinct for millions of years but thanks to a string of events, they were brought back although they are now anthropomorphic.");
 	}
 	else if (category == "insectoid") {
 		//addButton(0, "Dragonfly", CharCreation.speciesSelection, "dragonfly");
@@ -190,6 +196,7 @@ CharCreation.speciesSelectSubmenu = function(category) {
 CharCreation.speciesSelection = function(species) {
 	// Reset things back.
 	player.furPattern = FUR_PATTERN_SOLID;
+	player.furColor2 = "";
 	// Humanoid species
 	if (species == "human") {
 		player.skinType = SKIN_TYPE_PLAIN;
@@ -399,6 +406,115 @@ CharCreation.speciesSelection = function(species) {
 		}
 		player.originalRace = "cat";
 	}
+	if (species == "lion") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_BIG_CAT;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_CAT;
+		player.beardType = BEARD_MANE;
+		player.furPattern = FUR_PATTERN_SOLID_UNDERSIDE;
+		player.hornsType = HORNS_NONE;
+		player.horns = 0;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_CAT;
+		player.lowerBody = LOWER_BODY_TYPE_CAT;
+		player.tailType = TAIL_TYPE_LION;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.CAT;
+		}
+		player.originalRace = "lion";
+	}
+	if (species == "tiger") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_BIG_CAT;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_CAT;
+		player.furPattern = FUR_PATTERN_STRIPED_UNDERSIDE;
+		player.furColor = "orange";
+		player.furColor2 = "black";
+		player.hornsType = HORNS_NONE;
+		player.horns = 0;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_CAT;
+		player.lowerBody = LOWER_BODY_TYPE_CAT;
+		player.tailType = TAIL_TYPE_CAT;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.CAT;
+		}
+		player.originalRace = "tiger";
+	}
+	if (species == "leopard") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_BIG_CAT;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_CAT;
+		player.furPattern = FUR_PATTERN_LEOPARD;
+		player.furColor = "yellow";
+		player.furColor2 = "black";
+		player.hornsType = HORNS_NONE;
+		player.horns = 0;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_CAT;
+		player.lowerBody = LOWER_BODY_TYPE_CAT;
+		player.tailType = TAIL_TYPE_CAT;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.CAT;
+		}
+		player.originalRace = "leopard";
+	}
+	if (species == "jaguar") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_BIG_CAT;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_CAT;
+		player.furPattern = FUR_PATTERN_JAGUAR;
+		player.furColor = "yellow";
+		player.furColor2 = "black";
+		player.hornsType = HORNS_NONE;
+		player.horns = 0;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_CAT;
+		player.lowerBody = LOWER_BODY_TYPE_CAT;
+		player.tailType = TAIL_TYPE_CAT;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.CAT;
+		}
+		player.originalRace = "jaguar";
+	}
+	if (species == "cheetah") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_BIG_CAT;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_CAT;
+		player.furPattern = FUR_PATTERN_CHEETAH;
+		player.furColor = "yellow";
+		player.furColor2 = "black";
+		player.hornsType = HORNS_NONE;
+		player.horns = 0;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_CAT;
+		player.lowerBody = LOWER_BODY_TYPE_CAT;
+		player.tailType = TAIL_TYPE_CAT;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.CAT;
+		}
+		player.originalRace = "cheetah";
+	}
 	// Equine species
 	if (species == "horse") {
 		player.skinType = SKIN_TYPE_FUR;
@@ -418,6 +534,48 @@ CharCreation.speciesSelection = function(species) {
 			player.cocks[0].cockType = CockTypesEnum.HORSE;
 		}
 		player.originalRace = "horse";
+	}
+	if (species == "zebra") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_HORSE;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_HORSE;
+		player.furPattern = FUR_PATTERN_STRIPED;
+		player.furColor = "white";
+		player.furColor2 = "black";
+		player.hornsType = HORNS_NONE;
+		player.horns = 0;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_NORMAL;
+		player.lowerBody = LOWER_BODY_TYPE_HOOFED;
+		player.tailType = TAIL_TYPE_HORSE;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.HORSE;
+		}
+		player.originalRace = "horse";
+	}
+	if (species == "unicorn") {
+		player.skinType = SKIN_TYPE_FUR;
+		player.faceType = FACE_HORSE;
+		player.eyeType = EYES_HUMAN;
+		player.earType = EARS_HORSE;
+		player.furColor = "white";
+		player.hornsType = HORNS_UNICORN;
+		player.horns = 6;
+		player.gills = false;
+		player.antennae = ANTENNAE_NONE;
+		player.armType = ARM_TYPE_HUMAN;
+		player.clawType = CLAW_TYPE_NORMAL;
+		player.lowerBody = LOWER_BODY_TYPE_HOOFED;
+		player.tailType = TAIL_TYPE_HORSE;
+		player.wingType = WING_TYPE_NONE;
+		if (player.hasCock()) {
+			player.cocks[0].cockType = CockTypesEnum.HORSE;
+		}
+		player.originalRace = "unicorn";
 	}
 	// Mammal species
 	if (species == "raccoon") {

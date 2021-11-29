@@ -1,5 +1,5 @@
 //Variables that can be set as development progresses.
-var gameVersion = "0.1.3";
+var gameVersion = "0.1.4";
 var saveVersion = 1; //If this value is increased, the saves will be upgraded to accommodate the new changes.
 var levelCap = 5; //Determines the maximum level a player can attain. This will be raised as more content gets added over time. Planned to go up to level 50.
 
@@ -19,15 +19,16 @@ var scatEnabled = false;
 var goreEnabled = false;
 var infestEnabled = false;
 var plushifyEnabled = false;
+var bestialityEnabled = false;
 
 //Store data for fonts
 var buttonFont = "Palatino Linotype";
 var mainFont = "Times New Roman";
 var mainFontSizeArray = ["0.9em", "0.95em", "1em", "1.05em", "1.1em", "1.15em", "1.2em", "1.25em", "1.3em", "1.35em", "1.4em", "1.45em", "1.5em"];
-var mainFontSizeIndex = 6; //Goes from 0 to 8. Will be used to pick font size from array.
+var mainFontSizeIndex = 6; //Goes from 0 to 12. Will be used to pick font size from array.
 
 //Core variables
-var player;// = new Player();
+var player;
 var playerMenu = null;
 var gameStarted = false; //Determine if game has already started
 var shiftKeyDown = false;

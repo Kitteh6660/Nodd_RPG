@@ -163,7 +163,7 @@ Locations.OutsideInn.getADrink = function(selection) {
 			outputText("Derp! This text should not appear at all.");
 	}
 	player.refillThirst(35);
-	player.fillBladder(5);
+	player.fillBladder(8);
 	Time.advanceMinutes(5);
 	NPCs.DruskVaurn.affection(1);
 	doNext(Locations.OutsideInn.approachBar);

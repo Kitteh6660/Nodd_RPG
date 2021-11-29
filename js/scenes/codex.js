@@ -1,4 +1,5 @@
 Codex = [];
+Codex.Tutorial = [];
 Codex.NoddWorld = [];
 Codex.Sapient = [];
 Codex.Bestial = [];
@@ -35,30 +36,235 @@ Codex.menu = function() {
 	setHeader("Codex");
 	outputText("Welcome to the Codex! Your Ego Bracer comes equipped with codex that will allow you to get more information on the species of Nodd.");
 	menu();
-	addButton(0, "World of Nodd", Codex.NoddWorld.page)
-	addButton(1, "Sapient Species", Codex.Sapient.page);
-	addButton(2, "Bestial Species", Codex.Bestial.page);
-	addButton(3, "Houses & Cults", Codex.Factions.page);
-	addButton(4, "Artifacts", Codex.Artifacts.page);
+	addButton(0, "Tutorial", Codex.Tutorial.page);
+	addButton(1, "World of Nodd", Codex.NoddWorld.page);
+	addButton(2, "Factions", Codex.Factions.page);
+	addButton(3, "Sapient Species", Codex.Sapient.page);
+	addButton(4, "Bestial Species", Codex.Bestial.page);
 	addButton(14, "Back", enterEgoBracerMenu);
 }
 
+// Tutorial
+Codex.Tutorial.page = function() {
+	menu();
+	addButton(0, "Your Stats", Codex.Tutorial.stats);
+	addButton(1, "Navigation", Codex.Tutorial.navigation);
+	addButton(2, "Combat", Codex.Tutorial.combat);
+	addButton(3, "Levelling Up", Codex.Tutorial.levelUp);
+	addButton(14, "Back", Codex.menu);
+}
+
+Codex.Tutorial.stats = function() {
+	clearOutput();
+	setHeader("Codex: Your Stats");
+	Codex.formatHeaderText("Your Stats");
+	outputText("You have stats that define you.<br><br>");
+	Codex.formatSubheaderText("Your Stats");
+	outputText("<b>HP:</b> Your hitpoints. How much of a beating you can sustain. If this reaches zero, you lose the battle. You can replenish by resting, sleeping or from natural regeneration when well-sated.<br>");
+	outputText("<b>MP:</b> Your mana. How many times you can cast spells. If this reaches low, you won't be able to cast spells. You can replenish by spending gloam.<br>");
+	outputText("<b>Lust:</b> Your current level of arousal. If this reaches maximum, you will be overwhelmed with arousal and lose the battle. You can relieve your lust buildup by masturbating or having sex. Lust slowly increases over time up to a threshold.<br><br>");
+	outputText("<b>Energy:</b> Determines how energetic or tired you are. Slowly depletes over time, replenish by sleeping in a bed. Replenishing mana in battles also costs energy. Don't let your energy run out!<br>");
+	outputText("<b>Satiety:</b> Determines how full or hungry you are. Slowly depletes over time, replenish by eating food. There are bad effects if you get too hungry.<br>");
+	outputText("<b>Hydration:</b> Determines how hydrated or parched you are. Slowly depletes over time, replenish by drinking beverages. There are bad effects if you get too thirsty.<br>");
+	outputText("<b>Bladder:</b> Determines how badly you need to go. Slowly fills over time, empty by using restrooms. Try not to have an embarrassing accident!<br><br>");
+	Codex.formatSubheaderText("Your Attributes");
+	outputText("<b>Strength:</b> How strong you are. Governs melee damage.<br>");
+	outputText("<b>Dexterity:</b> How agile you are. Governs accuracy, dodge chance, and critical chance.<br>");
+	outputText("<b>Endurance:</b> How durable you are. Governs maximum HP.<br>");
+	outputText("<b>Intelligence:</b> How smart you are. Governs maximum MP and spell effectiveness.<br>");
+	outputText("<b>Willpower:</b> How mentally prepared you are. Governs spell resistance and lust resistance.<br>");
+	outputText("<b>Charisma:</b> How charming you are. Governs tease damage and may even make it easier to convince certain folks.<br>");
+	outputText("<b>Libido:</b> How easy it is for you to get aroused. Determines lust buildup rate and threshold, and also influences tease and certain spells.<br>");
+	outputText("<b>Corruption:</b> How much of a hold the City of Nodd has on you. Affects certain spells. Having high corruption may be a terrible idea.<br><br>");
+	Codex.formatSubheaderText("Advancement");
+	outputText("<b>Level:</b> Your overall power. Gain enough experience to level up.<br>");
+	outputText("<b>XP:</b> Your experience points. A measurement of your current progress until your next level.<br>");
+	outputText("<b>Gloam:</b> Chaos energy that serves both as the currency of Nodd and to replenish your mana. Indulge to gain gloam!<br>");
+	Codex.Tutorial.page();
+}
+
+Codex.Tutorial.navigation = function() {
+	clearOutput();
+	setHeader("Codex: Navigation");
+	Codex.formatHeaderText("Navigation");
+	outputText("You can navigate by pressing on the navigation buttons or using WASD, Q & E. In most traversable areas, the navigation buttons will represent North, South, West, East, Up, and Down.");
+	Codex.Tutorial.page();
+}
+
+Codex.Tutorial.combat = function() {
+	clearOutput();
+	setHeader("Codex: Combat");
+	Codex.formatHeaderText("Combat");
+	outputText("Throughout your travels in Nodd, you will encounter some hostiles who will engage you in combat.<br><br>");
+	Codex.formatSubheaderText("How to Win");
+	outputText("To beat your opponent, you need to reduce their <b>HP</b> to zero or raise their <b>Lust</b> to maximum.<br><br>");
+	outputText("But be careful, you lose if your opponent does the same to you and they can have their way with you.<br><br>");
+	Codex.formatSubheaderText("Combat Actions");
+	outputText("<b>Attack:</b> Attempt to make a melee strike against your opponent. In most cases, the chance of success is based on your dexterity versus your opponent's.<br>");
+	outputText("<b>Tease:</b> Attempt to seduce your opponent by showcasing your body parts. Your opponents have differing preferences which affect effectiveness. Your Charisma is rolled against your opponent's Willpower.<br>");
+	outputText("<b>Specials:</b> Use a special attack of your choice against your opponents, which may have additional effects.<br>");
+	outputText("<b>Spells:</b> Use a spell of your choice, which involves buffing yourself or your allies or hindering your opponents.<br>");
+	outputText("<b>Items:</b> If you have items that can help you in combat, you can use the items.<br>");
+	outputText("<b>Recover MP:</b> Spend gloam and energy to recover your mana.<br>");
+	outputText("<b>Wait:</b> Do nothing. Usually a bad idea unless there are some attacks that require reaction to counter.<br>");
+	outputText("<b>Fantasize:</b> Think about your opponent to intentionally raise your arousal. Generally a bad idea.<br>");
+	outputText("<b>Run:</b> Attempt to escape the combat. Your chance of escaping is determined by your dexterity versus your opponent's.<br><br>");
+	Codex.formatSubheaderText("Tips");
+	outputText("Certain opponents have differing strengths and weaknesses. Try using different gear and tactics to exploit your opponents' weaknesses.<br><br>");
+	Codex.Tutorial.page();
+}
+
+Codex.Tutorial.levelUp = function() {
+	clearOutput();
+	setHeader("Codex: Levelling Up");
+	Codex.formatHeaderText("Levelling Up");
+	outputText("To level up, you will need to accumulate enough experience points (XP) from defeating enemies and completing certain quests.<br><br>");
+	outputText("Once you level up, you can choose three attributes to increase by one. Each time you level up to an even number, you gain one perk point.<br><br>");
+	outputText("You cannot raise your base attribute past 30 (or 35 for Favoured Attribute).");
+	Codex.Tutorial.page();
+}
+
+// World of Nodd
 Codex.NoddWorld.page = function() {
 	menu();
 	addButton(14, "Back", Codex.menu);
+}
+
+// Factions
+Codex.Factions.page = function() {
+	var btn = 0;
+	menu();
+	//The Six Houses
+	Codex.addCodexButton(btn++, "Morphoria", Codex.Factions.entryMorphoria, codexFlags.unlockedMorphoria);
+	Codex.addCodexButton(btn++, "Omnillian", Codex.Factions.entryOmnillian, codexFlags.unlockedOmnillian);
+	Codex.addCodexButton(btn++, "Psilysium", Codex.Factions.entryPsilysium, codexFlags.unlockedPsilysium);
+	Codex.addCodexButton(btn++, "Umbrasia", Codex.Factions.entryUmbrasia, codexFlags.unlockedUmbrasia);
+	Codex.addCodexButton(btn++, "Viviria", Codex.Factions.entryViviria, codexFlags.unlockedViviria);
+	Codex.addCodexButton(btn++, "Vorn", Codex.Factions.entryVorn, codexFlags.unlockedVorn);
+	//The Cults
+	  // Buttons will be added for the cults eventually...
+	addButton(14, "Back", Codex.menu);
+}
+
+Codex.Factions.entryViviria = function() {
+	clearOutput();
+	setHeader("Codex: Viviria");
+	Codex.formatHeaderText("The House of Viviria");
+	outputPic("icon_viviria");
+	outputText("The House of Viviria is the house that represents the life aspect of magic. Their symbols include nature, immortality, and symbiosis. Viviria mages combat their opponents with the forces of nature.<br><br>");
+	outputText("Viviria’s citygod is The Mothertoad, an immense aggregation of corrupted mephitoads. <br><br>");
+	outputText("The house is choked with life, inside and out. It's hard to tell where the hive-like architecture ends and the plantlife begins; branches penetrate walls, roots sprawl along the floor, tamed only by persistent foot traffic. An incessant chorus of chirping and croaking can be heard, day or night. Bioluminescent pustules, insects, plants, and fungi provide the entirety of the building's light. Storm spells are maintained by the house's tempests, making it muggy and wet even indoors in many areas.<br><br>");
+	outputText("The house's official familiar is none other than the Mothertoad’s own spawn - mephitoads.<br><br>");
+	Codex.formatSubheaderText("The Verdant Ones");
+	outputText("A typical Verdant One may be a bright but dreamy sort. Often appearing passive or reserved, there is an undeniable mystical quality to them. One may sense in these mages a great hidden power, reserved only for when it's most needed.<br><br>");
+	outputText("Botanists, shamans and mystics, elementalists and beast-tamers make up their fellowship, just to name a few.<br><br>");
+	Codex.formatSubheaderText("The Hungry Ones");
+	outputText("​This sect harnesses the brutality of nature, choosing to conquer and spread. Many Hungry Ones are essentially necromancers, selecting hosts both dead and alive to further their influence.<br><br>");
+	outputText("While a typical Hungry One may at times appear aggressive or controlling, they are also capable leaders. Some claim to give purpose and security to those who have surrendered to the hardships of Nodd.<br><br>");
+	Codex.Factions.page();
+}
+
+Codex.Factions.entryVorn = function() {
+	clearOutput();
+	setHeader("Codex: Vorn");
+	Codex.formatHeaderText("The House of Vorn");
+	outputPic("icon_vorn");
+	outputText("The House of Vorn represents the flesh aspect of magic. Their symbols include pain, pleasure, sex, and the body. Their general tactic is to undo their opponent's belief through seduction and torment alike.<br><br>");
+	outputText("Vorn's Citygod is Mercian Vetch, a succubus-like entity whose face is always behind a mask.<br><br>");
+	outputText("​The house is castle-like, its towering spires spiked and nightmarish. Sletchers roam inside and out, seeking attention from the mages of the house, and seducing those just passing through. Crimsons and purples color the interior, and decor consists of satin, leather, chains, and dangerous-looking plants.<br><br>");
+	outputText("Vorn mages indulge in ritualistic sadomasochism, and most are heavily scarred.<br><br>");
+	outputText("Vorn's official familiar is the sletcher, a sensitive, pain-loving quadruped.<br><br>");
+	Codex.formatSubheaderText("The Indulgent Ones");
+	outputText("This sect focuses on seduction, sensation, lust and intimacy. They are often enjoying the fruits of The Vibrant Ones' labor.<br><br>");
+	outputText("​A typical Indulgent One may be very in touch with their emotions, and may sense the world more deeply than those around them. While their seductive nature and love of sensation can appear shallow to some, they are often loving, romantic, and eager to connect.<br><br>");
+	Codex.formatSubheaderText("The Vibrant Ones");
+	outputText("This sect focuses on beauty, strength, and putting on a show - frequently, a show for The Indulgent Ones to enjoy. Often these shows are intense experiences, and oftentimes violent in nature.<br><br>");
+	outputText("​A typical Vibrant One is a scintillating personality. With a penchant for drama and a love for attention, they are often lively and charismatic individuals who know just how to dazzle the world around them.<br><br>");
+	Codex.Factions.page();
+}
+
+Codex.Factions.entryOmnillian = function() {
+	clearOutput();
+	setHeader("Codex: Omnillian");
+	Codex.formatHeaderText("The House of Omnillian");
+	outputPic("icon_omnillian");
+	outputText("The house of Omnillian is the house that represents the control aspect of magic. Their symbols include creation, technology, innovation, knowledge, quantification, and exploration. Their general tactic is to undo their opponent's belief through innovative technology.<br><br>");
+	outputText("Omnillian’s citygod is Quin Aven.<br><br>");
+	outputText("Omnillian's house is built around efficiency and the demonstration of gloam at is most glorious. The entire building is technologically showy, and much of it is built to be easy to navigate.<br><br>");
+	outputText("Arcane constructs known as “spooks” patrol the house's campus. These small, bird-like machines idly follow and observe anyone in their proximity.<br><br>");
+	Codex.formatSubheaderText("The Inspired Ones");
+	outputText("This sect focuses on developing spells and artifacts for distribution by the Council. Roboticists, tinkers, and architects make up their numbers, to name a few.<br><br>");
+	outputText("A typical Inspired One is industrious and innovative, and often both intelligent and open-minded. Some are creative geniuses, but often don't recognize it.<br><br>");
+	Codex.formatSubheaderText("The Masterful Ones");
+	outputText("This sect focuses on quantifying Nodd. Most mages of this sect are employed in the Court of Analysis.<br><br>");
+	outputText("A typical Masterful One is an obsessive perfectionist, and can seem cold, severe, or even objectifying when focused on a problem.<br><br>");
+	Codex.Factions.page();
+}
+
+Codex.Factions.entryUmbrasia = function() {
+	clearOutput();
+	setHeader("Codex: Umbrasia");
+	Codex.formatHeaderText("The House of Umbrasia");
+	outputPic("icon_umbrasia");
+	outputText("The house of Umbrasia is the house that represents the death aspect of magic. Their symbols include destruction, decay, darkness, ritual, mourning, revenge, sleep, solitude, meditation, and silence. <br><br>");
+	outputText("Umbrasia’s citygod is Illa Phasmere, a ghostly, skeletal abomination.<br><br>");
+	outputText("Umbrasia's house is reminiscent of a tomb, dusty and cold. Wispy tapestries hang from the ceiling, and tall statues keep watch over the long, solemn hallways. The interior is dark and mostly lit only by pale blue candlelight.<br><br>");
+	outputText("The house’s official familiar is the squall, a creature whose scream causes their prey's fear of death to vanish.<br><br>");
+	Codex.formatSubheaderText("The Languid Ones");
+	outputText("​This sect focuses on blood-healing.<br><br>");
+	outputText("​A typical Languid One is a self-sufficient sort. They tend to be fastidious and well-kept, reliable and emotionally sturdy. Whether out of charity or habit, they often find themselves quietly righting the wrongs of others less capable.<br><br>");
+	Codex.formatSubheaderText("The Restless Ones");
+	outputText("This sect focuses on avenging past deaths - of themselves and others.<br><br>");
+	outputText("​A typical Restless One tends to be fiercely independent, and some go their own way shortly after being granted mageship. They tend to fear little beyond the loss of their freedom.<br><br>");
+	Codex.Factions.page();
+}
+
+Codex.Factions.entryPsilysium = function() {
+	clearOutput();
+	setHeader("Codex: Psilysium");
+	Codex.formatHeaderText("The House of Psilysium");
+	outputPic("icon_psilysium");
+	outputText("The house of Psilysium is the house that represents the mind aspect of magic. Their symbols include consciousness, dreams, substance-use, mazes, and puzzles. Their general tactic is to undo their opponent through manipulation of the mind.<br><br>");
+	outputText("Filo Rooke is Psilysium’s citygod.<br><br>");
+	outputText("​Much of the house is labyrinthine, and a confusing hell to navigate; many of its halls and rooms seem to serve no purpose whatsoever, and some include cryptic puzzles - likely to befuddle guests and lower ranks. The house's official familiar, the queril, either helps or hinders one's progress through the house with its illusory antics.<br><br>");
+	outputText("Teal and purple hues color the dimly-lit interior, which is decorated with optical illusions in the form of paintings and patterns, as well as many hanging birdcages and perches for the roaming queril.<br><br>");
+	Codex.formatSubheaderText("The Vexed Ones");
+	outputText("​This sect focuses on exploration and manipulation of the consciousness. With a love of perplexing the self and others, their fellowship includes puzzle-makers, illusionists, and psychic puppetmasters.<br><br>");
+	outputText("A typical Vexed One is a collector of experiences. They love the exotic and the bizarre, and seek novelty at any cost. With their bottomless cache of unlikely anecdotes, a Vexed One can't help but to be entertaining company.<br><br>");
+	Codex.formatSubheaderText("The Lucid Ones");
+	outputText("This sect focuses on knowledge and understanding. These are professors, apothecarists, and philosophers, whose interest in Psilysium is of a more academic or constructive nature.<br><br>");
+	outputText("A typical Lucid One is a brilliant thinker. They may be seen as brooding, cynical or severe, but they carry the burden of their being at all times. Dialogues with a Lucid One - and the monologues they frequently turn into - are invaluable treasures.<br><br>");
+	Codex.Factions.page();
+}
+
+Codex.Factions.entryMorphoria = function() {
+	clearOutput();
+	setHeader("Codex: Morphoria");
+	Codex.formatHeaderText("The House of Morphoria");
+	outputPic("icon_morphoria");
+	outputText("House Morphoria is the house that represents the change aspect of gloam. Their symbols include change, fate, the cosmos, randomness, games, and chance. Their citygod is Pnura, a serpentine creature that effortlessly shapeshifts.<br><br>");
+	outputText("Their general tactic is to undo their opponent’s belief by undoing their opponent’s definition of reality itself.<br><br>");
+	outputText("The house’s floorplan is ever-shifting. Much of the decor may in fact be orolisks - creatures that shift into inanimate objects to fool those that wander through the house’s halls.<br><br>");
+	Codex.formatSubheaderText("The Mutable Ones");
+	outputText("​This sect focuses on manipulating fate. These mages wield the power of transformation, in a variety of bizarre, alluring, and useful forms.<br><br>");
+	outputText("​A typical Mutable One is often an open-minded type, and usually highly adaptable. With a readiness to lend their time and resources, they tend to foster a sense of connection in others.<br><br>");
+	Codex.formatSubheaderText("The Erratic Ones");
+	outputText("Armed with cards and dice, this sect relies only on random chance to do their bidding.<br><br>");
+	outputText("A typical Erratic One may have an unmatched sense of humor, and a nothing-to-lose attitude towards life in Nodd. Resilient, witty, and optimistic, they can lighten the darkest of situations.<br><br>");
+	Codex.Factions.page();
 }
 
 // Sapient Species
 Codex.Sapient.page = function() {
 	var btn = 0;
 	menu();
-	Codex.addCodexButton(btn++, "Ravel", Codex.Sapient.entryRavel, codexFlags.unlockedRavel);
-	Codex.addCodexButton(btn++, "Petrid", Codex.Sapient.entryPetrid, codexFlags.unlockedPetrid);
-	Codex.addCodexButton(btn++, "Slyne", Codex.Sapient.entrySlyne, codexFlags.unlockedSlyne);
 	Codex.addCodexButton(btn++, "Krudge", Codex.Sapient.entryKrudge, codexFlags.unlockedKrudge);
-	Codex.addCodexButton(btn++, "Oggorus", Codex.Sapient.entryOggorus, codexFlags.unlockedOggorus);
 	Codex.addCodexButton(btn++, "Lehlt", Codex.Sapient.entryLehlt, codexFlags.unlockedLehlt);
 	Codex.addCodexButton(btn++, "Nurk", Codex.Sapient.entryNurk, codexFlags.unlockedNurk);
+	Codex.addCodexButton(btn++, "Oggorus", Codex.Sapient.entryOggorus, codexFlags.unlockedOggorus);
+	Codex.addCodexButton(btn++, "Petrid", Codex.Sapient.entryPetrid, codexFlags.unlockedPetrid);
+	Codex.addCodexButton(btn++, "Ravel", Codex.Sapient.entryRavel, codexFlags.unlockedRavel);
+	Codex.addCodexButton(btn++, "Slyne", Codex.Sapient.entrySlyne, codexFlags.unlockedSlyne);
 	addButton(14, "Back", Codex.menu);
 }
 
@@ -293,6 +499,9 @@ Codex.Bestial.page = function() {
 	var btn = 0;
 	menu();
 	Codex.addCodexButton(btn++, "Greep", Codex.Bestial.entryGreep, codexFlags.unlockedGreep);
+	Codex.addCodexButton(btn++, "Mephitoad", Codex.Bestial.entryMephitoad, codexFlags.unlockedMephitoad);
+	Codex.addCodexButton(btn++, "Miggwitch", Codex.Bestial.entryMiggwitch, codexFlags.unlockedMiggwitch);
+	Codex.addCodexButton(btn++, "Queril", Codex.Bestial.entryQueril, codexFlags.unlockedQueril);
 	addButton(14, "Back", Codex.menu);
 }
 
@@ -323,14 +532,123 @@ Codex.Bestial.entryGreep = function() {
 	Codex.Bestial.page();
 }
 
-// Districts
-Codex.Factions.page = function() {
-	menu();
-	addButton(14, "Back", Codex.menu);
+Codex.Bestial.entryMephitoad = function() {
+	clearOutput();
+	setHeader("Codex: Mephitoad");
+	Codex.formatHeaderText("The Mephitoad");
+	outputText("<b>Myth:</b> When one indulges a sudden food craving<br>");
+	outputText("<b>Aspect:</b> Life<br>");
+	outputText("<b>Height:</b> 4’<br>");
+	outputText("<b>Length:</b> 9’<br>");
+	outputText("<b>Weight:</b> 3,300 lbs<br>");
+	outputText("<b>Notable Traits:</b> Viviria’s familiar, eats anything, toxic<br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("Mephitoads - sometimes called \"slugpuppies\" - are walrus-sized amphibians. They have four eyes, long floppy ears, and four chin barbels. Their hind legs are vestigial, and they instead move on a strong, mucus-secreting tail. The mucus is toxic to ingest to most creatures, and is at best unpalatable to everyone else.<br><br>");
+	outputText("Their organs are specialized to process this highly varied, excessive, and often toxic diet. These toxins are filtered into a gland that then excretes them through the creature's mucus. As such, a mephitoad may be more or less toxic depending on what it's been eating.<br><br>");
+	outputText("Their innards are also remarkably strong and flexible, allowing the animal to consume large, sharp, pointy, or otherwise inedible objects.<br><br>");
+	outputText("Their hide is rubbery and wet. They come in a variety of colors and patterns, from drab and swampy hues to garish palettes that warn nicely of the creature's toxicity.<br><br>");
+	Codex.formatSubheaderText("Behaviour");
+	outputText("Mephitoads aren't particularly intelligent, and essentially exist to consume garbage.<br><br>");
+	outputText("Mephitoads do not seem to possess any cognitive impulse to stop eating. It is not uncommon to see one that has recently stumbled upon a smörgåsbord and immobilized itself - in which case it will only resume eating once it can move again.<br><br>");
+	Codex.formatSubheaderText("Reproduction");
+	outputText("Mephitoads are biologically hermaphrodites, and exchange genetic material by intertwining tentacle-like reproductive organs that emerge from a cloaca. The phallus itself has no opening, and instead the fluids ooze from tiny pores all along the organ's length. After copulation, the fluid-slathered organs unwind from one another and retract back into the creature's uterus, where eggs will be fertilized.<br><br>");
+	outputText("​The round, greenish-yellow eggs are cared for by the single parent, who will then watch after the \"pups\" after they're hatched.<br><br>");
+	Codex.formatSubheaderText("Diet");
+	outputText("Mephitoads do not seek out any particular food source, and instead tend to eat anything that catches their attention.<br><br>");
+	Codex.formatSubheaderText("Habitat");
+	outputText("Mephitoads live in swamps and bogs outside Nodd proper, though sometimes occupy sewers within the city. They are also kept on the House of Viviria’s campus grounds, where they’re revered.<br><br>");
+	Codex.formatSubheaderText("Usage");
+	outputText("Mephitoads are difficult to own, as they're known to consume furniture and owner alike. However, they are Viviria’s beloved symbol, and are kept as pets on the campus grounds.<br><br>");
+	Codex.Bestial.page();
 }
 
-// Districts
+Codex.Bestial.entryMiggwitch = function() {
+	clearOutput();
+	setHeader("Codex: Miggwitch");
+	Codex.formatHeaderText("The Miggwitch");
+	outputText("<b>Myth:</b> When one delights at another’s suffering<br>");
+	outputText("<b>Aspect:</b> Flesh<br>");
+	outputText("<b>Height:</b> 6’, at the withers<br>");
+	outputText("<b>Length:</b> 10’<br>");
+	outputText("<b>Weight:</b> 2,000 lbs<br>");
+	outputText("<b>Notable Traits:</b> Beast of burden, anesthetic secretions<br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("Miggwitches are tall, stilt-legged deer creatures. Their legs are fleshless from the last joint to the end of their digitless limbs. This is thought to be an adaptation to the aquatic flesh-eating worms that inhabit the swampy waters of their home.<br><br>");
+	Codex.formatSubheaderText("Behaviour");
+	outputText("Miggwitches are very anxious and easily startled. While only moderately smart, they're easily tamed and can be trained for various purposes.<br><br>");
+	Codex.formatSubheaderText("Reproduction");
+	outputText("The vagina of miggwitches is covered in microscopic urticating filaments. This causes the male an excruciating amount of pain - unless he's eaten sufficient amounts of a certain plant that numbs his genitalia.<br><br>");
+	Codex.formatSubheaderText("Diet");
+	outputText("The miggwitch eats a variety of aquatic plants, and its sharp teeth only serve to sever tough woody roots. Their diet ideally includes a type of swamp vegetation - numbell - with anesthetic properties. The anesthetic is an effect of a microorganism that lives on the plant; when consumed, the microbes find their way to the animal's mucous membranes where they then thrive.<br><br>");
+	Codex.formatSubheaderText("Habitat");
+	outputText("Miggwitches roam in small herds in the swamps outside Nodd. They're also seen inside Nodd as pack animals.<br><br>");
+	Codex.formatSubheaderText("Usage");
+	outputText("Miggwitches are easily domesticated, and are used for various transportation-related purposes.<br><br>");
+	outputText("They are not often eaten, and this is considered a taboo by some.<br><br>");
+	Codex.Bestial.page();
+}
+
+Codex.Bestial.entryQueril = function() {
+	clearOutput();
+	setHeader("Codex: Queril");
+	Codex.formatHeaderText("The Queril");
+	outputText("<b>Myth:</b> When one confuses oneself<br>");
+	outputText("<b>Aspect:</b> Mind<br>");
+	outputText("<b>Height:</b> 3.5’<br>");
+	outputText("<b>Length:</b> 4’, with tail<br>");
+	outputText("<b>Weight:</b> 10 lbs<br>");
+	outputText("<b>Notable Traits:</b> Psilysium’s familiar, hallucinogenic dust <br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("Querils are small, colorful, flightless birds. In place of wings, they have long black quills.<br><br>");
+	outputText("The tail of a queril is a cluster of tentacles, each one densely feathered. On each tip is a tufted plume from which hallucinogenic dust is produced.<br><br>");
+	Codex.formatSubheaderText("Behaviour");
+	outputText("Querils are capable of speech, but only seem able to ask questions. Oftentimes the questions are nonsensical or irrelevant, making conversation unfeasible, and the intellectual capacity of the queril difficult to assess.<br><br>");
+	Codex.formatSubheaderText("Reproduction");
+	outputText("Both sexes have a cloaca. The male's penis is semi-flexible, and is generally around 18 - 20 in. long.<br><br>");
+	outputText("Females lay a single large egg with glowing spots. The color indicates the color of the offspring's plumage.<br><br>");
+	Codex.formatSubheaderText("Diet");
+	outputText("Querils eat insects, fruits, nuts and seeds.<br><br>");
+	Codex.formatSubheaderText("Habitat");
+	outputText("Querils deck the labyrinthine halls of the Psilysium citadel, where they confuse and mislead disciples with their dust-induced illusions.<br><br>");
+	outputText("They can also be found in deep, dark forests.<br><br>");
+	Codex.formatSubheaderText("Usage");
+	outputText("Querils are the cherished symbol of the Psilysium house.<br><br>");
+	Codex.Bestial.page();
+}
+
+/*
+
+// A template for adding the rest of Bestial species.
+Codex.Bestial.entryTemplate = function() {
+	clearOutput();
+	setHeader("Codex: Bestial Template");
+	Codex.formatHeaderText("Bestial Species Template");
+	outputText("<b>Myth:</b> <br>");
+	outputText("<b>Aspect:</b> <br>");
+	outputText("<b>Height:</b> ??<br>");
+	outputText("<b>Length:</b> ??<br>");
+	outputText("<b>Weight:</b> ?? lbs<br>");
+	outputText("<b>Notable Traits:</b> <br><br>");
+	Codex.formatSubheaderText("Physiology");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Behaviour");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Reproduction");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Diet");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Habitat");
+	outputText("<br><br>");
+	Codex.formatSubheaderText("Usage");
+	outputText("<br><br>");
+	Codex.Bestial.page();
+}
+
+*/
+
+// Artifacts
 Codex.Artifacts.page = function() {
+	var btn = 0;
 	menu();
 	addButton(14, "Back", Codex.menu);
 }

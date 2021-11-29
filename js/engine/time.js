@@ -67,7 +67,7 @@ Time.advanceMinutes = function(minutes) {
 			player.bowels = player.maxBowels();
 		}
 		// Increment amount of hours since cum
-		if (minutes == 0) {
+		if (time.minutes == 0) {
 			player.hoursSinceCum++;
 			Time.tickHourlyFlags();
 		}
@@ -131,6 +131,7 @@ Time.wait = function(timeLength, isHour) {
 
 Time.tickHourlyFlags = function() {
 	if (npcFlags.outsideInnRestroomNPCCooldown > 0) npcFlags.outsideInnRestroomNPCCooldown--;
-	if (npcFlags.darklingRowSillyModeJerryCooldown > 0) npcFlags.darklingRowSillyModeJerryCooldown--;
-	if (npcFlags.darklingRowPrankNurkCooldown > 0) npcFlags.darklingRowPrankNurkCooldown--;
+	if (locFlags.darklingRowSillyModeJerryCooldown > 0) locFlags.darklingRowSillyModeJerryCooldown--;
+	if (locFlags.darklingRowPrankNurkCooldown > 0) locFlags.darklingRowPrankNurkCooldown--;
+	if (locFlags.darklingRowScarabCrashCooldown > 0) locFlags.darklingRowScarabCrashCooldown--;
 }

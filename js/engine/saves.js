@@ -449,6 +449,7 @@ Data.saveSettings = function() {
     try {
         saveData.silly = silly;
         saveData.use12Hours = use12Hours;
+		saveData.useMetrics = useMetrics;
 
         //saveData.buttonFont = buttonFont;
         saveData.mainFont = mainFont;
@@ -458,6 +459,7 @@ Data.saveSettings = function() {
         saveData.goreEnabled = goreEnabled;
         saveData.infestEnabled = infestEnabled;
         saveData.plushifyEnabled = plushifyEnabled;
+		saveData.bestialityEnabled = bestialityEnabled;
 
         //Set save to successful
         localStorage.setItem("Nodd_Main", JSON.stringify(saveData));
@@ -479,11 +481,13 @@ Data.loadSettings = function() {
     try {
         silly = saveData.silly;
         use12Hours = saveData.use12Hours;
+		useMetrics = saveData.useMetrics;
 
 		scatEnabled = saveData.scatEnabled != undefined ? saveData.scatEnabled : false;
 		goreEnabled = saveData.goreEnabled != undefined ? saveData.goreEnabled : false;
 		infestEnabled = saveData.infestEnabled != undefined ? saveData.infestEnabled : false;
 		plushifyEnabled = saveData.plushifyEnabled != undefined ? saveData.plushifyEnabled : false;
+		bestialityEnabled = saveData.bestialityEnabled != undefined ? saveData.bestialityEnabled : false;
 
         mainFont = saveData.mainFont;
         mainFontSizeIndex = saveData.mainFontSizeIndex;

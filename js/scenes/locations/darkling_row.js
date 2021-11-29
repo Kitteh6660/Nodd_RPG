@@ -58,7 +58,12 @@ Locations.DarklingRow.shopMenu = function() {
 
 Locations.DarklingRow.explore = function() {
 	clearOutput();
-	if (locFlags.darklingRowExploreCounter < 10) {
+	if (player.energy < 5 && locFlags.darklingRowFoundOutsideInn) { //Additional check for softlock prevention.
+		outputText("You are too exhausted to explore. Find a bed to sleep in to replenish your energy.");
+		doNext(resumeFromMenu);
+		return;
+	}
+	if (locFlags.darklingRowExploreCounter < 8) {
 		Time.advanceMinutes(15);
 	}
 	else {
@@ -144,6 +149,8 @@ Locations.DarklingRow.explore = function() {
 		var funcs = [Locations.DarklingRow.greepLovers];
 		if (silly && locFlags.darklingRowSillyModeJerryCooldown <= 0) funcs.push(Locations.DarklingRow.workersWithGlassPaneSMASH);
 		if (locFlags.darklingRowPrankNurkCooldown <= 0) funcs.push(Locations.DarklingRow.pnurked);
+		if (locFlags.darklingRowScarabCrashCooldown <= 0 && time.days >= 3 && rand(2) == 0) funcs.push(Locations.DarklingRow.scarabCrashWitness);
+		if (time.days >= 4 && !locFlags.darklingRowCarriageDiscovered && rand(2) == 0) funcs.push(Locations.DarklingRow.miggwitchCarriage);
 		funcs[rand(funcs.length)]();
 	}
 	else if (rng < 75) {
@@ -242,8 +249,22 @@ Locations.DarklingRow.pnurked = function() {
 	outputText("“Hello there. Can I have some clothes please?”<br><br>");
 	outputText("You shake your head no. <br><br>");
 	outputText("“Okay. I’ll steal them then!”<br><br>");
-	outputText("Then, he snaps his fingers and runs away. Laughing maniacally as he does so and how he has your clothes! He’s...still naked and you’re still looking the same.<br><br>");
+	outputText("Then, he snaps his fingers and runs away. Laughing manically as he does so and how he has your clothes! He’s...still naked and you’re still looking the same.<br><br>");
 	locFlags.darklingRowPrankNurkCooldown = 12; // Locks out this scene for 12 hours.
+}
+Locations.DarklingRow.scarabCrashWitness = function() {
+	outputText("A loud <b>CRASH</b> startles you. The sound comes from a nearby location and when you rush to investigate, you are horrified by what has happened.<br><br>");
+	outputText("A badly-managed " + (codexFlags.unlockedLehlt ? "Lehlt" : "goat-like") + " corpse lays at the floor and a wall marking suggests that someone must have slammed into the wall at such high speeds. Near the corpse is the shattered remains of a bug-like device.<br><br>");
+	outputText("\"<i>This Lehlt will make a fine vulturewear!</i>\" You hear a shouting from a female Ravel who already sauntered over to the corpse and she casted what a spell, accompanied with an orange flash. The Ravel peels the pelt off with such skills. As soon as she departs, two more citizens rush in to cut up and gather the meat of the now-skinned Lehlt.<br><br>");
+	Codex.unlockCodexEntry("Lehlts", "unlockedLehlt");
+	locFlags.darklingRowScarabCrashCooldown = 48 + rand(48); // Locks out this scene for 48 hours minimum.
+}
+Locations.DarklingRow.miggwitchCarriage = function() {
+	outputText("As you're minding your own business in the shady streets of the Darkling Row, you spot what appears to be a carriage pulled by... an odd creature. Certainly not horse but something different and the way the cart is being pulled is unlike anything you've ever seen.<br><br>");
+	outputText("Peering closer, your suspicions are confirmed; a metal cock ring is clasped around the base of the creature's swollen gonads and hooked to a carriage. How the creature is able to pull the carriage without his balls bursting or snapping is beyond your understanding.<br><br>");
+	Codex.unlockCodexEntry("Miggwitches", "unlockedMiggwitch");
+	outputText("As soon as you finish examining, the creature and the carriage have already moved on. However, you suppose that the next time the carriage comes around, you could hitch a ride to get around the City of Nodd in relative safety. At least, fairly safe, you can't be too careful.");
+	locFlags.darklingRowCarriageDiscovered = true;
 }
 Locations.DarklingRow.randomCitizenComments = function() {
 	// Not yet added.
